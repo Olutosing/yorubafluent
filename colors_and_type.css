@@ -1,0 +1,246 @@
+/* ============================================================
+   German for the Rest of Us — Design Tokens
+   colors_and_type.css
+
+   Single source of truth for all surfaces (Vocabulary + Lessons).
+   Import this file in any new artefact; tokens extracted verbatim
+   from vocab.css and uploads/lesson.css.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&display=swap");
+
+@font-face {
+  font-family: 'Flegrei';
+  src: url('fonts/Flegrei.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ── FONTS ─────────────────────────────────────────────── */
+  --font-body:     'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans:     'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-display:  'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-flegrei:  'Flegrei', 'Plus Jakarta Sans', sans-serif;
+
+  /* ── TYPE SIZES ────────────────────────────────────────── */
+  --size-xs:    0.75rem;    /* 12px */
+  --size-sm:    0.88rem;    /* 14px */
+  --size-label: 0.79rem;    /* 12.6px — UI labels */
+  --size-base:  1rem;       /* 16px */
+  --size-body:  1.1875rem;  /* 19px — reading body size */
+  --size-md:    1.125rem;   /* 18px */
+  --size-lg:    1.25rem;    /* 20px */
+  --size-xl:    1.5rem;     /* 24px */
+  --size-2xl:   1.875rem;   /* 30px */
+  --size-3xl:   2.25rem;    /* 36px */
+
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semibold:600;
+  --weight-bold:    700;
+  --weight-extrabold:800;
+  --weight-black:   900;
+
+  --leading-tight:  1.1;
+  --leading-card:   1.15;
+  --leading-normal: 1.5;
+  --leading-body:   1.62;
+  --leading-loose:  1.72;
+
+  /* ── SPACING ───────────────────────────────────────────── */
+  --space-xs:        0.25rem;   /* 4px */
+  --space-sm:        0.5rem;    /* 8px */
+  --space-md:        1rem;      /* 16px */
+  --space-lg:        1.5rem;    /* 24px */
+  --space-xl:        2rem;      /* 32px */
+  --space-2xl:       3rem;      /* 48px */
+  --section-gap:     56px;
+  --block-gap:       48px;
+  --inner-gap:       24px;
+  --page-pad-x:      28px;
+  --page-pad-y:      40px;
+  --max-width-text:  720px;
+  --max-width-grid:  1180px;
+
+  /* ── COLOR · CORE PALETTE ──────────────────────────────── */
+  --bg:              #FDFDFD;
+  --ink:             #212121;   /* Grey 900 */
+  --ink-muted:       #636363;   /* secondary text */
+  --ink-mid:         #767676;   /* labels, UI chrome */
+  --ink-faint:       #BDBDBD;   /* dividers, disabled */
+  --card-bg:         #F5F5F5;   /* Grey 100 */
+  --card-bg-deep:    #EEEEEE;   /* Grey 200 */
+  --divider:         rgba(33, 33, 33, 0.14);
+  --surface:         #FFFFFF;
+
+  /* ── GERMAN WORD COLOUR ────────────────────────────────── */
+  --german:          #92400E;   /* warm amber-brown — all German text in light mode */
+
+  /* ── ACCENT · GOLD (shared across both surfaces) ──────── */
+  --gold:            #FFB300;   /* Amber 600 */
+  --gold-light:      #FFE57F;   /* Amber A100 */
+  --gold-dark:       #FF8F00;   /* Amber 800 */
+
+  /* ── ACCENT · TEAL (Vocabulary surface) ───────────────── */
+  --teal:            #0F827A;
+  --teal-bright:     #14A398;
+  --teal-deep:       #0A5C56;
+
+  /* ── ACCENT · CORAL (Lessons surface) ─────────────────── */
+  --coral:           #E07A5F;
+  --coral-deep:      #C45E44;
+
+  /* ── FEEDBACK COLOURS ──────────────────────────────────── */
+  --correct-bg:      rgba(0, 137, 123, 0.08);
+  --correct-ink:     #00897B;
+  --wrong-bg:        rgba(229, 57, 53, 0.06);
+  --wrong-ink:       #E53935;
+  --corrected-bg:    rgba(25, 118, 210, 0.07);
+  --corrected-ink:   #1976D2;
+
+  /* ── GENDER BADGE COLOURS ──────────────────────────────── */
+  --der:             #1565C0;   /* Masculine — blue */
+  --die:             #AD1457;   /* Feminine — pink */
+  --das:             #2E7D32;   /* Neuter — green */
+
+  /* ── ELEVATION ─────────────────────────────────────────── */
+  --card-shadow:       0 18px 44px -28px rgba(28, 18, 10, 0.40);
+  --card-shadow-hover: 0 28px 60px -26px rgba(28, 18, 10, 0.50);
+  --card-shadow-dark:  0 18px 44px -22px rgba(0, 0, 0, 0.70);
+
+  /* ── BORDERS ───────────────────────────────────────────── */
+  --border-thin:     1px solid var(--divider);
+  --border-medium:   2px solid var(--divider);
+  --border-accent:   4px solid var(--teal);
+  --border-gold:     2px solid var(--gold);
+  /* Note: border-radius is 0 everywhere except gender badges (999px) */
+
+  /* ── MOTION ────────────────────────────────────────────── */
+  --ease:            cubic-bezier(0.4, 0, 0.2, 1);       /* standard Material */
+  --ease-overshoot:  cubic-bezier(0.34, 1.56, 0.64, 1);  /* spring / card hover */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);      /* fast slam */
+  --dur-fast:        150ms;
+  --dur-normal:      280ms;
+  --dur-carousel:    650ms;
+
+  /* ── NOISE TEXTURE ─────────────────────────────────────── */
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ── DARK THEME ────────────────────────────────────────── */
+html[data-theme="dark"] {
+  --bg:              #121212;
+  --ink:             #F0EDE8;
+  --ink-muted:       #A8A29A;
+  --ink-faint:       #4A4A4A;
+  --ink-mid:         #8A857D;
+  --german:          #FFB300;   /* gold takes over warm-brown role in dark mode */
+  --card-bg:         #1E1E1E;
+  --card-bg-deep:    #262626;
+  --divider:         rgba(255, 255, 255, 0.12);
+  --teal:            #0C6A63;
+  --teal-bright:     #119388;
+  --teal-deep:       #063F3A;
+  --card-shadow:     0 18px 44px -22px rgba(0, 0, 0, 0.70);
+  --card-shadow-hover: 0 28px 60px -20px rgba(0, 0, 0, 0.80);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; overflow-x: clip; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   SEMANTIC TYPE CLASSES
+   ============================================================ */
+
+/* Page / hero title — Plus Jakarta Sans Black, very tight */
+.t-hero {
+  font-family: var(--font-display);
+  font-weight: var(--weight-black);
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+/* Section heading */
+.t-section {
+  font-family: var(--font-display);
+  font-weight: var(--weight-black);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+}
+
+/* Card / concept title */
+.t-card-title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-black);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: var(--leading-card);
+  letter-spacing: -0.025em;
+}
+
+/* Body copy */
+.t-body {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+}
+
+/* Eyebrow / section label — UPPERCASE small tracking */
+.t-label {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-extrabold);
+  font-size: var(--size-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+}
+
+/* Subtitle — italic body text */
+.t-subtitle {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  line-height: var(--leading-normal);
+  color: var(--ink-muted);
+}
+
+/* Meta / caption */
+.t-meta {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-bold);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+}
+
+/* Ghost display — Flegrei large */
+.t-ghost {
+  font-family: var(--font-flegrei);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* German word colour */
+.de { color: var(--german); font-style: normal; }
+strong { color: var(--german); font-weight: 700; }

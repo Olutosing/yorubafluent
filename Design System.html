@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>German for the Rest of Us — Design System</title>
+  <link rel="stylesheet" href="colors_and_type.css">
+  <style>
+    /* ── PAGE SHELL ─────────────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: var(--noise);
+      background-repeat: repeat;
+      background-size: 300px 300px;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    * { position: relative; z-index: 1; }
+
+    .page { max-width: 960px; margin: 0 auto; padding: 0 var(--page-pad-x) 80px; }
+
+    /* ── TOP BAR ─────────────────────────────────────────────────── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem var(--page-pad-x);
+      border-bottom: var(--border-thin);
+      margin-bottom: 0;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .topbar::before { display: none; }
+
+    .wordmark-top {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+    }
+
+    .wordmark-main {
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .wordmark-main span { color: var(--teal); }
+
+    .theme-btn {
+      appearance: none;
+      background: none;
+      cursor: pointer;
+      border: 1.5px solid var(--divider);
+      color: var(--ink);
+      opacity: 0.6;
+      padding: 0.45rem;
+      display: grid;
+      place-items: center;
+      transition: opacity var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+    }
+
+    .theme-btn:hover { opacity: 1; border-color: var(--teal); }
+    .theme-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── HERO ────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      background: var(--teal);
+      overflow: hidden;
+      padding: 52px var(--page-pad-x) 48px;
+      margin-bottom: 64px;
+    }
+
+    .hero-grain {
+      position: absolute; inset: 0; pointer-events: none; z-index: 2;
+      background-repeat: repeat; background-size: 200px 200px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+    }
+
+    .hero-vignette {
+      position: absolute; inset: 0; pointer-events: none; z-index: 3;
+      background: radial-gradient(130% 100% at 80% 10%, rgba(20,163,152,0.5) 0%, transparent 60%),
+                  radial-gradient(110% 120% at 10% 100%, rgba(10,92,86,0.65) 0%, transparent 55%);
+    }
+
+    .hero-ghost {
+      position: absolute; right: -0.02em; top: -0.08em; z-index: 1;
+      font-family: var(--font-flegrei);
+      font-size: clamp(180px, 32vw, 340px);
+      line-height: 0.75; color: #fff; opacity: 0.07;
+      letter-spacing: -0.04em; pointer-events: none; user-select: none;
+    }
+
+    .hero-content { position: relative; z-index: 10; color: #fff; }
+
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.7);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-eyebrow-tick { width: 24px; height: 2px; background: var(--gold); flex-shrink: 0; }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-weight: var(--weight-black);
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      letter-spacing: -0.04em;
+      line-height: 0.92;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-title .flegrei-accent {
+      font-family: var(--font-flegrei);
+      font-weight: 400;
+      text-transform: none;
+      color: var(--gold);
+      font-size: 1.08em;
+    }
+
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 1rem 2.4rem;
+    }
+
+    .hero-meta-item { }
+    .hero-meta-label {
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 2px;
+    }
+    .hero-meta-value {
+      font-size: 0.88rem; font-weight: 700; color: rgba(255,255,255,0.9);
+    }
+
+    /* ── SECTION ANATOMY ─────────────────────────────────────────── */
+    .ds-section {
+      margin-bottom: var(--section-gap);
+    }
+
+    .ds-section-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.8rem;
+      padding-bottom: 1rem;
+      border-bottom: 5px solid var(--teal);
+      margin-bottom: 32px;
+    }
+
+    .ds-section-eyebrow {
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--ink-mid);
+      display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;
+    }
+
+    .ds-section-eyebrow-tick { width: 20px; height: 2px; background: var(--gold); flex-shrink: 0; }
+
+    .ds-section-title {
+      font-family: var(--font-display);
+      font-weight: var(--weight-black);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .ds-section-count {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-mid); align-self: flex-end;
+    }
+
+    .ds-section-count strong { color: var(--teal); }
+
+    /* ── COLOR GRID ──────────────────────────────────────────────── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 8px;
+    }
+
+    .color-swatch { overflow: hidden; }
+    .color-chip { height: 48px; }
+    .color-label { padding: 6px 8px; background: var(--card-bg); }
+    .color-name { font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+    .color-val { font-size: 9.5px; font-weight: 600; color: var(--ink-mid); margin-top: 1px; font-family: monospace; }
+
+    .color-group-label {
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--ink-mid);
+      margin-bottom: 10px; margin-top: 24px;
+    }
+
+    .color-group-label:first-child { margin-top: 0; }
+
+    /* ── TYPE ROWS ───────────────────────────────────────────────── */
+    .type-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      align-items: baseline;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: var(--border-thin);
+    }
+
+    .type-row:last-child { border-bottom: none; }
+
+    .type-tag {
+      font-size: 9px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink-mid); line-height: 1.4;
+    }
+
+    /* ── GENDER BADGES ───────────────────────────────────────────── */
+    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+    .badge {
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.07em;
+      text-transform: uppercase; padding: 0.22rem 0.65rem;
+      border-radius: 999px; white-space: nowrap;
+    }
+
+    /* ── SPACING BARS ────────────────────────────────────────────── */
+    .spacing-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 7px 0; border-bottom: var(--border-thin);
+    }
+
+    .spacing-row:last-child { border-bottom: none; }
+
+    .spacing-lbl {
+      font-size: 9px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-mid); min-width: 96px;
+    }
+
+    .spacing-bar { background: var(--teal); height: 8px; flex-shrink: 0; }
+    .spacing-val { font-size: 9px; font-weight: 700; color: var(--ink-faint); font-family: monospace; }
+
+    /* ── COMPONENT CARD ──────────────────────────────────────────── */
+    .set-card {
+      position: relative;
+      background: var(--card-bg);
+      border-left: 4px solid var(--teal);
+      padding: 20px 22px 18px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform 380ms var(--ease-overshoot), box-shadow 280ms var(--ease), border-color 150ms;
+    }
+
+    .set-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.8; pointer-events: none;
+    }
+
+    .set-card:hover {
+      transform: translateY(-5px) rotate(0.3deg);
+      box-shadow: var(--card-shadow-hover);
+      border-left-color: var(--gold);
+    }
+
+    .card-num {
+      position: absolute; top: -0.4rem; right: 0;
+      font-family: var(--font-flegrei);
+      font-size: 5rem; line-height: 0.8;
+      color: var(--teal); opacity: 0.12; pointer-events: none;
+      transition: opacity 280ms;
+    }
+
+    .set-card:hover .card-num { opacity: 0.22; }
+
+    .card-inner { position: relative; z-index: 1; }
+
+    .card-eye {
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink-mid);
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.55rem;
+    }
+
+    .card-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-weight: var(--weight-black);
+      font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+      letter-spacing: -0.022em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .card-foot {
+      margin-top: 1.1rem; padding-top: 0.8rem;
+      border-top: var(--border-thin);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .card-words {
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-mid);
+    }
+
+    .card-go {
+      font-size: 0.67rem; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+
+    /* ── CARDS GRID ──────────────────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    /* ── VOCAB ENTRY ─────────────────────────────────────────────── */
+    .vocab-entry { padding: 16px 0; border-bottom: var(--border-thin); }
+    .vocab-entry:last-child { border-bottom: none; }
+
+    .vocab-word-row {
+      display: flex; align-items: baseline; gap: 10px;
+      flex-wrap: wrap; margin-bottom: 0.4rem;
+    }
+
+    .vocab-word {
+      font-family: var(--font-display);
+      font-weight: var(--weight-black);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      letter-spacing: -0.025em;
+      color: var(--german);
+    }
+
+    .vocab-meta {
+      font-size: 0.82rem; line-height: 1.5; color: var(--ink-muted);
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    }
+
+    .vocab-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-faint); flex-shrink: 0; }
+    .vocab-mean { color: var(--ink); font-weight: 700; }
+
+    .vocab-gloss {
+      font-size: 0.9rem; line-height: 1.62; color: var(--ink-muted);
+      background: var(--card-bg);
+      border-left: 3px solid var(--gold);
+      padding: 0.7rem 1rem;
+      margin-top: 0.7rem;
+    }
+
+    /* ── BUTTONS ─────────────────────────────────────────────────── */
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 16px; }
+
+    .ds-btn {
+      appearance: none; cursor: pointer;
+      font-family: var(--font-sans); font-size: 0.68rem; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.65rem 1.35rem; border: 1.5px solid;
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      transition: transform var(--dur-fast), box-shadow var(--dur-fast), background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast);
+    }
+
+    .ds-btn:hover { transform: translateY(-1px); }
+
+    .ds-btn-primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .ds-btn-primary:hover { background: var(--teal-deep); border-color: var(--teal-deep); }
+
+    .ds-btn-ghost { background: transparent; border-color: var(--divider); color: var(--ink-mid); }
+    .ds-btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+    .ds-btn-outline { background: transparent; border-color: var(--teal); color: var(--teal); }
+    .ds-btn-correct { background: transparent; border-color: var(--correct-ink); color: var(--correct-ink); }
+    .ds-btn-wrong { background: transparent; border-color: var(--wrong-ink); color: var(--wrong-ink); }
+
+    .nav-circ {
+      appearance: none; width: 46px; height: 46px; border-radius: 50%;
+      background: transparent; border: 1.5px solid var(--divider);
+      color: var(--ink); display: grid; place-items: center; cursor: pointer;
+      transition: border-color var(--dur-fast), color var(--dur-fast), transform var(--dur-fast);
+    }
+
+    .nav-circ:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-1px); }
+    .nav-circ.active { border-color: var(--teal); }
+    .nav-circ.disabled { opacity: 0.25; pointer-events: none; }
+
+    /* ── TABS ────────────────────────────────────────────────────── */
+    .tab-row {
+      display: flex;
+      border-bottom: 2px solid var(--divider);
+      margin-bottom: 0;
+    }
+
+    .tab-item {
+      appearance: none; background: transparent; border: none;
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      font-family: var(--font-sans); font-size: 0.77rem; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink-mid); cursor: pointer;
+      padding: 0.8rem 1.2rem;
+      transition: color var(--dur-fast), border-color var(--dur-fast);
+    }
+
+    .tab-item:hover { color: var(--ink); }
+    .tab-item.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+    /* ── QUIZ FEEDBACK ───────────────────────────────────────────── */
+    .feedback-strip {
+      padding: 10px 14px;
+      border-left: 3px solid;
+      display: flex; flex-direction: column; gap: 3px;
+    }
+
+    .feedback-verdict {
+      font-size: 0.64rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    .feedback-answer {
+      font-family: var(--font-display);
+      font-weight: var(--weight-black);
+      font-size: 1.6rem; letter-spacing: -0.025em;
+      color: var(--german);
+    }
+
+    .fb-correct { background: var(--correct-bg); border-color: var(--correct-ink); }
+    .fb-correct .feedback-verdict { color: var(--correct-ink); }
+    .fb-wrong { background: var(--wrong-bg); border-color: var(--wrong-ink); }
+    .fb-wrong .feedback-verdict { color: var(--wrong-ink); }
+
+    /* ── MOTION TOKENS ───────────────────────────────────────────── */
+    .motion-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 9px 0; border-bottom: var(--border-thin);
+    }
+
+    .motion-row:last-child { border-bottom: none; }
+    .motion-lbl { font-size: 9px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); min-width: 110px; }
+    .motion-pill { font-family: monospace; font-size: 9px; font-weight: 700; color: var(--ink-mid); background: var(--card-bg); padding: 3px 7px; }
+    .motion-desc { font-size: 9px; color: var(--ink-muted); }
+
+    /* ── TWO-COL LAYOUT ──────────────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── SURFACE PILLS ───────────────────────────────────────────── */
+    .surface-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px; font-size: 0.67rem; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1.5px solid;
+    }
+
+    .surface-pill-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    /* ── DARK MODE OVERRIDES ─────────────────────────────────────── */
+    html[data-theme="dark"] .topbar { background: var(--bg); }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div>
+      <div class="wordmark-top">German for the Rest of Us</div>
+      <div class="wordmark-main"><span>Design System</span></div>
+    </div>
+    <button class="theme-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">
+      <svg id="iconSun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg id="iconMoon" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-grain"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-ghost">ß</div>
+    <div class="hero-content page">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-tick"></div>
+        Akinwumi's · Design System
+      </div>
+      <div class="hero-title">
+        German for<br>the Rest of <span class="flegrei-accent">Us.</span>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Typeface</div>
+          <div class="hero-meta-value">Plus Jakarta Sans + Flegrei</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Surfaces</div>
+          <div class="hero-meta-value">Vocabulary · Lessons</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Foundation</div>
+          <div class="hero-meta-value">Material Grey + Amber 600</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Radius</div>
+          <div class="hero-meta-value">0 (badges: 999px)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- ═══════════════════════════════════════ SURFACES -->
+    <div class="ds-section">
+      <div class="ds-section-head">
+        <div>
+          <div class="ds-section-eyebrow"><span class="ds-section-eyebrow-tick"></span>Overview</div>
+          <div class="ds-section-title">Two surfaces</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <!-- Vocab surface -->
+        <div style="background:var(--teal);padding:24px 26px;position:relative;overflow:hidden;">
+          <div style="position:absolute;right:-0.05em;top:-0.1em;font-family:var(--font-flegrei);font-size:160px;line-height:0.7;color:#fff;opacity:0.07;pointer-events:none;">V</div>
+          <div style="position:relative;z-index:1;color:#fff;">
+            <div class="surface-pill" style="border-color:rgba(255,255,255,0.3);color:#fff;margin-bottom:14px;">
+              <span class="surface-pill-dot" style="background:var(--gold);"></span>Vocabulary
+            </div>
+            <div style="font-weight:900;font-size:1.5rem;letter-spacing:-0.03em;margin-bottom:6px;">Teal accent</div>
+            <div style="font-size:0.82rem;opacity:0.75;margin-bottom:14px;">Word sets, flashcards, quizzes, glossary.</div>
+            <div style="font-family:monospace;font-size:0.8rem;opacity:0.8;">--teal: #0F827A</div>
+          </div>
+        </div>
+
+        <!-- Lessons surface -->
+        <div style="background:var(--coral);padding:24px 26px;position:relative;overflow:hidden;">
+          <div style="position:absolute;right:-0.05em;top:-0.1em;font-family:var(--font-flegrei);font-size:160px;line-height:0.7;color:#fff;opacity:0.07;pointer-events:none;">L</div>
+          <div style="position:relative;z-index:1;color:#fff;">
+            <div class="surface-pill" style="border-color:rgba(255,255,255,0.3);color:#fff;margin-bottom:14px;">
+              <span class="surface-pill-dot" style="background:var(--gold);"></span>Lessons
+            </div>
+            <div style="font-weight:900;font-size:1.5rem;letter-spacing:-0.03em;margin-bottom:6px;">Coral accent</div>
+            <div style="font-size:0.82rem;opacity:0.75;margin-bottom:14px;">Course homepage, individual lesson pages.</div>
+            <div style="font-family:monospace;font-size:0.8rem;opacity:0.8;">--coral: #E07A5F</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ COLOURS -->
+    <div class="ds-section">
+      <div class="ds-section-head">
+        <div>
+          <div class="ds-section-eyebrow"><span class="ds-section-eyebrow-tick"></span>Foundation</div>
+          <div class="ds-section-title">Color</div>
+        </div>
+        <div class="ds-section-count"><strong>16</strong> tokens</div>
+      </div>
+
+      <div class="color-group-label">Core palette</div>
+      <div class="color-grid">
+        <div class="color-swatch"><div class="color-chip" style="background:#FDFDFD;border:1px solid #eee;"></div><div class="color-label"><div class="color-name">bg</div><div class="color-val">#FDFDFD</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#212121;"></div><div class="color-label"><div class="color-name">ink</div><div class="color-val">#212121</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#636363;"></div><div class="color-label"><div class="color-name">ink-muted</div><div class="color-val">#636363</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#767676;"></div><div class="color-label"><div class="color-name">ink-mid</div><div class="color-val">#767676</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#BDBDBD;"></div><div class="color-label"><div class="color-name">ink-faint</div><div class="color-val">#BDBDBD</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#F5F5F5;border:1px solid #eee;"></div><div class="color-label"><div class="color-name">card-bg</div><div class="color-val">#F5F5F5</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#92400E;"></div><div class="color-label"><div class="color-name">german</div><div class="color-val">#92400E</div></div></div>
+      </div>
+
+      <div class="color-group-label">Shared accent — Amber 600</div>
+      <div class="color-grid">
+        <div class="color-swatch"><div class="color-chip" style="background:#FFB300;"></div><div class="color-label"><div class="color-name">gold</div><div class="color-val">#FFB300</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#FF8F00;"></div><div class="color-label"><div class="color-name">gold-dark</div><div class="color-val">#FF8F00</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#FFE57F;"></div><div class="color-label"><div class="color-name">gold-light</div><div class="color-val">#FFE57F</div></div></div>
+      </div>
+
+      <div class="color-group-label">Surface accents</div>
+      <div class="color-grid">
+        <div class="color-swatch"><div class="color-chip" style="background:#0F827A;"></div><div class="color-label"><div class="color-name">teal</div><div class="color-val">#0F827A</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#14A398;"></div><div class="color-label"><div class="color-name">teal-bright</div><div class="color-val">#14A398</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#0A5C56;"></div><div class="color-label"><div class="color-name">teal-deep</div><div class="color-val">#0A5C56</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#E07A5F;"></div><div class="color-label"><div class="color-name">coral</div><div class="color-val">#E07A5F</div></div></div>
+        <div class="color-swatch"><div class="color-chip" style="background:#C45E44;"></div><div class="color-label"><div class="color-name">coral-deep</div><div class="color-val">#C45E44</div></div></div>
+      </div>
+
+      <div class="color-group-label">Semantic — gender badges</div>
+      <div class="badge-row" style="margin-bottom:16px;">
+        <div class="badge" style="background:rgba(21,101,192,0.12);color:#1565C0;">der — masc.</div>
+        <div class="badge" style="background:rgba(173,20,87,0.12);color:#AD1457;">die — fem.</div>
+        <div class="badge" style="background:rgba(46,125,50,0.12);color:#2E7D32;">das — neut.</div>
+        <div class="badge" style="background:var(--card-bg);color:var(--ink-mid);">— no article</div>
+      </div>
+
+      <div class="color-group-label">Semantic — quiz feedback</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <div style="padding:8px 14px;background:var(--correct-bg);border-left:3px solid var(--correct-ink);min-width:130px;">
+          <div style="font-size:9px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--correct-ink);">Correct</div>
+        </div>
+        <div style="padding:8px 14px;background:var(--wrong-bg);border-left:3px solid var(--wrong-ink);min-width:130px;">
+          <div style="font-size:9px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--wrong-ink);">Wrong</div>
+        </div>
+        <div style="padding:8px 14px;background:var(--corrected-bg);border-left:3px solid var(--corrected-ink);min-width:130px;">
+          <div style="font-size:9px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--corrected-ink);">Corrected</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ TYPOGRAPHY -->
+    <div class="ds-section">
+      <div class="ds-section-head">
+        <div>
+          <div class="ds-section-eyebrow"><span class="ds-section-eyebrow-tick"></span>Foundation</div>
+          <div class="ds-section-title">Typography</div>
+        </div>
+        <div class="ds-section-count"><strong>2</strong> families</div>
+      </div>
+
+      <div class="type-row" style="align-items:flex-start;">
+        <div class="type-tag">Hero<br>900 · −0.04em<br>uppercase</div>
+        <div style="font-weight:900;font-size:clamp(2.2rem,6vw,4rem);letter-spacing:-0.04em;line-height:0.95;text-transform:uppercase;">Wort für<br><span style="color:var(--teal);">Wort.</span></div>
+      </div>
+
+      <div class="type-row" style="align-items:flex-start;">
+        <div class="type-tag">Section<br>900 · −0.03em</div>
+        <div style="font-weight:900;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-0.03em;line-height:1.0;">Word sets</div>
+      </div>
+
+      <div class="type-row" style="align-items:flex-start;">
+        <div class="type-tag">Card title<br>900 · −0.025em</div>
+        <div style="font-weight:900;font-size:clamp(1.35rem,2.5vw,1.8rem);letter-spacing:-0.025em;line-height:1.12;">Part Three</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-tag">Body<br>400 · 1.62lh<br>1.1875rem</div>
+        <div style="font-size:1.1875rem;line-height:1.62;">Build your German one word at a time — every term <strong style="color:var(--german);">erklärt</strong>, quizzed, and made to stick.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-tag">Subtitle<br>italic · muted</div>
+        <div style="font-style:italic;font-size:1.05rem;line-height:1.55;color:var(--ink-muted);">Learn every German greeting and farewell — when to use it, where it comes from.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-tag">Label / eyebrow<br>800 · 0.18em<br>uppercase</div>
+        <div style="font-weight:800;font-size:0.79rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mid);">All vocabulary</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-tag">Meta / cap<br>700 · 0.12em<br>uppercase</div>
+        <div style="font-weight:700;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-faint);">A1 · Beginner · 6 sets</div>
+      </div>
+
+      <div class="type-row" style="align-items:flex-start;">
+        <div class="type-tag">Flegrei<br>ghost / display<br>accent only</div>
+        <div>
+          <div style="font-family:var(--font-flegrei);font-size:4rem;line-height:0.85;color:var(--teal);opacity:0.25;letter-spacing:-0.04em;">ß</div>
+          <div style="font-family:var(--font-flegrei);font-size:2.4rem;font-weight:400;color:var(--gold);letter-spacing:-0.02em;line-height:0.9;margin-top:8px;">Wort.</div>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-tag">German word<br>--german token<br>always coloured</div>
+        <div style="font-size:1.1rem;line-height:1.6;">
+          The German word <span style="color:var(--german);font-weight:700;">das Alter</span> means
+          <span style="font-style:italic;color:var(--ink-muted);">age</span>.
+          It comes from <span style="color:var(--german);">alt</span> (old).
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ SPACING & ELEVATION -->
+    <div class="ds-section">
+      <div class="ds-section-head">
+        <div>
+          <div class="ds-section-eyebrow"><span class="ds-section-eyebrow-tick"></span>Foundation</div>
+          <div class="ds-section-title">Spacing &amp; elevation</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="color-group-label" style="margin-top:0;">Spacing scale</div>
+          <div class="spacing-row"><div class="spacing-lbl">xs · 4px</div><div class="spacing-bar" style="width:4px;"></div><div class="spacing-val">0.25rem</div></div>
+          <div class="spacing-row"><div class="spacing-lbl">sm · 8px</div><div class="spacing-bar" style="width:8px;"></div><div class="spacing-val">0.5rem</div></div>
+          <div class="spacing-row"><div class="spacing-lbl">md · 16px</div><div class="spacing-bar" style="width:16px;"></div><div class="spacing-val">1rem</div></div>
+          <div class="spacing-row"><div class="spacing-lbl">lg · 24px</div><div class="spacing-bar" style="width:24px;"></div><div class="spacing-val">1.5rem</div></div>
+          <div class="spacing-row"><div class="spacing-lbl">xl · 32px</div><div class="spacing-bar" style="width:32px;"></div><div class="spacing-val">2rem</div></div>
+          <div class="spacing-row"><div class="spacing-lbl">2xl · 48px</div><div class="spacing-bar" style="width:48px;"></div><div class="spacing-val">3rem</div></div>
+          <div class="spacing-row"><div class="spacing-lbl">page-x · 28px</div><div class="spacing-bar" style="width:28px;background:var(--gold);"></div><div class="spacing-val">28px</div></div>
+          <div class="spacing-row"><div class="spacing-lbl">block · 48px</div><div class="spacing-bar" style="width:48px;background:var(--gold);"></div><div class="spacing-val">48px</div></div>
+          <div class="spacing-row"><div class="spacing-lbl">section · 56px</div><div class="spacing-bar" style="width:56px;background:var(--gold);"></div><div class="spacing-val">56px</div></div>
+        </div>
+
+        <div>
+          <div class="color-group-label" style="margin-top:0;">Shadows</div>
+          <div style="background:var(--card-bg);padding:14px 18px;margin-bottom:10px;box-shadow:0 18px 44px -28px rgba(28,18,10,0.40);">
+            <div style="font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-mid);">card-shadow · rest</div>
+          </div>
+          <div style="background:var(--card-bg);padding:14px 18px;margin-bottom:20px;box-shadow:0 28px 60px -26px rgba(28,18,10,0.50);">
+            <div style="font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-mid);">card-shadow-hover</div>
+          </div>
+
+          <div class="color-group-label">Borders</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="height:22px;border-left:4px solid var(--teal);padding-left:10px;display:flex;align-items:center;"><span style="font-size:9px;font-weight:700;color:var(--ink-mid);">accent · 4px teal / gold on hover</span></div>
+            <div style="height:22px;border-left:2px solid var(--gold);padding-left:10px;display:flex;align-items:center;"><span style="font-size:9px;font-weight:700;color:var(--ink-mid);">border-gold · 2px</span></div>
+            <div style="height:22px;border-left:1px solid var(--divider);padding-left:10px;display:flex;align-items:center;"><span style="font-size:9px;font-weight:700;color:var(--ink-mid);">divider · 1px</span></div>
+            <div style="height:22px;border-top:5px solid var(--teal);padding-top:6px;display:flex;align-items:center;"><span style="font-size:9px;font-weight:700;color:var(--ink-mid);">section separator · 5px top</span></div>
+          </div>
+          <div style="margin-top:12px;font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--coral);">border-radius: 0 · badges only: 999px</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ MOTION -->
+    <div class="ds-section">
+      <div class="ds-section-head">
+        <div>
+          <div class="ds-section-eyebrow"><span class="ds-section-eyebrow-tick"></span>Foundation</div>
+          <div class="ds-section-title">Motion</div>
+        </div>
+      </div>
+
+      <div class="motion-row"><div class="motion-lbl">Standard ease</div><div class="motion-pill">cubic-bezier(0.4,0,0.2,1)</div><div class="motion-desc">All UI transitions</div></div>
+      <div class="motion-row"><div class="motion-lbl">Overshoot</div><div class="motion-pill">cubic-bezier(0.34,1.56,0.64,1)</div><div class="motion-desc">Card hover spring</div></div>
+      <div class="motion-row"><div class="motion-lbl">Out-expo</div><div class="motion-pill">cubic-bezier(0.16,1,0.3,1)</div><div class="motion-desc">Fast slam in</div></div>
+      <div class="motion-row"><div class="motion-lbl">dur-fast</div><div class="motion-pill">150ms</div><div class="motion-desc">Hover colour, opacity</div></div>
+      <div class="motion-row"><div class="motion-lbl">dur-normal</div><div class="motion-pill">280ms</div><div class="motion-desc">Page transitions</div></div>
+      <div class="motion-row"><div class="motion-lbl">Carousel</div><div class="motion-pill">650ms standard</div><div class="motion-desc">Card slide — translate + opacity + blur + left</div></div>
+      <div class="motion-row"><div class="motion-lbl">Flashcard flip</div><div class="motion-pill">0.6s standard</div><div class="motion-desc">rotateY 0→180°</div></div>
+      <div class="motion-row"><div class="motion-lbl">Swap / enter</div><div class="motion-pill">520ms</div><div class="motion-desc">translateY(10px) → 0 + fade</div></div>
+      <div class="motion-row"><div class="motion-lbl">Progress fill</div><div class="motion-pill">0.3s ease</div><div class="motion-desc">Quiz progress bar</div></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ COMPONENTS -->
+    <div class="ds-section">
+      <div class="ds-section-head">
+        <div>
+          <div class="ds-section-eyebrow"><span class="ds-section-eyebrow-tick"></span>Components</div>
+          <div class="ds-section-title">Cards</div>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="set-card">
+          <div class="card-num">01</div>
+          <div class="card-inner">
+            <div class="card-eye"><span class="card-dot"></span>Vocabulary set</div>
+            <div class="card-title">Personal Identity</div>
+            <div class="card-foot">
+              <span class="card-words">18 words</span>
+              <span class="card-go">Open →</span>
+            </div>
+          </div>
+        </div>
+        <div class="set-card">
+          <div class="card-num">02</div>
+          <div class="card-inner">
+            <div class="card-eye"><span class="card-dot"></span>Vocabulary set</div>
+            <div class="card-title">Part Two</div>
+            <div class="card-foot">
+              <span class="card-words">14 words</span>
+              <span class="card-go">Open →</span>
+            </div>
+          </div>
+        </div>
+        <div class="set-card">
+          <div class="card-num">03</div>
+          <div class="card-inner">
+            <div class="card-eye"><span class="card-dot"></span>Vocabulary set</div>
+            <div class="card-title">Part Three</div>
+            <div class="card-foot">
+              <span class="card-words">16 words</span>
+              <span class="card-go">Open →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ VOCAB ENTRY -->
+    <div class="ds-section">
+      <div class="ds-section-head">
+        <div>
+          <div class="ds-section-eyebrow"><span class="ds-section-eyebrow-tick"></span>Components</div>
+          <div class="ds-section-title">Vocabulary entry</div>
+        </div>
+      </div>
+
+      <div class="vocab-entry">
+        <div class="vocab-word-row">
+          <div class="vocab-word">das Alter</div>
+          <div class="badge" style="background:rgba(46,125,50,0.12);color:#2E7D32;">das</div>
+        </div>
+        <div class="vocab-meta">
+          <span style="font-style:italic;">das Al-ter</span>
+          <span class="vocab-sep"></span>
+          <span class="vocab-mean">age</span>
+          <span class="vocab-sep"></span>
+          <span>noun</span>
+        </div>
+        <div class="vocab-gloss">Means both your age as a number and old age as a life stage. From <em>alt</em> (old).</div>
+      </div>
+
+      <div class="vocab-entry">
+        <div class="vocab-word-row">
+          <div class="vocab-word">der Rentner</div>
+          <div class="badge" style="background:rgba(21,101,192,0.12);color:#1565C0;">der</div>
+        </div>
+        <div class="vocab-meta">
+          <span style="font-style:italic;">der Rent-ner</span>
+          <span class="vocab-sep"></span>
+          <span class="vocab-mean">retiree (male)</span>
+          <span class="vocab-sep"></span>
+          <span>noun</span>
+        </div>
+        <div class="vocab-gloss">From <em>Rente</em> (pension). Feminine form: <em style="color:var(--german);">die Rentnerin</em>.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ BUTTONS -->
+    <div class="ds-section">
+      <div class="ds-section-head">
+        <div>
+          <div class="ds-section-eyebrow"><span class="ds-section-eyebrow-tick"></span>Components</div>
+          <div class="ds-section-title">Buttons &amp; controls</div>
+        </div>
+      </div>
+
+      <div class="color-group-label" style="margin-top:0;">Primary</div>
+      <div class="btn-row">
+        <button class="ds-btn ds-btn-primary">Check answer</button>
+        <button class="ds-btn ds-btn-outline">Try again</button>
+      </div>
+
+      <div class="color-group-label">Ghost / outline states</div>
+      <div class="btn-row">
+        <button class="ds-btn ds-btn-ghost">Skip</button>
+        <button class="ds-btn ds-btn-ghost">Reveal ↓</button>
+        <button class="ds-btn ds-btn-correct">Know it ✓</button>
+        <button class="ds-btn ds-btn-wrong">Again ✕</button>
+      </div>
+
+      <div class="color-group-label">Navigation (circular)</div>
+      <div class="btn-row">
+        <button class="nav-circ disabled">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <button class="nav-circ active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="color-group-label">Mode tabs</div>
+      <div class="tab-row" style="margin-bottom:24px;">
+        <button class="tab-item active">Reading</button>
+        <button class="tab-item">Quiz</button>
+        <button class="tab-item">Flashcards</button>
+      </div>
+
+      <div class="color-group-label">Quiz feedback</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <div class="feedback-strip fb-correct" style="min-width:160px;">
+          <div class="feedback-verdict">Correct ✓</div>
+          <div class="feedback-answer">der Rentner</div>
+        </div>
+        <div class="feedback-strip fb-wrong" style="min-width:160px;">
+          <div class="feedback-verdict">Incorrect</div>
+          <div class="feedback-answer">die Rentnerin</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ FLASHCARD -->
+    <div class="ds-section">
+      <div class="ds-section-head">
+        <div>
+          <div class="ds-section-eyebrow"><span class="ds-section-eyebrow-tick"></span>Components</div>
+          <div class="ds-section-title">Flashcard</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:20px;">
+        <!-- Front -->
+        <div style="width:230px;aspect-ratio:1/1.1;position:relative;">
+          <div style="position:absolute;inset:0;background:var(--card-bg);border-left:4px solid var(--teal);padding:20px 22px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--card-shadow);">
+            <div style="position:absolute;inset:0;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3CfeColorMatrix type=%22saturate%22 values=%220%22/%3E%3C/filter%3E%3Crect width=%22300%22 height=%22300%22 filter=%22url(%23n)%22 opacity=%220.04%22/%3E%3C/svg%3E');opacity:0.8;pointer-events:none;"></div>
+            <div style="position:relative;z-index:1;display:flex;flex-direction:column;height:100%;">
+              <div style="font-size:0.64rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mid);display:flex;align-items:center;gap:0.4rem;margin-bottom:auto;"><span style="width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>German → English</div>
+              <div style="font-weight:900;letter-spacing:-0.03em;line-height:1.02;font-size:2rem;color:var(--german);">das Alter</div>
+              <div class="badge" style="background:rgba(46,125,50,0.12);color:#2E7D32;margin-top:0.7rem;align-self:flex-start;">das</div>
+              <div style="margin-top:auto;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint);">Tap to reveal →</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Back -->
+        <div style="width:230px;aspect-ratio:1/1.1;position:relative;">
+          <div style="position:absolute;inset:0;background:var(--card-bg);border-left:4px solid var(--gold);padding:20px 22px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--card-shadow);">
+            <div style="position:absolute;inset:0;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3CfeColorMatrix type=%22saturate%22 values=%220%22/%3E%3C/filter%3E%3Crect width=%22300%22 height=%22300%22 filter=%22url(%23n)%22 opacity=%220.04%22/%3E%3C/svg%3E');opacity:0.8;pointer-events:none;"></div>
+            <div style="position:relative;z-index:1;display:flex;flex-direction:column;height:100%;">
+              <div style="font-size:0.64rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mid);display:flex;align-items:center;gap:0.4rem;margin-bottom:auto;"><span style="width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Answer</div>
+              <div style="font-weight:900;font-size:1.7rem;letter-spacing:-0.02em;line-height:1.1;color:var(--ink);">age</div>
+              <div style="font-style:italic;font-size:0.88rem;color:var(--ink-mid);margin-bottom:0.6rem;">das Al-ter</div>
+              <div style="font-size:0.84rem;line-height:1.55;color:var(--ink-muted);padding-top:0.7rem;border-top:var(--border-thin);">Both your age as a number and old age as a stage of life.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page -->
+
+  <script>
+    // ── THEME TOGGLE ────────────────────────────────────────
+    const root = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    const iconSun = document.getElementById('iconSun');
+    const iconMoon = document.getElementById('iconMoon');
+
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('german-lesson-theme', theme);
+      if (theme === 'dark') {
+        iconSun.style.display = 'none';
+        iconMoon.style.display = '';
+      } else {
+        iconSun.style.display = '';
+        iconMoon.style.display = 'none';
+      }
+    }
+
+    const saved = localStorage.getItem('german-lesson-theme') || 'light';
+    applyTheme(saved);
+
+    btn.addEventListener('click', () => {
+      applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    // ── TAB INTERACTION ──────────────────────────────────────
+    document.querySelectorAll('.tab-row').forEach(row => {
+      row.querySelectorAll('.tab-item').forEach(tab => {
+        tab.addEventListener('click', () => {
+          row.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
