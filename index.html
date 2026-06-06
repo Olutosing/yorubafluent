@@ -89,6 +89,49 @@
     .pill-blog  { background: var(--teal);  color: #fff; }
     .pill-about { background: var(--gold);  color: #212121; }
 
+    /* ── HAMBURGER NAV (mobile) ─────────────────────── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--ink);
+      transition: all var(--dur-normal) var(--ease);
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px var(--page-pad);
+      background: var(--bg);
+      border-bottom: 1px solid var(--divider);
+      position: sticky;
+      top: 57px;
+      z-index: 99;
+    }
+
+    .mobile-menu.open { display: flex; }
+    .mobile-menu .pill { width: fit-content; }
+
+    @media (max-width: 600px) {
+      .pill-nav  { display: none; }
+      .hamburger { display: flex; }
+    }
+
     /* ── HERO ────────────────────────────────────────── */
     .hero {
       background: var(--teal);
@@ -525,7 +568,15 @@
       <a href="/blog" class="pill pill-blog">Blog</a>
       <a href="/about" class="pill pill-about">About</a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" class="pill pill-home">Home</a>
+    <a href="/blog" class="pill pill-blog">Blog</a>
+    <a href="/about" class="pill pill-about">About</a>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -646,5 +697,13 @@
     </div>
   </footer>
 
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+  </script>
 </body>
 </html>
