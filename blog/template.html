@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Title — YorubaFluent</title>
+  <meta name="description" content="Post excerpt goes here.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../blog.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- ============================================================
+    ✏️  STEP 1 — EDIT YOUR POST DETAILS
+       Change the five values below. Do not touch anything else.
+  ============================================================ -->
+  <script id="post-meta" type="application/json">
+  {
+    "title":    "Your Post Title Goes Here",
+    "category": "Culture",
+    "date":     "Jun 2026",
+    "readTime": "5 min read",
+    "glyph":    "Ẹ",
+    "color":    "#C3D5C2",
+    "image":    null
+  }
+  </script>
+
+  <!-- ============================================================
+    ✏️  STEP 2 — PASTE YOUR MARKDOWN CONTENT BELOW
+       Write or paste your Markdown here. Save the file. Done.
+
+    QUICK REFERENCE:
+      ## Heading         →  section heading
+      ### Sub-heading    →  smaller heading
+      **bold text**      →  bold
+      *italic text*      →  italic
+      > A quote          →  blockquote
+      - item             →  bullet list
+      1. item            →  numbered list
+      [text](url)        →  link
+  ============================================================ -->
+  <script id="post-content" type="text/plain">
+Write your post here. Replace this text with your content.
+
+## Your First Heading
+
+Start your first section here. Write naturally — just paste in what you exported from Google Docs or Notion.
+
+> A Yoruba saying or key quote goes here.
+
+Continue writing after the quote. Explain, expand, give examples.
+
+### A Sub-heading
+
+More content under this sub-section.
+
+- First point
+- Second point
+- Third point
+
+Closing paragraph. Leave the reader with one clear takeaway.
+  </script>
+
+</head>
+<body>
+
+  <!-- NAV — content managed in blog-ui.js -->
+  <div id="site-nav"></div>
+
+  <!-- POST HEADER (built by JS from post-meta) -->
+  <header class="post-header">
+    <a href="https://olutosing.github.io/yorubafluent/blog/" class="post-back">← All posts</a>
+    <div class="post-eyebrow"><div class="eyebrow-tick"></div><span id="meta-category"></span><span id="meta-readtime"></span></div>
+    <h1 class="post-title" id="meta-title"></h1>
+    <div class="post-byline">
+      <span>By Olutosin Akinwumi</span>
+      <span class="byline-dot"></span>
+      <span id="meta-date"></span>
+      <span class="byline-dot"></span>
+      <span id="meta-readtime2"></span>
+    </div>
+  </header>
+
+  <!-- HERO IMAGE (built by JS from post-meta) -->
+  <div id="post-hero-slot"></div>
+
+  <!-- POST BODY (Markdown rendered here) -->
+  <article class="post-body" id="post-body"></article>
+
+  <!-- POST END -->
+  <div class="post-end">
+    <span class="post-end-label">YorubaFluent · Blog</span>
+    <a href="https://olutosing.github.io/yorubafluent/blog/" class="post-end-link">← Back to all posts</a>
+  </div>
+
+  <!-- FOOTER — content managed in blog-ui.js -->
+  <div id="site-footer"></div>
+
+  <script src="../blog-ui.js"></script>
+  <script>
+    // Read metadata
+    const meta = JSON.parse(document.getElementById('post-meta').textContent);
+
+    // Populate page title and description
+    document.title = meta.title + ' — YorubaFluent';
+
+    // Populate header
+    document.getElementById('meta-category').textContent = meta.category + ' · ';
+    document.getElementById('meta-readtime').textContent = meta.readTime;
+    document.getElementById('meta-title').textContent = meta.title;
+    document.getElementById('meta-date').textContent = meta.date;
+    document.getElementById('meta-readtime2').textContent = meta.readTime;
+
+    // Hero slot
+    const heroSlot = document.getElementById('post-hero-slot');
+    if (meta.image) {
+      heroSlot.innerHTML = `<img class="post-hero" src="${meta.image}" alt="${meta.title}">`;
+    } else {
+      heroSlot.innerHTML = `
+        <div class="post-hero-placeholder" style="background:${meta.color}">
+          <span class="post-hero-glyph" aria-hidden="true">${meta.glyph}</span>
+        </div>`;
+    }
+
+    // Render Markdown content
+    const raw = document.getElementById('post-content').textContent;
+    document.getElementById('post-body').innerHTML = marked.parse(raw.trim());
+  </script>
+
+</body>
+</html>

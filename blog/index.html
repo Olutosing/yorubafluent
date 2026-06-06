@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — YorubaFluent</title>
+  <meta name="description" content="Language, culture and stories from a Yoruba learner's journey. Written by Olutosin Akinwumi.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+
+  <!-- NAV — content managed in blog-ui.js -->
+  <div id="site-nav"></div>
+
+  <!-- ARCHIVE HEADER -->
+  <header class="archive-header">
+    <div class="archive-header-left">
+      <div class="archive-eyebrow">
+        <div class="eyebrow-tick"></div>
+        YorubaFluent
+      </div>
+      <h1 class="archive-title">Blog</h1>
+      <p class="archive-desc">Language, culture and stories from a Yoruba learner's journey.</p>
+    </div>
+    <span class="archive-count" id="postCount"></span>
+  </header>
+
+  <!-- FILTER STRIP -->
+  <div class="filter-strip" id="filterStrip">
+    <button class="filter-btn active" data-category="all">All</button>
+  </div>
+
+  <!-- POSTS GRID -->
+  <main class="posts-grid" id="postsGrid">
+    <!-- Posts rendered by JS -->
+  </main>
+
+  <!-- FOOTER — content managed in blog-ui.js -->
+  <div id="site-footer"></div>
+
+  <script src="blog-ui.js"></script>
+  <script>
+    // Posts
+    let allPosts = [];
+    let activeCategory = 'all';
+
+    function buildCard(post) {
+      const url = `https://olutosing.github.io/yorubafluent/blog/${post.slug}/`;
+      const a = document.createElement('a');
+      a.className = 'post-card';
+      a.href = url;
+
+      if (post.image) {
+        a.innerHTML = `
+          <img class="post-card-img" src="${post.image}" alt="${post.title}" loading="lazy">
+          <div class="post-card-overlay"></div>
+          <div class="post-card-label">
+            <div class="post-card-category">${post.category}</div>
+            <div class="post-card-title">${post.title}</div>
+            <div class="post-card-meta">${post.date} &nbsp;·&nbsp; ${post.readTime}</div>
+          </div>`;
+      } else {
+        a.innerHTML = `
+          <div class="post-card-bg" style="background:${post.color}">
+            <span class="post-card-glyph" aria-hidden="true">${post.glyph}</span>
+          </div>
+          <div class="post-card-overlay"></div>
+          <div class="post-card-label">
+            <div class="post-card-category">${post.category}</div>
+            <div class="post-card-title">${post.title}</div>
+            <div class="post-card-meta">${post.date} &nbsp;·&nbsp; ${post.readTime}</div>
+          </div>`;
+      }
+      return a;
+    }
+
+    function renderPosts(posts) {
+      const grid = document.getElementById('postsGrid');
+      grid.innerHTML = '';
+
+      if (posts.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-glyph">Ẹ</div>
+            <div class="empty-text">No posts yet in this category</div>
+          </div>`;
+        return;
+      }
+
+      posts.forEach(post => grid.appendChild(buildCard(post)));
+    }
+
+    function buildFilters(posts) {
+      const strip = document.getElementById('filterStrip');
+      const categories = [...new Set(posts.map(p => p.category))];
+
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.category = cat;
+        btn.textContent = cat;
+        strip.appendChild(btn);
+      });
+
+      strip.addEventListener('click', e => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
+
+        activeCategory = btn.dataset.category;
+
+        strip.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filtered = activeCategory === 'all'
+          ? allPosts
+          : allPosts.filter(p => p.category === activeCategory);
+
+        renderPosts(filtered);
+        updateCount(filtered.length);
+      });
+    }
+
+    function updateCount(n) {
+      document.getElementById('postCount').textContent =
+        `${n} post${n !== 1 ? 's' : ''}`;
+    }
+
+    fetch('./posts.json')
+      .then(r => r.json())
+      .then(posts => {
+        allPosts = posts;
+        buildFilters(posts);
+        renderPosts(posts);
+        updateCount(posts.length);
+      })
+      .catch(() => {
+        document.getElementById('postsGrid').innerHTML = `
+          <div class="empty-state">
+            <div class="empty-glyph">Ọ</div>
+            <div class="empty-text">Could not load posts</div>
+          </div>`;
+      });
+  </script>
+
+</body>
+</html>
