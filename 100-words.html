@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your First 100 Words — YorubaFluent</title>
+  <meta name="description" content="Learn your first 100 Yoruba words with interactive flashcards and quizzes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── TOKENS ────────────────────────────────────────── */
+    :root {
+      --bg:             #FDFDFD;
+      --ink:            #212121;
+      --ink-muted:      #636363;
+      --ink-mid:        #767676;
+      --ink-faint:      #BDBDBD;
+      --card-bg:        #F5F5F5;
+      --divider:        rgba(33,33,33,0.14);
+      --gold:           #FFB300;
+      --teal:           #0F827A;
+      --teal-deep:      #0A5C56;
+      --coral:          #E07A5F;
+      --coral-deep:     #C45E44;
+      --ease:           cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-out:       cubic-bezier(0.34, 1.56, 0.64, 1);
+      --dur-fast:       150ms;
+      --dur-normal:     280ms;
+      --card-shadow:    0 18px 44px -28px rgba(28,18,10,0.40);
+      --font-display:   'Flegrei', Georgia, serif;
+      --font-sans:      'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
+      --page-pad:       clamp(16px, 4vw, 48px);
+    }
+
+    @font-face {
+      font-family: 'Flegrei';
+      src: url('Flegrei-Yoruba.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ───────────────────────────────────────────── */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem var(--page-pad);
+      border-bottom: 1px solid var(--divider);
+      background: var(--bg);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo-group { display: flex; flex-direction: column; }
+    .nav-logo { font-family: var(--font-display); font-size: 1.5rem; color: var(--ink); letter-spacing: -0.02em; text-decoration: none; line-height: 1; }
+    .nav-byline { text-align: right; font-size: 0.5rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); margin-top: 2px; }
+    .pill-nav { display: flex; gap: 8px; align-items: center; }
+    .pill { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.38rem 1rem; border-radius: 999px; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast); }
+    .pill:hover { transform: translateY(-1px); opacity: 0.88; }
+    .pill-home  { background: var(--coral); color: #fff; }
+    .pill-blog  { background: var(--teal);  color: #fff; }
+    .pill-about { background: var(--gold);  color: #212121; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: all var(--dur-normal) var(--ease); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; flex-direction: column; gap: 10px; padding: 16px var(--page-pad); background: var(--bg); border-bottom: 1px solid var(--divider); position: sticky; top: 57px; z-index: 99; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu .pill { width: fit-content; }
+    @media (max-width: 600px) { .pill-nav { display: none; } .hamburger { display: flex; } }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    .footer { border-top: 1px solid var(--divider); padding: 28px var(--page-pad) 24px; }
+    .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+    .footer-brand-group { display: flex; flex-direction: column; }
+    .footer-brand { font-family: var(--font-display); font-size: 2rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; line-height: 1; }
+    .footer-byline { text-align: right; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-mid); margin-top: 2px; }
+    .footer-nav { display: flex; flex-direction: column; gap: 10px; }
+    .footer-nav a { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color var(--dur-fast); }
+    .footer-nav a:hover { color: var(--teal); }
+    .footer-social { display: flex; gap: 18px; align-items: center; margin-bottom: 20px; }
+    .footer-social a { display: flex; color: var(--ink-mid); text-decoration: none; transition: color var(--dur-fast); }
+    .footer-social a svg { width: 18px; height: 18px; display: block; }
+    .footer-social a:hover { color: var(--teal); }
+    .footer-bottom { border-top: 1px solid var(--divider); padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .footer-copy { font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.06em; }
+
+    /* ─── PAGE HEADER ───────────────────────────────────── */
+    .page-header {
+      background: var(--teal);
+      padding: 48px var(--page-pad) 44px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 300px;
+      opacity: 0.6; pointer-events: none;
+    }
+    .page-header-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+    .page-eyebrow {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); margin-bottom: 12px;
+    }
+    .eyebrow-tick { width: 24px; height: 2px; background: var(--gold); flex-shrink: 0; }
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 9vw, 5.5rem);
+      color: #fff; line-height: 0.9; letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .page-subtitle {
+      font-size: 1rem; color: rgba(255,255,255,0.75);
+      max-width: 380px; line-height: 1.6; margin-bottom: 24px;
+    }
+    .page-stats { display: flex; gap: 8px; flex-wrap: wrap; }
+    .stat-chip {
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px;
+      background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .stat-chip-live { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); }
+
+    /* ─── APP LAYOUT ───────────────────────────────────────
+       Desktop: 3-column grid with category sidebars.
+       Mobile: single column, sidebars hidden.
+       ──────────────────────────────────────────────────── */
+    .app-outer {
+      padding: 36px var(--page-pad) 80px;
+    }
+    .app-layout {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 164px 1fr 164px;
+      gap: 0 36px;
+      align-items: start;
+    }
+    .app-center { min-width: 0; max-width: 580px; }
+
+    /* ─── CAT SIDEBAR (desktop) ─────────────────────────── */
+    .cat-sidebar {
+      position: sticky;
+      top: 84px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .cat-sidebar--left  { align-items: flex-end;   padding-top: 110px; }
+    .cat-sidebar--right { align-items: flex-start; padding-top: 127px; }
+
+    .sidebar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1.5px solid var(--divider);
+      background: transparent;
+      color: var(--ink-mid);
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
+    }
+    .sidebar-item:hover { border-color: var(--teal); color: var(--teal); }
+    .sidebar-item.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .sidebar-count { font-size: 0.58rem; opacity: 0.55; }
+    .sidebar-item.active .sidebar-count { opacity: 0.85; }
+
+    /* ─── CAT FAB (mobile floating category picker) ─────── */
+    .cat-fab-wrap {
+      display: none;         /* shown only on mobile */
+      position: fixed;
+      top: 80px; right: 16px;
+      z-index: 250;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 9px;
+    }
+    .cat-fab {
+      display: flex; align-items: center; gap: 7px;
+      padding: 9px 16px; border-radius: 999px;
+      background: var(--teal); color: #fff; border: none;
+      font-family: var(--font-sans); font-size: 0.68rem;
+      font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(15,130,122,0.35);
+      transition: background var(--dur-fast);
+    }
+    .cat-fab:hover { background: var(--teal-deep); }
+    .cat-fab-icon {
+      font-size: 0.6rem; opacity: 0.75;
+      transition: transform 240ms ease;
+      display: inline-block;
+    }
+    .cat-fab-wrap.open .cat-fab-icon { transform: rotate(180deg); }
+
+    /* invisible backdrop to close on outside tap */
+    .cat-dd-backdrop {
+      display: none; position: fixed; inset: 0; z-index: 238;
+    }
+    .cat-dd-backdrop.open { display: block; }
+
+    /* dropdown list */
+    .cat-dropdown {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 7px;
+    }
+    .cat-dd-item {
+      display: block;
+      padding: 8px 14px; border-radius: 999px;
+      border: 1.5px solid var(--divider);
+      background: var(--bg); color: var(--ink-mid);
+      font-family: var(--font-sans); font-size: 0.68rem;
+      font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      /* hidden state */
+      transform: translateY(-14px); opacity: 0; pointer-events: none;
+      transition: transform 210ms ease, opacity 210ms ease;
+    }
+    .cat-dd-item:hover { border-color: var(--teal); color: var(--teal); }
+    .cat-dd-item.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+    /* open: items drop down with top-first stagger */
+    .cat-fab-wrap.open .cat-dd-item {
+      transform: translateY(0); opacity: 1; pointer-events: auto;
+    }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(1)  { transition-delay:   0ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(2)  { transition-delay:  18ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(3)  { transition-delay:  36ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(4)  { transition-delay:  54ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(5)  { transition-delay:  72ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(6)  { transition-delay:  90ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(7)  { transition-delay: 108ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(8)  { transition-delay: 126ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(9)  { transition-delay: 144ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(10) { transition-delay: 162ms; }
+    .cat-fab-wrap.open .cat-dd-item:nth-child(11) { transition-delay: 180ms; }
+
+    /* close: withdraw bottom-first back toward button */
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(11) { transition-delay:   0ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(10) { transition-delay:  14ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(9)  { transition-delay:  28ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(8)  { transition-delay:  42ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(7)  { transition-delay:  56ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(6)  { transition-delay:  70ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(5)  { transition-delay:  84ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(4)  { transition-delay:  98ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(3)  { transition-delay: 112ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(2)  { transition-delay: 126ms; }
+    .cat-fab-wrap:not(.open) .cat-dd-item:nth-child(1)  { transition-delay: 140ms; }
+
+    /* ─── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 959px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+        max-width: 580px;
+      }
+      .cat-sidebar { display: none; }
+      .cat-mobile-btn { display: none; }
+      .cat-fab-wrap { display: flex; }
+    }
+
+    /* ─── MODE TABS ─────────────────────────────────────── */
+    .mode-tabs {
+      display: flex; background: var(--card-bg);
+      border-radius: 12px; padding: 4px; gap: 4px;
+      margin-bottom: 24px;
+    }
+    .mode-tab {
+      flex: 1; font-family: var(--font-sans); font-size: 0.78rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 10px 16px; border: none; border-radius: 9px;
+      cursor: pointer; background: transparent; color: var(--ink-mid);
+      transition: background var(--dur-fast) var(--ease), color var(--dur-fast);
+    }
+    .mode-tab.active { background: var(--bg); color: var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,0.12); }
+    .mode-tab:hover:not(.active) { color: var(--ink); }
+
+
+    /* ─── PANEL ─────────────────────────────────────────── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ─── PROGRESS BAR ──────────────────────────────────── */
+    .progress-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .progress-track { flex: 1; height: 4px; background: var(--card-bg); border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--teal); border-radius: 99px; transition: width 0.5s var(--ease); width: 0%; }
+    .progress-fill.complete { background: var(--gold); }
+    .progress-label {
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.06em;
+      color: var(--ink-mid); white-space: nowrap; min-width: 60px; text-align: right;
+    }
+    .progress-label.complete { color: var(--gold); }
+
+    /* ─── BROWSE CARD ───────────────────────────────────── */
+    .browse-perspective {
+      perspective: 900px;
+      margin-bottom: 20px;
+    }
+    .browse-card {
+      position: relative; width: 100%; height: 300px;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    .browse-card.flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute; inset: 0; border-radius: 20px;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      padding: 24px 28px;
+      display: flex; flex-direction: column;
+    }
+
+    /* Front */
+    .card-front {
+      background: var(--teal);
+      align-items: center; justify-content: center; text-align: center;
+      gap: 0;
+    }
+    .card-front-meta {
+      position: absolute; top: 20px; left: 22px; right: 22px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .card-cat-badge {
+      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.85);
+    }
+    .card-seen-tag {
+      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.06em;
+      padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.28); color: #fff;
+    }
+    .card-word {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 9vw, 3.6rem);
+      color: #fff; line-height: 1.1; letter-spacing: -0.01em;
+      word-break: break-word; max-width: 100%;
+    }
+    .card-reveal-hint {
+      position: absolute; bottom: 18px; left: 0; right: 0; text-align: center;
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+    }
+    .card-know-btn {
+      position: absolute; bottom: 14px; right: 22px;
+      font-family: var(--font-sans); font-size: 0.6rem; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px; border: none; cursor: pointer;
+      background: rgba(255,255,255,0.22); color: rgba(255,255,255,0.9);
+      transition: background var(--dur-fast);
+      z-index: 2;
+    }
+    .card-know-btn:hover { background: rgba(255,255,255,0.35); }
+
+    /* Back */
+    .card-back {
+      transform: rotateY(180deg);
+      background: #fff; border: 1.5px solid var(--divider);
+      box-shadow: var(--card-shadow);
+      justify-content: center; gap: 10px;
+    }
+    .card-meaning {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 6vw, 2.6rem);
+      color: var(--ink); line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .card-example-yo {
+      font-size: 0.88rem; color: var(--teal); font-style: italic; line-height: 1.55;
+    }
+    .card-example-en { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.5; }
+
+    /* ─── BROWSE NAV ────────────────────────────────────── */
+    .browse-nav {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .btn-nav {
+      font-family: var(--font-sans); font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 0.06em; text-transform: lowercase;
+      padding: 10px 22px; border-radius: 999px;
+      border: 1.5px solid var(--divider);
+      background: transparent; color: var(--ink-mid);
+      cursor: pointer; transition: all var(--dur-fast) var(--ease);
+      flex-shrink: 0;
+    }
+    .btn-nav:hover:not(:disabled) { border-color: var(--ink-mid); color: var(--ink); }
+    .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+    .btn-nav-primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .btn-nav-primary:hover:not(:disabled) { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+    .browse-counter {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em;
+      color: var(--ink-faint); text-align: center; flex-shrink: 0;
+    }
+
+    /* ─── QUIZ ──────────────────────────────────────────── */
+    .quiz-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .quiz-score {
+      font-size: 0.8rem; font-weight: 800; letter-spacing: 0.04em; color: var(--ink-mid);
+    }
+    .quiz-score strong { color: var(--teal); font-size: 1rem; }
+    .btn-reset {
+      font-family: var(--font-sans); font-size: 0.65rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 5px 13px; border-radius: 999px;
+      border: 1.5px solid var(--divider);
+      background: transparent; color: var(--ink-mid);
+      cursor: pointer; transition: all var(--dur-fast);
+    }
+    .btn-reset:hover { border-color: var(--coral); color: var(--coral); }
+
+    .quiz-card {
+      background: var(--card-bg); border-radius: 20px;
+      padding: 32px 24px 24px;
+    }
+    .quiz-instruction {
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-faint); margin-bottom: 10px;
+    }
+    .quiz-prompt {
+      font-size: 1.05rem; font-weight: 700; color: var(--ink);
+      line-height: 1.4; margin-bottom: 28px;
+    }
+    .quiz-options {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 16px;
+    }
+    @media (max-width: 380px) { .quiz-options { grid-template-columns: 1fr; } }
+
+    .quiz-opt {
+      font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700;
+      padding: 14px 16px; border-radius: 12px;
+      border: 1.5px solid var(--divider);
+      background: var(--bg); color: var(--ink);
+      cursor: pointer; text-align: left; line-height: 1.3;
+      transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
+      font-family: var(--font-display);
+    }
+    .quiz-opt:hover:not(:disabled) { border-color: var(--teal); color: var(--teal); }
+    .quiz-opt.correct { background: #e6f4f1; border-color: var(--teal); color: var(--teal-deep); }
+    .quiz-opt.wrong   { background: #fdf0ed; border-color: var(--coral); color: var(--coral-deep); }
+    .quiz-opt.dim     { opacity: 0.35; }
+    .quiz-opt:disabled { cursor: default; }
+
+    .btn-quiz-next {
+      width: 100%; font-family: var(--font-sans); font-size: 0.78rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: lowercase;
+      padding: 14px; border-radius: 12px; border: none;
+      background: var(--teal); color: #fff;
+      cursor: pointer; transition: background var(--dur-fast);
+    }
+    .btn-quiz-next:hover { background: var(--teal-deep); }
+
+    /* Quiz nav (prev / next) */
+    .quiz-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    /* Quiz done state */
+    .quiz-done { text-align: center; padding: 40px 16px 28px; }
+    .quiz-done-glyph { font-family: var(--font-display); font-size: 3rem; color: var(--teal); margin-bottom: 8px; }
+    .quiz-done-title { font-family: var(--font-display); font-size: 2rem; color: var(--ink); margin-bottom: 8px; }
+    .quiz-done-sub { font-size: 0.9rem; color: var(--ink-muted); margin-bottom: 28px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-eyebrow"><span class="eyebrow-tick"></span>YorubaFluent</div>
+    <h1 class="page-title">Your First<br>100 Words</h1>
+    <p class="page-subtitle">Build your Yoruba foundation one word at a time. Browse, flip, quiz yourself.</p>
+    <div class="page-stats">
+      <span class="stat-chip">100 words</span>
+      <span class="stat-chip">10 categories</span>
+      <span class="stat-chip">No login needed</span>
+      <span class="stat-chip stat-chip-live" id="global-stat">0 / 100 seen</span>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY FAB (mobile floating picker) -->
+<div class="cat-fab-wrap" id="cat-fab-wrap">
+  <button class="cat-fab" id="cat-fab">
+    <span id="cat-fab-label">All</span>
+    <span class="cat-fab-icon">▾</span>
+  </button>
+  <div class="cat-dropdown" id="cat-dropdown"></div>
+</div>
+<div class="cat-dd-backdrop" id="cat-dd-backdrop"></div>
+
+<!-- APP -->
+<div class="app-outer">
+  <div class="app-layout">
+
+    <!-- LEFT SIDEBAR (desktop) -->
+    <aside class="cat-sidebar cat-sidebar--left" id="sidebar-left"></aside>
+
+    <!-- CENTER -->
+    <div class="app-center">
+
+      <div class="mode-tabs">
+        <button class="mode-tab active" id="tab-browse">Browse</button>
+        <button class="mode-tab"        id="tab-quiz">Quiz</button>
+      </div>
+
+      <!-- BROWSE -->
+      <div id="panel-browse" class="panel active">
+
+        <div class="progress-wrap">
+          <div class="progress-track"><div class="progress-fill" id="b-fill"></div></div>
+          <span class="progress-label" id="b-label">0 / 100</span>
+        </div>
+
+        <div class="browse-perspective">
+          <div class="browse-card" id="browse-card">
+
+            <div class="card-face card-front">
+              <div class="card-front-meta">
+                <span class="card-cat-badge" id="f-cat"></span>
+                <span class="card-seen-tag"  id="f-seen" style="display:none">✓ seen</span>
+              </div>
+              <div class="card-word" id="f-word"></div>
+              <div class="card-reveal-hint">tap to reveal</div>
+              <button class="card-know-btn" id="btn-know">I already know this</button>
+            </div>
+
+            <div class="card-face card-back">
+              <div class="card-meaning"     id="b-meaning"></div>
+              <div class="card-example-yo"  id="b-sent-yo"></div>
+              <div class="card-example-en"  id="b-sent-en"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="browse-nav">
+          <button class="btn-nav"                 id="btn-prev">← prev</button>
+          <span   class="browse-counter"          id="b-counter">1 / 100</span>
+          <button class="btn-nav btn-nav-primary" id="btn-next">next →</button>
+        </div>
+
+      </div>
+
+      <!-- QUIZ -->
+      <div id="panel-quiz" class="panel">
+
+        <div class="quiz-meta">
+          <span class="quiz-score" id="q-score">Score: <strong>0</strong> / 0</span>
+          <button class="btn-reset" id="btn-reset">Reset</button>
+        </div>
+
+        <div class="quiz-card" id="quiz-card">
+          <div class="quiz-instruction">Which Yoruba word means…</div>
+          <div class="quiz-prompt"  id="q-prompt"></div>
+          <div class="quiz-options" id="q-options"></div>
+        </div>
+
+        <div class="quiz-card" id="quiz-done-screen" style="display:none">
+          <div class="quiz-done">
+            <div class="quiz-done-glyph">Ẹ ṣé</div>
+            <div class="quiz-done-title">Round complete!</div>
+            <div class="quiz-done-sub" id="quiz-done-sub"></div>
+            <button class="btn-quiz-next" id="btn-quiz-again">Play again →</button>
+          </div>
+        </div>
+
+        <div class="quiz-nav">
+          <button class="btn-nav" id="btn-qprev" style="display:none">← prev</button>
+          <button class="btn-nav btn-nav-primary" id="btn-qnext" style="display:none">next →</button>
+        </div>
+
+      </div>
+
+    </div><!-- /app-center -->
+
+    <!-- RIGHT SIDEBAR (desktop) -->
+    <aside class="cat-sidebar cat-sidebar--right" id="sidebar-right"></aside>
+
+  </div><!-- /app-layout -->
+</div><!-- /app-outer -->
+
+<div id="site-footer"></div>
+<script src="blog/blog-ui.js"></script>
+<script>
+/* ════════════════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════════════════ */
+var allWords   = [];
+var filtered   = [];
+var activeMode = 'browse';
+var activeCat  = 'all';
+
+/* browse */
+var bIndex   = 0;
+var bFlipped = false;
+
+/* quiz */
+var qCorrect      = 0;
+var qTotal        = 0;
+var qOrder        = [];
+var qCursor       = 0;
+var qAnswered     = false;
+var qHistory      = [];  /* [{selectedId, correctId, options}] per answered question */
+var qBothNavShown = false; /* true once user clicks next for the first time */
+
+var STORAGE_SEEN = 'yfl-100-seen';
+var STORAGE_POS  = 'yfl-100-pos';   /* "category:index" */
+var seenIds = new Set();
+
+/* ════════════════════════════════════════════════════════
+   PERSISTENCE
+   ════════════════════════════════════════════════════════ */
+function loadSeen() {
+  try { JSON.parse(localStorage.getItem(STORAGE_SEEN) || '[]').forEach(function(id){ seenIds.add(id); }); } catch(e){}
+}
+function saveSeen() {
+  try { localStorage.setItem(STORAGE_SEEN, JSON.stringify(Array.from(seenIds))); } catch(e){}
+}
+function loadPos(cat) {
+  try {
+    var raw = JSON.parse(localStorage.getItem(STORAGE_POS) || '{}');
+    return typeof raw[cat] === 'number' ? raw[cat] : 0;
+  } catch(e){ return 0; }
+}
+function savePos(cat, idx) {
+  try {
+    var raw = JSON.parse(localStorage.getItem(STORAGE_POS) || '{}');
+    raw[cat] = idx;
+    localStorage.setItem(STORAGE_POS, JSON.stringify(raw));
+  } catch(e){}
+}
+
+/* ════════════════════════════════════════════════════════
+   INIT
+   ════════════════════════════════════════════════════════ */
+var CATS = ['Greetings','Family','Food & Drink','Body','Time','Places','Nature','Verbs','Adjectives','Concepts'];
+
+function init(words) {
+  allWords = words;
+  loadSeen();
+  buildCatSidebars();
+  buildCatDropdown();
+  setCategory('all');
+  bindEvents();
+}
+
+function buildCatSidebars() {
+  var allItems = [{ cat: 'all', label: 'All 100', n: allWords.length }];
+  CATS.forEach(function(cat) {
+    var n = allWords.filter(function(w){ return w.category === cat; }).length;
+    allItems.push({ cat: cat, label: cat, n: n });
+  });
+
+  function makeBtn(item, extraClass) {
+    var btn = document.createElement('button');
+    btn.className   = 'sidebar-item' + (extraClass ? ' ' + extraClass : '');
+    btn.dataset.cat = item.cat;
+    var name = document.createElement('span');
+    name.textContent = item.label;
+    var count = document.createElement('span');
+    count.className = 'sidebar-count';
+    count.textContent = item.n;
+    btn.appendChild(name);
+    btn.appendChild(count);
+    return btn;
+  }
+
+  function makePanelBtn(item) {
+    var btn = document.createElement('button');
+    btn.className   = 'panel-item' + (item.cat === 'all' ? ' panel-item--all' : '');
+    btn.dataset.cat = item.cat;
+    btn.textContent = item.cat === 'all' ? 'All 100 words' : item.label + ' · ' + item.n;
+    return btn;
+  }
+
+  var left  = document.getElementById('sidebar-left');
+  var right = document.getElementById('sidebar-right');
+
+  /* left: All + first 5 categories */
+  allItems.slice(0, 6).forEach(function(item) { left.appendChild(makeBtn(item)); });
+
+  /* right: last 5 categories */
+  allItems.slice(6).forEach(function(item) { right.appendChild(makeBtn(item)); });
+}
+
+function buildCatDropdown() {
+  var allItems = [{ cat: 'all', label: 'All 100' }];
+  CATS.forEach(function(cat) { allItems.push({ cat: cat, label: cat }); });
+
+  var dropdown = document.getElementById('cat-dropdown');
+  allItems.forEach(function(item) {
+    var btn = document.createElement('button');
+    btn.className   = 'cat-dd-item';
+    btn.dataset.cat = item.cat;
+    btn.textContent = item.label;
+    dropdown.appendChild(btn);
+  });
+}
+
+/* ════════════════════════════════════════════════════════
+   CATEGORY
+   ════════════════════════════════════════════════════════ */
+function setCategory(cat) {
+  activeCat = cat;
+  filtered  = cat === 'all' ? allWords.slice() : allWords.filter(function(w){ return w.category === cat; });
+
+  document.querySelectorAll('.sidebar-item').forEach(function(b){ b.classList.toggle('active', b.dataset.cat === cat); });
+  document.querySelectorAll('.cat-dd-item').forEach(function(b){ b.classList.toggle('active', b.dataset.cat === cat); });
+
+  var fabLabel = document.getElementById('cat-fab-label');
+  if (fabLabel) fabLabel.textContent = cat === 'all' ? 'All' : cat;
+
+  bIndex   = Math.min(loadPos(cat), filtered.length - 1);
+  bFlipped = false;
+  renderBrowse();
+
+  if (activeMode === 'quiz') startQuiz();
+}
+
+function openCatFab() {
+  document.getElementById('cat-fab-wrap').classList.add('open');
+  document.getElementById('cat-dd-backdrop').classList.add('open');
+}
+
+function closeCatFab() {
+  document.getElementById('cat-fab-wrap').classList.remove('open');
+  document.getElementById('cat-dd-backdrop').classList.remove('open');
+}
+
+/* ════════════════════════════════════════════════════════
+   BROWSE
+   ════════════════════════════════════════════════════════ */
+function renderBrowse() {
+  if (!filtered.length) return;
+  var w = filtered[bIndex];
+
+  document.getElementById('f-word').textContent    = w.yoruba;
+  document.getElementById('f-cat').textContent     = w.category;
+  document.getElementById('b-meaning').textContent = w.meaning;
+  document.getElementById('b-sent-yo').textContent = w.sent_yo;
+  document.getElementById('b-sent-en').textContent = w.sent_en;
+
+  var seenTag = document.getElementById('f-seen');
+  seenTag.style.display = seenIds.has(w.id) ? '' : 'none';
+
+  document.getElementById('b-counter').textContent = (bIndex + 1) + ' / ' + filtered.length;
+  document.getElementById('btn-prev').disabled = bIndex === 0;
+  document.getElementById('btn-next').disabled = bIndex === filtered.length - 1;
+
+  updateBrowseProgress();
+  updateGlobalStat();
+
+  /* reset card to face-up without transition */
+  var card = document.getElementById('browse-card');
+  bFlipped = false;
+  if (card.classList.contains('flipped')) {
+    card.style.transition = 'none';
+    card.classList.remove('flipped');
+    /* re-enable transition after paint */
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ card.style.transition = ''; }); });
+  }
+}
+
+function updateBrowseProgress() {
+  var seen  = filtered.filter(function(w){ return seenIds.has(w.id); }).length;
+  var total = filtered.length;
+  var pct   = total ? (seen / total * 100) : 0;
+  var fill  = document.getElementById('b-fill');
+  var label = document.getElementById('b-label');
+  fill.style.width = pct + '%';
+  var done  = seen === total && total > 0;
+  fill.classList.toggle('complete', done);
+  label.classList.toggle('complete', done);
+  label.textContent = done ? 'All seen ✓' : seen + ' / ' + total;
+}
+
+function updateGlobalStat() {
+  var el = document.getElementById('global-stat');
+  if (el) el.textContent = seenIds.size + ' / ' + allWords.length + ' seen';
+}
+
+function flipCard() {
+  var card = document.getElementById('browse-card');
+  bFlipped = !bFlipped;
+  card.classList.toggle('flipped', bFlipped);
+
+  /* mark seen on first reveal */
+  if (bFlipped && filtered.length) {
+    var w = filtered[bIndex];
+    if (!seenIds.has(w.id)) {
+      seenIds.add(w.id);
+      saveSeen();
+      document.getElementById('f-seen').style.display = '';
+      updateBrowseProgress();
+      updateGlobalStat();
+    }
+  }
+}
+
+function navBrowse(dir) {
+  var next = bIndex + dir;
+  if (next < 0 || next >= filtered.length) return;
+
+  var card    = document.getElementById('browse-card');
+  var wasFlipped = bFlipped;
+
+  /* snap any existing flip to front instantly before animating */
+  if (bFlipped) {
+    card.style.transition = 'none';
+    card.classList.remove('flipped');
+    bFlipped = false;
+  }
+
+  function doSwap() {
+    bIndex = next;
+    savePos(activeCat, bIndex);
+    renderBrowse();
+  }
+
+  if (wasFlipped) {
+    /* came from back face — turn like a card (rotateY) */
+    var outAngle = dir > 0 ? 'rotateY(90deg)'  : 'rotateY(-90deg)';
+    var inAngle  = dir > 0 ? 'rotateY(-90deg)' : 'rotateY(90deg)';
+    card.style.transition = 'transform 170ms ease-in';
+    card.style.transform  = outAngle;
+    setTimeout(function() {
+      doSwap();
+      card.style.transition = 'none';
+      card.style.transform  = inAngle;
+      requestAnimationFrame(function() { requestAnimationFrame(function() {
+        card.style.transition = 'transform 170ms ease-out';
+        card.style.transform  = '';
+      }); });
+    }, 175);
+  } else {
+    /* front-to-front — slide horizontally */
+    var outX = dir > 0 ? '52px' : '-52px';
+    var inX  = dir > 0 ? '-52px' : '52px';
+    card.style.transition = 'transform 150ms ease-in, opacity 150ms ease-in';
+    card.style.transform  = 'translateX(' + outX + ')';
+    card.style.opacity    = '0';
+    setTimeout(function() {
+      doSwap();
+      card.style.transition = 'none';
+      card.style.transform  = 'translateX(' + inX + ')';
+      card.style.opacity    = '0';
+      requestAnimationFrame(function() { requestAnimationFrame(function() {
+        card.style.transition = 'transform 150ms ease-out, opacity 150ms ease-out';
+        card.style.transform  = '';
+        card.style.opacity    = '';
+      }); });
+    }, 155);
+  }
+}
+
+function markKnown(e) {
+  e.stopPropagation();
+  if (!filtered.length) return;
+  var w = filtered[bIndex];
+  if (!seenIds.has(w.id)) {
+    seenIds.add(w.id);
+    saveSeen();
+    updateBrowseProgress();
+    updateGlobalStat();
+  }
+  /* advance if not at end */
+  if (bIndex < filtered.length - 1) {
+    navBrowse(1);
+  } else {
+    document.getElementById('f-seen').style.display = '';
+  }
+}
+
+/* ════════════════════════════════════════════════════════
+   QUIZ
+   ════════════════════════════════════════════════════════ */
+function shuffle(a) {
+  var arr = a.slice();
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+function startQuiz() {
+  qCorrect      = 0;
+  qTotal        = 0;
+  qAnswered     = false;
+  qHistory      = [];
+  qBothNavShown = false;
+  qOrder        = shuffle(filtered.map(function(_, i){ return i; }));
+  qCursor       = 0;
+  updateQuizScore();
+  document.getElementById('quiz-card').style.display      = '';
+  document.getElementById('quiz-done-screen').style.display = 'none';
+  renderQuiz();
+}
+
+function getDistractors(word, count) {
+  /* prefer same-category distractors; fill from others */
+  var same   = allWords.filter(function(w){ return w.category === word.category && w.id !== word.id; });
+  var others = allWords.filter(function(w){ return w.category !== word.category; });
+  var pool   = shuffle(same.concat(others));
+  var seen   = new Set([word.yoruba]);
+  var result = [];
+  for (var i = 0; i < pool.length && result.length < count; i++) {
+    if (!seen.has(pool[i].yoruba)) { seen.add(pool[i].yoruba); result.push(pool[i]); }
+  }
+  return result;
+}
+
+function renderQuiz() {
+  var btnPrev = document.getElementById('btn-qprev');
+  var btnNext = document.getElementById('btn-qnext');
+
+  /* done screen */
+  if (qCursor >= qOrder.length) {
+    document.getElementById('quiz-card').style.display       = 'none';
+    document.getElementById('quiz-done-screen').style.display = '';
+    document.getElementById('quiz-done-sub').textContent =
+      qCorrect + ' correct out of ' + qTotal + ' · ' + filtered.length + ' words';
+    if (qBothNavShown) {
+      btnPrev.style.display = '';  btnPrev.disabled = false;
+      btnNext.style.display = '';  btnNext.disabled = true;  /* no more questions */
+    } else {
+      btnPrev.style.display = 'none';
+      btnNext.style.display = 'none';
+    }
+    return;
+  }
+
+  document.getElementById('quiz-card').style.display       = '';
+  document.getElementById('quiz-done-screen').style.display = 'none';
+
+  var word       = filtered[qOrder[qCursor]];
+  var alreadyAnswered = qCursor < qHistory.length;
+  var options;
+
+  if (alreadyAnswered) {
+    options = qHistory[qCursor].options;
+    qAnswered = true;
+  } else {
+    options = shuffle([word].concat(getDistractors(word, 3)));
+    qAnswered = false;
+  }
+
+  document.getElementById('q-prompt').textContent = word.meaning;
+
+  var optEl = document.getElementById('q-options');
+  optEl.innerHTML = '';
+  options.forEach(function(opt) {
+    var btn = document.createElement('button');
+    btn.className   = 'quiz-opt';
+    btn.textContent = opt.yoruba;
+    btn.dataset.id  = String(opt.id);
+    if (alreadyAnswered) {
+      var h = qHistory[qCursor];
+      btn.disabled = true;
+      if (opt.id === h.correctId)        btn.classList.add('correct');
+      else if (opt.id === h.selectedId)  btn.classList.add('wrong');
+      else                               btn.classList.add('dim');
+    } else {
+      btn.addEventListener('click', function(){ selectOpt(opt.id, word.id, options); });
+    }
+    optEl.appendChild(btn);
+  });
+
+  if (qBothNavShown) {
+    btnPrev.style.display = '';  btnPrev.disabled = (qCursor === 0);
+    btnNext.style.display = '';  btnNext.disabled = !qAnswered;
+  } else {
+    /* before first next-click: prev hidden, next only after answering Q1 */
+    btnPrev.style.display = 'none';
+    btnNext.style.display = alreadyAnswered ? '' : 'none';
+    btnNext.disabled      = false;
+  }
+}
+
+function selectOpt(selectedId, correctId, options) {
+  if (qAnswered) return;
+  qAnswered = true;
+
+  /* record answer and update score (first-time answers only) */
+  qHistory.push({ selectedId: selectedId, correctId: correctId, options: options });
+  qTotal++;
+  if (selectedId === correctId) qCorrect++;
+  updateQuizScore();
+
+  document.querySelectorAll('.quiz-opt').forEach(function(btn) {
+    btn.disabled = true;
+    var id = parseInt(btn.dataset.id, 10);
+    if (id === correctId)        btn.classList.add('correct');
+    else if (id === selectedId)  btn.classList.add('wrong');
+    else                         btn.classList.add('dim');
+  });
+
+  if (qBothNavShown) {
+    document.getElementById('btn-qnext').disabled = false;
+  } else {
+    document.getElementById('btn-qnext').style.display = '';
+  }
+}
+
+function advanceQuiz() {
+  if (!qAnswered) return;          /* can't skip unanswered questions */
+  if (!qBothNavShown) qBothNavShown = true;
+  qCursor++;
+  renderQuiz();
+}
+
+function retreatQuiz() {
+  if (qCursor > 0) { qCursor--; renderQuiz(); }
+}
+
+function updateQuizScore() {
+  document.getElementById('q-score').innerHTML =
+    'Score: <strong>' + qCorrect + '</strong> / ' + qTotal;
+}
+
+
+/* ════════════════════════════════════════════════════════
+   EVENTS
+   ════════════════════════════════════════════════════════ */
+function bindEvents() {
+  /* mode tabs */
+  document.getElementById('tab-browse').addEventListener('click', function() {
+    if (activeMode === 'browse') return;
+    activeMode = 'browse';
+    document.getElementById('tab-browse').classList.add('active');
+    document.getElementById('tab-quiz').classList.remove('active');
+    document.getElementById('panel-browse').classList.add('active');
+    document.getElementById('panel-quiz').classList.remove('active');
+  });
+  document.getElementById('tab-quiz').addEventListener('click', function() {
+    if (activeMode === 'quiz') return;
+    activeMode = 'quiz';
+    document.getElementById('tab-quiz').classList.add('active');
+    document.getElementById('tab-browse').classList.remove('active');
+    document.getElementById('panel-quiz').classList.add('active');
+    document.getElementById('panel-browse').classList.remove('active');
+    startQuiz();
+  });
+
+  /* desktop sidebars */
+  document.getElementById('sidebar-left').addEventListener('click', function(e) {
+    var btn = e.target.closest('.sidebar-item');
+    if (btn) setCategory(btn.dataset.cat);
+  });
+  document.getElementById('sidebar-right').addEventListener('click', function(e) {
+    var btn = e.target.closest('.sidebar-item');
+    if (btn) setCategory(btn.dataset.cat);
+  });
+
+  /* mobile FAB category picker */
+  document.getElementById('cat-fab').addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wrap = document.getElementById('cat-fab-wrap');
+    wrap.classList.contains('open') ? closeCatFab() : openCatFab();
+  });
+  document.getElementById('cat-dropdown').addEventListener('click', function(e) {
+    var btn = e.target.closest('.cat-dd-item');
+    if (btn) { setCategory(btn.dataset.cat); closeCatFab(); }
+  });
+  document.getElementById('cat-dd-backdrop').addEventListener('click', closeCatFab);
+
+  /* browse card flip (click on card, not child buttons) */
+  document.getElementById('browse-card').addEventListener('click', function(e) {
+    if (e.target.closest('.card-know-btn')) return;
+    flipCard();
+  });
+
+  /* browse nav */
+  document.getElementById('btn-prev').addEventListener('click', function(e) { e.stopPropagation(); navBrowse(-1); });
+  document.getElementById('btn-next').addEventListener('click', function(e) { e.stopPropagation(); navBrowse(1); });
+
+  /* "I already know this" */
+  document.getElementById('btn-know').addEventListener('click', markKnown);
+
+  /* quiz nav */
+  document.getElementById('btn-reset').addEventListener('click', startQuiz);
+  document.getElementById('btn-quiz-again').addEventListener('click', startQuiz);
+  document.getElementById('btn-qnext').addEventListener('click', advanceQuiz);
+  document.getElementById('btn-qprev').addEventListener('click', retreatQuiz);
+}
+
+/* ════════════════════════════════════════════════════════
+   WORD DATA (embedded — no fetch needed)
+   ════════════════════════════════════════════════════════ */
+var WORDS = [
+  {id:1,  yoruba:"Ẹ káàárọ̀",  meaning:"Good morning",         category:"Greetings",    sent_yo:"Ẹ káàárọ̀, ọ pẹ́lẹ́?",             sent_en:"Good morning, how are you?"},
+  {id:2,  yoruba:"Ẹ káàsán",   meaning:"Good afternoon",       category:"Greetings",    sent_yo:"Ẹ káàsán, ẹ dára.",                sent_en:"Good afternoon, you look well."},
+  {id:3,  yoruba:"Ẹ kú alẹ́",  meaning:"Good evening",         category:"Greetings",    sent_yo:"Ẹ kú alẹ́, ẹ wà ní àlàáfíà.",     sent_en:"Good evening, be in peace."},
+  {id:4,  yoruba:"Ẹ kaabọ̀",   meaning:"Welcome",              category:"Greetings",    sent_yo:"Ẹ kaabọ̀ sí ilé wa.",              sent_en:"Welcome to our home."},
+  {id:5,  yoruba:"Odàbọ̀",     meaning:"Goodbye",              category:"Greetings",    sent_yo:"Odàbọ̀, a ó padà wá.",             sent_en:"Goodbye, we will return."},
+  {id:6,  yoruba:"Bẹ́ẹ̀ ni",    meaning:"Yes",                  category:"Greetings",    sent_yo:"Bẹ́ẹ̀ ni, mo gbọ́.",               sent_en:"Yes, I understand."},
+  {id:7,  yoruba:"Bẹ́ẹ̀ kọ",    meaning:"No",                   category:"Greetings",    sent_yo:"Bẹ́ẹ̀ kọ, kì í ṣe bẹ́ẹ̀.",         sent_en:"No, that is not so."},
+  {id:8,  yoruba:"Ẹ jọ̀ọ́",     meaning:"Please",               category:"Greetings",    sent_yo:"Ẹ jọ̀ọ́, ẹ ran mí lọ́wọ́.",        sent_en:"Please, help me."},
+  {id:9,  yoruba:"Ẹ ṣé",       meaning:"Thank you",            category:"Greetings",    sent_yo:"Ẹ ṣé fún iranlọ́wọ́ rẹ.",          sent_en:"Thank you for your help."},
+  {id:10, yoruba:"Ẹ má bínú",  meaning:"Sorry / Excuse me",    category:"Greetings",    sent_yo:"Ẹ má bínú, mi ò mọ̀.",             sent_en:"I'm sorry, I did not know."},
+
+  {id:11, yoruba:"Ìdílé",      meaning:"Family",               category:"Family",       sent_yo:"Ìdílé mi tóbi.",                   sent_en:"My family is large."},
+  {id:12, yoruba:"Ìyá",        meaning:"Mother",               category:"Family",       sent_yo:"Ìyá mi ń jẹun.",                   sent_en:"My mother is eating."},
+  {id:13, yoruba:"Bàbá",       meaning:"Father",               category:"Family",       sent_yo:"Bàbá mi jẹ́ olùkọ̀.",              sent_en:"My father is a teacher."},
+  {id:14, yoruba:"Ọmọ",        meaning:"Child",                category:"Family",       sent_yo:"Ọmọ náà ń sáré.",                  sent_en:"The child is running."},
+  {id:15, yoruba:"Ọ̀rẹ́",       meaning:"Friend",               category:"Family",       sent_yo:"Ọ̀rẹ́ mi pẹ̀lú mi.",               sent_en:"My friend is with me."},
+  {id:16, yoruba:"Ẹgbọ́n",      meaning:"Elder sibling",        category:"Family",       sent_yo:"Ẹgbọ́n mi ń gbé Làgós.",           sent_en:"My elder sibling lives in Lagos."},
+  {id:17, yoruba:"Àbúrò",      meaning:"Younger sibling",      category:"Family",       sent_yo:"Àbúrò mi jẹ́ ọmọ ilé-ìwé.",        sent_en:"My younger sibling is a student."},
+  {id:18, yoruba:"Ọkọ",        meaning:"Husband",              category:"Family",       sent_yo:"Ọkọ mi wà nílé.",                  sent_en:"My husband is at home."},
+  {id:19, yoruba:"Ìyàwó",      meaning:"Wife",                 category:"Family",       sent_yo:"Ìyàwó rẹ ń jẹun.",                sent_en:"His wife is eating."},
+  {id:20, yoruba:"Ènìyàn",     meaning:"Person / People",      category:"Family",       sent_yo:"Gbogbo ènìyàn ní ọkàn.",           sent_en:"Every person has a heart."},
+
+  {id:21, yoruba:"Oúnjẹ",      meaning:"Food",                 category:"Food & Drink", sent_yo:"Oúnjẹ náà dára.",                  sent_en:"The food is good."},
+  {id:22, yoruba:"Omi",        meaning:"Water",                category:"Food & Drink", sent_yo:"Mo fẹ́ mu omi.",                   sent_en:"I want to drink water."},
+  {id:23, yoruba:"Ẹran",       meaning:"Meat",                 category:"Food & Drink", sent_yo:"Mo fẹ́ jẹ ẹran.",                  sent_en:"I want to eat meat."},
+  {id:24, yoruba:"Ẹja",        meaning:"Fish",                 category:"Food & Drink", sent_yo:"Ẹja tuntun dára jù.",              sent_en:"Fresh fish is the best."},
+  {id:25, yoruba:"Àgbàdo",     meaning:"Corn / Maize",         category:"Food & Drink", sent_yo:"Àgbàdo tútù dára.",                sent_en:"Fresh corn is good."},
+  {id:26, yoruba:"Ìyán",       meaning:"Pounded yam",          category:"Food & Drink", sent_yo:"Ìyán àti ọbẹ̀ dára.",             sent_en:"Pounded yam and soup is good."},
+  {id:27, yoruba:"Irẹsì",      meaning:"Rice",                 category:"Food & Drink", sent_yo:"Mo fẹ́ jẹ irẹsì.",                sent_en:"I want to eat rice."},
+  {id:28, yoruba:"Ọbẹ̀",        meaning:"Soup / Stew",          category:"Food & Drink", sent_yo:"Ọbẹ̀ ẹgúṣí dára jù.",             sent_en:"Egusi soup is the best."},
+  {id:29, yoruba:"Àdìẹ",       meaning:"Chicken",              category:"Food & Drink", sent_yo:"Àdìẹ náà ń fò.",                   sent_en:"The chicken is flying."},
+  {id:30, yoruba:"Wàrà",       meaning:"Milk",                 category:"Food & Drink", sent_yo:"Wàrà màlúù dára fún ara.",         sent_en:"Cow's milk is good for the body."},
+
+  {id:31, yoruba:"Orí",        meaning:"Head",                 category:"Body",         sent_yo:"Orí mi ń fọ́.",                     sent_en:"I have a headache."},
+  {id:32, yoruba:"Ojú",        meaning:"Eye / Face",           category:"Body",         sent_yo:"Ojú rẹ ń sọ ìtàn.",                sent_en:"Your face tells a story."},
+  {id:33, yoruba:"Ọwọ́",        meaning:"Hand",                 category:"Body",         sent_yo:"Fọ ọwọ́ rẹ dáadáa.",               sent_en:"Wash your hands well."},
+  {id:34, yoruba:"Ẹsẹ̀",        meaning:"Leg / Foot",           category:"Body",         sent_yo:"Ẹsẹ̀ mi ń fọ́.",                   sent_en:"My leg is hurting."},
+  {id:35, yoruba:"Ẹnu",        meaning:"Mouth",                category:"Body",         sent_yo:"Ẹnu rẹ tóbi.",                     sent_en:"Your mouth is big."},
+  {id:36, yoruba:"Etí",        meaning:"Ear",                  category:"Body",         sent_yo:"Etí mi gbọ́ ohun náà.",             sent_en:"My ear heard that sound."},
+  {id:37, yoruba:"Imú",        meaning:"Nose",                 category:"Body",         sent_yo:"Imú rẹ gùn.",                      sent_en:"Your nose is long."},
+  {id:38, yoruba:"Ara",        meaning:"Body",                 category:"Body",         sent_yo:"Ara mi kò dára lónìí.",             sent_en:"My body is not well today."},
+  {id:39, yoruba:"Ọkàn",       meaning:"Heart / Mind",         category:"Body",         sent_yo:"Ọkàn mi kún fún ayọ̀.",             sent_en:"My heart is full of joy."},
+  {id:40, yoruba:"Ẹ̀yìn",       meaning:"Back",                 category:"Body",         sent_yo:"Ẹ̀yìn mi ń fọ́.",                  sent_en:"My back is aching."},
+
+  {id:41, yoruba:"Ọjọ́",        meaning:"Day",                  category:"Time",         sent_yo:"Ọjọ́ tuntun, àǹfààní tuntun.",     sent_en:"A new day, a new opportunity."},
+  {id:42, yoruba:"Àárọ̀",       meaning:"Morning",              category:"Time",         sent_yo:"Ní àárọ̀ ni mo máa ń jí.",          sent_en:"I usually wake up in the morning."},
+  {id:43, yoruba:"Alẹ́",        meaning:"Night / Evening",      category:"Time",         sent_yo:"Alẹ́ ti dé.",                      sent_en:"Night has come."},
+  {id:44, yoruba:"Ọ̀sán",       meaning:"Afternoon",            category:"Time",         sent_yo:"Ní ọ̀sán ni mo jẹun.",             sent_en:"I eat in the afternoon."},
+  {id:45, yoruba:"Ọdún",       meaning:"Year",                 category:"Time",         sent_yo:"Ọdún tuntun ń bọ̀.",               sent_en:"A new year is coming."},
+  {id:46, yoruba:"Oṣù",        meaning:"Month / Moon",         category:"Time",         sent_yo:"Oṣù kan ti kọjá.",                 sent_en:"One month has passed."},
+  {id:47, yoruba:"Ọ̀sẹ̀",        meaning:"Week",                 category:"Time",         sent_yo:"Ọ̀sẹ̀ kan ni ọjọ́ méje.",          sent_en:"One week is seven days."},
+  {id:48, yoruba:"Àkókò",      meaning:"Time / Moment",        category:"Time",         sent_yo:"Àkókò jẹ́ ọrọ ìyebíyè.",          sent_en:"Time is precious."},
+  {id:49, yoruba:"Òní",        meaning:"Today",                category:"Time",         sent_yo:"Òní ọjọ́ dára.",                   sent_en:"Today is a good day."},
+  {id:50, yoruba:"Ọ̀la",        meaning:"Tomorrow",             category:"Time",         sent_yo:"Ọ̀la a ó padà.",                   sent_en:"Tomorrow we will return."},
+
+  {id:51, yoruba:"Ilé",        meaning:"Home / House",         category:"Places",       sent_yo:"Ilé mi wà nísàlẹ̀ òkè náà.",       sent_en:"My home is at the foot of that hill."},
+  {id:52, yoruba:"Ilú",        meaning:"Town / City",          category:"Places",       sent_yo:"Ilú yìí tóbi.",                    sent_en:"This city is large."},
+  {id:53, yoruba:"Ìlé-ìwé",    meaning:"School",               category:"Places",       sent_yo:"Mo lọ sí ìlé-ìwé.",                sent_en:"I go to school."},
+  {id:54, yoruba:"Ọjà",        meaning:"Market",               category:"Places",       sent_yo:"Ìyá mi ń tà ní ọjà.",              sent_en:"My mother sells at the market."},
+  {id:55, yoruba:"Ọ̀nà",        meaning:"Road / Path",          category:"Places",       sent_yo:"Ọ̀nà yìí gùn.",                    sent_en:"This road is long."},
+  {id:56, yoruba:"Àgbàlá",     meaning:"Compound / Yard",      category:"Places",       sent_yo:"Àgbàlá wa tóbi.",                  sent_en:"Our compound is large."},
+  {id:57, yoruba:"Òkè",        meaning:"Hill / Mountain",      category:"Places",       sent_yo:"Ilé wà lórí òkè.",                 sent_en:"The house is on the hill."},
+  {id:58, yoruba:"Odò",        meaning:"River",                category:"Places",       sent_yo:"Odò tóbi wà nísàlẹ̀.",             sent_en:"A large river is below."},
+
+  {id:59, yoruba:"Ọ̀run",       meaning:"Sky / Heaven",         category:"Nature",       sent_yo:"Ọ̀run wà lókè.",                   sent_en:"The sky is above."},
+  {id:60, yoruba:"Òjò",        meaning:"Rain",                 category:"Nature",       sent_yo:"Òjò ń rọ̀.",                       sent_en:"It is raining."},
+  {id:61, yoruba:"Òòrùn",      meaning:"Sun",                  category:"Nature",       sent_yo:"Òòrùn gbóná lónìí.",               sent_en:"The sun is hot today."},
+  {id:62, yoruba:"Igi",        meaning:"Tree / Wood",          category:"Nature",       sent_yo:"Igi náà gùn.",                     sent_en:"The tree is tall."},
+  {id:63, yoruba:"Ilẹ̀",        meaning:"Ground / Earth",       category:"Nature",       sent_yo:"Ilẹ̀ wa ní àwa.",                  sent_en:"This land is ours."},
+  {id:64, yoruba:"Igbó",       meaning:"Forest / Bush",        category:"Nature",       sent_yo:"Igbó náà jìnà.",                   sent_en:"The forest is far."},
+  {id:65, yoruba:"Adágún",     meaning:"Lake / Pond",          category:"Nature",       sent_yo:"Adágún náà rẹwà.",                 sent_en:"The lake is beautiful."},
+
+  {id:66, yoruba:"Jẹ",         meaning:"To eat",               category:"Verbs",        sent_yo:"Mo jẹ oúnjẹ lóojúmọ́.",            sent_en:"I eat food every day."},
+  {id:67, yoruba:"Mu",         meaning:"To drink",             category:"Verbs",        sent_yo:"O mu omi púpọ̀.",                  sent_en:"He drinks a lot of water."},
+  {id:68, yoruba:"Lọ",         meaning:"To go",                category:"Verbs",        sent_yo:"Mo lọ sí ọjà.",                    sent_en:"I went to the market."},
+  {id:69, yoruba:"Wá",         meaning:"To come",              category:"Verbs",        sent_yo:"Wá sí ilé wa.",                    sent_en:"Come to our house."},
+  {id:70, yoruba:"Rí",         meaning:"To see",               category:"Verbs",        sent_yo:"Mo rí rẹ lánàá.",                  sent_en:"I saw you yesterday."},
+  {id:71, yoruba:"Gbọ́",        meaning:"To hear",              category:"Verbs",        sent_yo:"Mo gbọ́ ohun rẹ.",                 sent_en:"I hear your voice."},
+  {id:72, yoruba:"Sọ",         meaning:"To say / speak",       category:"Verbs",        sent_yo:"Ẹ sọ èdè Yorùbá.",                sent_en:"Speak the Yoruba language."},
+  {id:73, yoruba:"Ní",         meaning:"To have",              category:"Verbs",        sent_yo:"Mo ní ọmọ méjì.",                  sent_en:"I have two children."},
+  {id:74, yoruba:"Ṣe",         meaning:"To do / make",         category:"Verbs",        sent_yo:"Ṣe oúnjẹ fún wa.",                sent_en:"Make food for us."},
+  {id:75, yoruba:"Sáré",       meaning:"To run",               category:"Verbs",        sent_yo:"Ọmọ náà ń sáré.",                 sent_en:"The child is running."},
+  {id:76, yoruba:"Jí",         meaning:"To wake up",           category:"Verbs",        sent_yo:"Mo jí ní àárọ̀.",                  sent_en:"I woke up in the morning."},
+  {id:77, yoruba:"Sùn",        meaning:"To sleep",             category:"Verbs",        sent_yo:"Mo sùn lẹ́yìn oúnjẹ.",            sent_en:"I sleep after eating."},
+  {id:78, yoruba:"Ka",         meaning:"To read / count",      category:"Verbs",        sent_yo:"Mo ka ìwé.",                       sent_en:"I read a book."},
+  {id:79, yoruba:"Kọ́",         meaning:"To learn / teach",     category:"Verbs",        sent_yo:"Mo ń kọ́ èdè Yorùbá.",             sent_en:"I am learning Yoruba."},
+  {id:80, yoruba:"Fẹ́",         meaning:"To want / love",       category:"Verbs",        sent_yo:"Mo fẹ́ kọ́ Yorùbá.",               sent_en:"I want to learn Yoruba."},
+
+  {id:81, yoruba:"Dára",       meaning:"Good / Beautiful",     category:"Adjectives",   sent_yo:"Ohun gbogbo dára.",                sent_en:"Everything is good."},
+  {id:82, yoruba:"Búburú",     meaning:"Bad / Evil",           category:"Adjectives",   sent_yo:"Ìṣẹ̀ náà búburú.",                 sent_en:"That work is bad."},
+  {id:83, yoruba:"Tóbi",       meaning:"Big / Large",          category:"Adjectives",   sent_yo:"Ilé rẹ tóbi.",                     sent_en:"Your house is big."},
+  {id:84, yoruba:"Kékeré",     meaning:"Small / Little",       category:"Adjectives",   sent_yo:"Ọmọ kékeré ń kọrin.",              sent_en:"The small child is singing."},
+  {id:85, yoruba:"Tuntun",     meaning:"New / Fresh",          category:"Adjectives",   sent_yo:"Ìwé tuntun ni mo ra.",             sent_en:"I bought a new book."},
+  {id:86, yoruba:"Ìyàlẹ́nu",   meaning:"Amazing / Surprising", category:"Adjectives",   sent_yo:"Ohun tó ṣẹlẹ̀ jẹ́ ìyàlẹ́nu.",     sent_en:"What happened is amazing."},
+  {id:87, yoruba:"Pọ̀",         meaning:"Many / Much",          category:"Adjectives",   sent_yo:"Ènìyàn pọ̀ níbẹ̀.",               sent_en:"There are many people there."},
+  {id:88, yoruba:"Gbóná",      meaning:"Hot",                  category:"Adjectives",   sent_yo:"Oúnjẹ yìí gbóná.",                 sent_en:"This food is hot."},
+  {id:89, yoruba:"Tútù",       meaning:"Cold / Cool",          category:"Adjectives",   sent_yo:"Omi tútù dára.",                   sent_en:"Cold water is good."},
+  {id:90, yoruba:"Gùn",        meaning:"Long / Tall",          category:"Adjectives",   sent_yo:"Ẹsẹ̀ rẹ gùn.",                     sent_en:"Your legs are long."},
+
+  {id:91,  yoruba:"Ìfẹ́",       meaning:"Love",                 category:"Concepts",     sent_yo:"Ìfẹ́ ń gbé wa papọ̀.",             sent_en:"Love keeps us together."},
+  {id:92,  yoruba:"Ayọ̀",       meaning:"Joy / Happiness",      category:"Concepts",     sent_yo:"Ayọ̀ kún inú mi.",                 sent_en:"Joy fills my heart."},
+  {id:93,  yoruba:"Àánú",       meaning:"Mercy / Compassion",   category:"Concepts",     sent_yo:"Àánú Ọlọ́run tó wa.",              sent_en:"God's mercy is with us."},
+  {id:94,  yoruba:"Orúkọ",     meaning:"Name",                 category:"Concepts",     sent_yo:"Orúkọ rẹ ni kí?",                  sent_en:"What is your name?"},
+  {id:95,  yoruba:"Owó",       meaning:"Money",                category:"Concepts",     sent_yo:"Owó kò tó iṣẹ́.",                  sent_en:"Money is not everything."},
+  {id:96,  yoruba:"Àṣà",       meaning:"Culture / Tradition",  category:"Concepts",     sent_yo:"Àṣà wa ń ṣàpẹẹrẹ wa.",            sent_en:"Our culture defines us."},
+  {id:97,  yoruba:"Èdè",       meaning:"Language",             category:"Concepts",     sent_yo:"Èdè Yorùbá dára.",                 sent_en:"The Yoruba language is beautiful."},
+  {id:98,  yoruba:"Ìwé",       meaning:"Book",                 category:"Concepts",     sent_yo:"Mo fẹ́ ka ìwé.",                   sent_en:"I want to read a book."},
+  {id:99,  yoruba:"Ìmọ̀",       meaning:"Knowledge / Wisdom",   category:"Concepts",     sent_yo:"Ìmọ̀ ń ṣe àyípadà.",               sent_en:"Knowledge brings change."},
+  {id:100, yoruba:"Àlàáfíà",   meaning:"Peace / Wellbeing",    category:"Concepts",     sent_yo:"Àlàáfíà wà pẹ̀lú rẹ.",             sent_en:"Peace be with you."}
+];
+
+init(WORDS);
+</script>
+
+</body>
+</html>
