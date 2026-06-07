@@ -59,12 +59,25 @@
       z-index: 100;
     }
 
+    .nav-logo-group { display: flex; flex-direction: column; width: fit-content; }
+
     .nav-logo {
       font-family: var(--font-display);
       font-size: 1.5rem;
       color: var(--ink);
       letter-spacing: -0.02em;
       text-decoration: none;
+      line-height: 1;
+    }
+
+    .nav-byline {
+      text-align: right;
+      font-size: 0.5rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-top: 2px;
     }
 
     .pill-nav { display: flex; gap: 8px; align-items: center; }
@@ -208,6 +221,16 @@
       .wordmark-break { display: block; }
     }
 
+    .hero-byline {
+      text-align: right;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 4px;
+    }
+
     .hero-tagline {
       font-size: 1.125rem;
       font-weight: 400;
@@ -218,6 +241,7 @@
     }
 
     .hero-cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-cta-row .cta-btn { min-width: 160px; text-align: center; }
 
     .cta-btn {
       font-family: var(--font-sans);
@@ -460,59 +484,48 @@
     }
 
     /* ── FOOTER ──────────────────────────────────────── */
-    .footer {
-      border-top: 1px solid var(--divider);
-      padding: 52px var(--page-pad) 36px;
-    }
+    .footer { border-top: 1px solid var(--divider); padding: 28px var(--page-pad) 24px; }
 
-    .footer-top {
+    .footer-inner {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 32px;
-      margin-bottom: 48px;
+      gap: 16px;
+      margin-bottom: 20px;
     }
 
-    .footer-wordmark-group {
-      display: flex;
-      flex-direction: column;
-      align-self: flex-start;
+    .footer-brand-group { display: flex; flex-direction: column; width: fit-content; }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1;
     }
 
-    .footer-eyebrow {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.7rem;
-      font-size: 0.68rem;
+    .footer-byline {
+      text-align: right;
+      font-size: 0.62rem;
       font-weight: 800;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--ink-mid);
-      margin-bottom: 0.4rem;
+      margin-top: 2px;
     }
-
-    .footer-wordmark {
-      font-family: var(--font-display);
-      font-size: clamp(3.5rem, 14vw, 10rem);
-      line-height: 0.85;
-      letter-spacing: -0.04em;
-      color: var(--ink);
-    }
-
 
     .footer-nav {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      padding-top: 8px;
+      gap: 10px;
     }
 
     .footer-nav a {
       font-size: 0.72rem;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--ink-mid);
       text-decoration: none;
@@ -521,28 +534,22 @@
 
     .footer-nav a:hover { color: var(--teal); }
 
-    .footer-social {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      margin-top: 32px;
-    }
+    .footer-social { display: flex; gap: 18px; align-items: center; margin-bottom: 20px; }
 
     .footer-social a {
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      display: flex;
       color: var(--ink-mid);
       text-decoration: none;
       transition: color var(--dur-fast);
     }
 
+    .footer-social a svg { width: 18px; height: 18px; display: block; }
+
     .footer-social a:hover { color: var(--teal); }
 
     .footer-bottom {
       border-top: 1px solid var(--divider);
-      padding-top: 20px;
+      padding-top: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -556,17 +563,189 @@
       letter-spacing: 0.06em;
     }
 
+    /* ── WORD OF THE DAY ─────────────────────────── */
+    .wotd-section { border-top: 1px solid var(--divider); }
+
+    .wotd-card {
+      padding: 52px var(--page-pad) 72px 52px;
+      cursor: pointer;
+      transition: background var(--dur-normal) var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .wotd-card:hover { background: var(--card-bg); }
+
+    .wotd-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: 1.2rem;
+    }
+    .wotd-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+    .wotd-word {
+      font-family: var(--font-sans);
+      font-size: clamp(2.8rem, 10vw, 6rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .wotd-meaning { font-size: 1.1rem; font-weight: 700; color: var(--ink-muted); margin-top: 0.75rem; margin-bottom: 1.5rem; }
+
+    .wotd-rule { border: none; border-top: 2px solid var(--gold); width: 48px; margin: 0 0 1.5rem 0; }
+
+    .wotd-sent-yo { font-size: 1rem; font-weight: 500; color: var(--ink); margin-bottom: 0; }
+    .wotd-sent-en { font-size: 0.9rem; color: var(--ink-muted); margin-top: 0.75rem; margin-bottom: 2rem; padding-left: 0; }
+
+    .wotd-date {
+      margin-left: auto;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      color: var(--teal);
+    }
+
+    .wotd-watermark {
+      position: absolute;
+      bottom: -0.1em;
+      right: -0.05em;
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 22vw, 10rem);
+      letter-spacing: -0.04em;
+      line-height: 0.85;
+      color: rgba(33,33,33,0.06);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .wotd-share-wrap { position: relative; display: inline-block; }
+
+    .wotd-share-btn {
+      background: none;
+      border: 1.5px solid var(--divider);
+      padding: 0.45rem 1.1rem;
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      cursor: pointer;
+      transition: border-color var(--dur-fast), color var(--dur-fast);
+    }
+    .wotd-share-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+    .wotd-share-menu {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 0;
+      background: var(--bg);
+      border: 1px solid var(--divider);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+      min-width: 190px;
+      z-index: 300;
+      opacity: 0;
+      transform: translateY(6px);
+      pointer-events: none;
+      transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+    }
+    .wotd-share-menu.open { opacity: 1; transform: translateY(0); pointer-events: all; }
+
+    .wotd-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: background var(--dur-fast);
+      border-bottom: 1px solid var(--divider);
+    }
+    .wotd-menu-item:last-child { border-bottom: none; }
+    .wotd-menu-item:hover { background: var(--card-bg); }
+    .wotd-menu-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .wotd-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      pointer-events: none;
+      transition: background var(--dur-normal) var(--ease);
+    }
+    .wotd-overlay.open { background: rgba(0,0,0,0.65); pointer-events: all; }
+
+    .wotd-modal {
+      background: var(--bg);
+      max-width: 620px;
+      width: 100%;
+      padding: 52px;
+      position: relative;
+      transform: scale(0.92) translateY(16px);
+      opacity: 0;
+      transition: transform var(--dur-normal) var(--ease-overshoot), opacity var(--dur-normal) var(--ease);
+    }
+    .wotd-overlay.open .wotd-modal { transform: scale(1) translateY(0); opacity: 1; }
+
+    .wotd-modal .wotd-word { font-size: clamp(3.5rem, 12vw, 7rem); line-height: 1; margin-bottom: 0.75rem; }
+    .wotd-modal .wotd-meaning { font-size: 1.25rem; }
+    .wotd-modal .wotd-sent-yo { font-size: 1.1rem; }
+    .wotd-modal .wotd-sent-en { font-size: 1rem; }
+
+    .wotd-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--ink-mid);
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background var(--dur-fast);
+      line-height: 1;
+    }
+    .wotd-close:hover { background: var(--card-bg); }
+
   </style>
 </head>
 <body>
 
   <!-- NAV -->
   <nav class="nav">
-    <a href="https://www.yorubafluent.com/" target="_top" class="nav-logo">YorubaFluent</a>
+    <div class="nav-logo-group">
+      <a href="https://www.yorubafluent.com/" target="_top" class="nav-logo">YorubaFluent</a>
+      <span class="nav-byline">By Olutosin Akinwumi</span>
+    </div>
     <div class="pill-nav">
       <a href="https://www.yorubafluent.com/" target="_top" class="pill pill-home">Home</a>
+      <a href="https://www.yorubafluent.com/plans-pricing" target="_top" class="pill pill-about">Learn</a>
       <a href="https://www.yorubafluent.com/blog" target="_top" class="pill pill-blog">Blog</a>
-      <a href="https://www.yorubafluent.com/plans-pricing" target="_top" class="pill pill-about">About</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -574,8 +753,8 @@
   </nav>
   <div class="mobile-menu" id="mobileMenu">
     <a href="https://www.yorubafluent.com/" target="_top" class="pill pill-home">Home</a>
+    <a href="https://www.yorubafluent.com/plans-pricing" target="_top" class="pill pill-about">Learn</a>
     <a href="https://www.yorubafluent.com/blog" target="_top" class="pill pill-blog">Blog</a>
-    <a href="https://www.yorubafluent.com/plans-pricing" target="_top" class="pill pill-about">About</a>
   </div>
 
   <!-- HERO -->
@@ -583,19 +762,63 @@
     <div class="hero-ghost" aria-hidden="true">Ẹ</div>
     <div class="hero-content">
       <div class="hero-wordmark-group">
-        <div class="hero-eyebrow">
-          <div class="eyebrow-tick"></div>
-          By Olutosin Akinwumi
-        </div>
         <h1 class="hero-wordmark">Yoruba<span class="wordmark-break">Fluent</span></h1>
+        <div class="hero-byline">By Olutosin Akinwumi</div>
       </div>
       <p class="hero-tagline">Speak Yoruba. Fluently.<br>One word, one phrase, one story at a time.</p>
       <div class="hero-cta-row">
-        <a href="https://www.yorubafluent.com/members-area/my/my-bookings" target="_top" class="cta-btn cta-primary">Enter School →</a>
+        <a href="https://www.yorubafluent.com/members-area/my/my-bookings" target="_top" class="cta-btn cta-primary">ILÉ-ÌWÉ</a>
         <a href="https://www.yorubafluent.com/blog" target="_top" class="cta-btn cta-secondary">Read the Blog</a>
       </div>
     </div>
   </section>
+
+  <!-- WORD OF THE DAY -->
+  <section class="wotd-section">
+    <div class="wotd-card" id="wotd-card" role="button" tabindex="0" aria-label="Expand word of the day">
+      <div class="wotd-eyebrow"><span class="wotd-dot"></span>Yoruba Word of the Day<span class="wotd-date" id="wotd-date-card"></span></div>
+      <div class="wotd-word" id="wotd-word-card"></div>
+      <div class="wotd-meaning" id="wotd-meaning-card"></div>
+      <hr class="wotd-rule">
+      <p class="wotd-sent-yo" id="wotd-sent-yo-card"></p>
+      <p class="wotd-sent-en" id="wotd-sent-en-card"></p>
+      <div class="wotd-share-wrap">
+        <button class="wotd-share-btn" id="wotd-share-toggle-card">Share ↗</button>
+        <div class="wotd-share-menu" id="wotd-share-menu-card">
+          <a class="wotd-menu-item" id="wotd-wa-card" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
+          <a class="wotd-menu-item" id="wotd-x-card" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
+          <a class="wotd-menu-item" id="wotd-fb-card" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a>
+          <button class="wotd-menu-item" id="wotd-ig-card"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Instagram</button>
+          <button class="wotd-menu-item" id="wotd-copy-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy link</button>
+        </div>
+      </div>
+      <div class="wotd-watermark">YorubaFluent</div>
+    </div>
+  </section>
+
+  <!-- WORD OF THE DAY MODAL -->
+  <div class="wotd-overlay" id="wotd-overlay">
+    <div class="wotd-modal">
+      <button class="wotd-close" id="wotd-close" aria-label="Close">×</button>
+      <div class="wotd-eyebrow"><span class="wotd-dot"></span>Yoruba Word of the Day<span class="wotd-date" id="wotd-date-modal"></span></div>
+      <div class="wotd-word" id="wotd-word-modal"></div>
+      <div class="wotd-meaning" id="wotd-meaning-modal"></div>
+      <hr class="wotd-rule">
+      <p class="wotd-sent-yo" id="wotd-sent-yo-modal"></p>
+      <p class="wotd-sent-en" id="wotd-sent-en-modal"></p>
+      <div class="wotd-share-wrap">
+        <button class="wotd-share-btn" id="wotd-share-toggle-modal">Share ↗</button>
+        <div class="wotd-share-menu" id="wotd-share-menu-modal">
+          <a class="wotd-menu-item" id="wotd-wa-modal" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
+          <a class="wotd-menu-item" id="wotd-x-modal" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
+          <a class="wotd-menu-item" id="wotd-fb-modal" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a>
+          <button class="wotd-menu-item" id="wotd-ig-modal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Instagram</button>
+          <button class="wotd-menu-item" id="wotd-copy-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy link</button>
+        </div>
+      </div>
+      <div class="wotd-watermark">YorubaFluent</div>
+    </div>
+  </div>
 
   <!-- FEATURES -->
   <div class="features">
@@ -639,45 +862,125 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-top">
-      <div class="footer-wordmark-group">
-        <div class="footer-eyebrow">
-          <div class="eyebrow-tick-sm"></div>
-          By Olutosin Akinwumi
-        </div>
-        <div class="footer-wordmark">Yoruba<br>Fluent</div>
-      </div>
-      <nav class="footer-nav">
-        <a href="https://www.yorubafluent.com/" target="_top">Home</a>
-        <a href="https://www.yorubafluent.com/blog" target="_top">Blog</a>
-        <a href="https://www.yorubafluent.com/plans-pricing" target="_top">Plans & Pricing</a>
-        <a href="https://www.yorubafluent.com/members-area/my/my-bookings" target="_top">Enter School</a>
-        <a href="https://www.yorubafluent.com/vocabularies" target="_top">Vocabularies</a>
-      </nav>
-    </div>
-    <div class="footer-social">
-      <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://x.com/" target="_blank" rel="noopener">X</a>
-      <a href="https://youtube.com/" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://tiktok.com/" target="_blank" rel="noopener">TikTok</a>
-    </div>
+  <!-- FOOTER — injected by blog/blog-ui.js -->
+  <div id="site-footer"></div>
 
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2026 YorubaFluent. All rights reserved.</span>
-      <span class="footer-copy">Speak Yoruba. Fluently.</span>
-    </div>
-  </footer>
-
+  <script src="blog/blog-ui.js"></script>
   <script>
-    // Hamburger menu
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open');
-    });
+    // ── WORD OF THE DAY ──────────────────────────────
+    const WORDS = [
+      { yoruba: "Ẹ káàárọ̀",  meaning: "Good morning",        sent_yo: "Ẹ káàárọ̀, ọ pẹ́lẹ́?",                   sent_en: "Good morning, how are you?" },
+      { yoruba: "Ẹ kaabọ̀",   meaning: "Welcome",              sent_yo: "Ẹ kaabọ̀ sí ilé wa.",                   sent_en: "Welcome to our home." },
+      { yoruba: "Odàbọ̀",     meaning: "Goodbye",              sent_yo: "Odàbọ̀, a ó padà wá.",                  sent_en: "Goodbye, we will return." },
+      { yoruba: "Ìdílé",      meaning: "Family",               sent_yo: "Ìdílé mi tóbi.",                        sent_en: "My family is large." },
+      { yoruba: "Ìyá",        meaning: "Mother",               sent_yo: "Ìyá mi ń jẹun.",                        sent_en: "My mother is eating." },
+      { yoruba: "Bàbá",       meaning: "Father",               sent_yo: "Bàbá mi jẹ́ olùkọ̀.",                   sent_en: "My father is a teacher." },
+      { yoruba: "Ọmọ",        meaning: "Child",                sent_yo: "Ọmọ náà ń sáré.",                       sent_en: "The child is running." },
+      { yoruba: "Ọ̀rẹ́",       meaning: "Friend",               sent_yo: "Ọ̀rẹ́ mi pẹ̀lú mi.",                    sent_en: "My friend is with me." },
+      { yoruba: "Omi",        meaning: "Water",                sent_yo: "Mo fẹ́ mu omi.",                         sent_en: "I want to drink water." },
+      { yoruba: "Oúnjẹ",      meaning: "Food",                 sent_yo: "Oúnjẹ náà dára.",                       sent_en: "The food is good." },
+      { yoruba: "Ìfẹ́",        meaning: "Love",                 sent_yo: "Ìfẹ́ ń gbé wa papọ̀.",                  sent_en: "Love keeps us together." },
+      { yoruba: "Orúkọ",      meaning: "Name",                 sent_yo: "Orúkọ rẹ ni kí?",                       sent_en: "What is your name?" },
+      { yoruba: "Owó",        meaning: "Money",                sent_yo: "Owó kò tó iṣẹ́.",                        sent_en: "Money is not everything." },
+      { yoruba: "Ilú",        meaning: "Town / City",          sent_yo: "Ilú yìí tóbi.",                          sent_en: "This city is large." },
+      { yoruba: "Ọjọ́",        meaning: "Day",                  sent_yo: "Ọjọ́ tuntun, àǹfààní tuntun.",          sent_en: "A new day, a new opportunity." },
+      { yoruba: "Ìwé",        meaning: "Book",                 sent_yo: "Mo fẹ́ ka ìwé.",                         sent_en: "I want to read a book." },
+      { yoruba: "Àṣà",        meaning: "Culture / Tradition",  sent_yo: "Àṣà wa ń ṣàpẹẹrẹ wa.",                 sent_en: "Our culture defines us." },
+      { yoruba: "Èdè",        meaning: "Language",             sent_yo: "Èdè Yorùbá dára.",                      sent_en: "The Yoruba language is beautiful." },
+      { yoruba: "Dára",       meaning: "Good / Beautiful",     sent_yo: "Ohun gbogbo dára.",                      sent_en: "Everything is good." },
+      { yoruba: "Àárọ̀",      meaning: "Morning",              sent_yo: "Ní àárọ̀ ni mo máa ń jí.",               sent_en: "I usually wake up in the morning." },
+      { yoruba: "Alẹ́",        meaning: "Night / Evening",      sent_yo: "Alẹ́ ti dé.",                            sent_en: "Night has come." },
+      { yoruba: "Ẹran",       meaning: "Meat",                 sent_yo: "Mo fẹ́ jẹ ẹran.",                        sent_en: "I want to eat meat." },
+      { yoruba: "Ẹja",        meaning: "Fish",                 sent_yo: "Ẹja tuntun dára jù.",                   sent_en: "Fresh fish is the best." },
+      { yoruba: "Àgbàdo",     meaning: "Corn / Maize",         sent_yo: "Àgbàdo tútù dára.",                     sent_en: "Fresh corn is good." },
+      { yoruba: "Ẹ káàsán",   meaning: "Good afternoon",       sent_yo: "Ẹ káàsán, ẹ dára.",                     sent_en: "Good afternoon, you look well." },
+      { yoruba: "Bẹ́ẹ̀ ni",    meaning: "Yes",                  sent_yo: "Bẹ́ẹ̀ ni, mo gbọ́.",                     sent_en: "Yes, I understand." },
+      { yoruba: "Bẹ́ẹ̀ kọ",    meaning: "No",                   sent_yo: "Bẹ́ẹ̀ kọ, kì í ṣe bẹ́ẹ̀.",              sent_en: "No, that is not so." },
+      { yoruba: "Orí",        meaning: "Head",                 sent_yo: "Orí mi ń fọ́.",                          sent_en: "I have a headache." },
+      { yoruba: "Ojú",        meaning: "Eye / Face",           sent_yo: "Ojú rẹ ń sọ ìtàn.",                     sent_en: "Your face tells a story." },
+      { yoruba: "Ilé",        meaning: "Home / House",         sent_yo: "Ilé mi wà nísàlẹ̀ òkè náà.",            sent_en: "My home is at the foot of that hill." }
+    ];
+
+    (function () {
+      const dayIndex = Math.floor(Date.now() / 86400000) % WORDS.length;
+      const w = WORDS[dayIndex];
+
+      const dateStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      const shareText = 'Today\'s Yoruba word is “' + w.yoruba + '” — ' + w.meaning + '\n\n”' + w.sent_yo + '”\n' + w.sent_en + '\n\nLearn Yoruba at yorubafluent.com';
+      const xUrl  = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
+      const waUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+      const fbUrl = 'https://www.facebook.com/sharer/sharer.php?quote=' + encodeURIComponent(shareText) + '&u=' + encodeURIComponent('https://yorubafluent.com');
+
+      ['card', 'modal'].forEach(s => {
+        document.getElementById('wotd-word-' + s).textContent = w.yoruba;
+        document.getElementById('wotd-meaning-' + s).textContent = w.meaning;
+        document.getElementById('wotd-sent-yo-' + s).textContent = '”' + w.sent_yo + '”';
+        document.getElementById('wotd-sent-en-' + s).textContent = w.sent_en;
+        document.getElementById('wotd-date-' + s).textContent = dateStr;
+        document.getElementById('wotd-wa-' + s).href = waUrl;
+        document.getElementById('wotd-x-' + s).href = xUrl;
+        document.getElementById('wotd-fb-' + s).href = fbUrl;
+      });
+
+      const overlay = document.getElementById('wotd-overlay');
+
+      function openModal(e) {
+        if (e.target.closest('.wotd-share-wrap')) return;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        document.querySelectorAll('.wotd-share-menu').forEach(m => m.classList.remove('open'));
+      }
+
+      const card = document.getElementById('wotd-card');
+      card.addEventListener('click', openModal);
+      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(e); });
+      document.getElementById('wotd-close').addEventListener('click', closeModal);
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+      // Close menus when clicking outside
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.wotd-share-menu').forEach(m => m.classList.remove('open'));
+      });
+
+      ['card', 'modal'].forEach(s => {
+        const toggleBtn = document.getElementById('wotd-share-toggle-' + s);
+        const menu = document.getElementById('wotd-share-menu-' + s);
+
+        toggleBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          document.querySelectorAll('.wotd-share-menu').forEach(m => { if (m !== menu) m.classList.remove('open'); });
+          menu.classList.toggle('open');
+        });
+
+        // Stop modal from opening when interacting with share links
+        menu.addEventListener('click', e => e.stopPropagation());
+
+        // Instagram: native share on mobile, copy on desktop
+        document.getElementById('wotd-ig-' + s).addEventListener('click', () => {
+          menu.classList.remove('open');
+          if (navigator.share) {
+            navigator.share({ title: 'Yoruba Word of the Day', text: shareText });
+          } else {
+            navigator.clipboard.writeText(shareText);
+          }
+        });
+
+        // Copy to clipboard
+        document.getElementById('wotd-copy-' + s).addEventListener('click', function () {
+          menu.classList.remove('open');
+          navigator.clipboard.writeText(shareText).then(() => {
+            const orig = this.innerHTML;
+            this.innerHTML = this.innerHTML.replace('Copy link', 'Copied! ✓');
+            setTimeout(() => { this.innerHTML = orig; }, 2000);
+          });
+        });
+      });
+    })();
 
     // Blog preview — fetch latest 4 posts from posts.json
     fetch('https://olutosing.github.io/yorubafluent/blog/posts.json')

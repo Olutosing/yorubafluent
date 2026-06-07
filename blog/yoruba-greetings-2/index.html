@@ -53,7 +53,7 @@ Therefore, **kú àárọ̀** when used for one person with honour becomes **ẹ
 
   <header class="post-header">
     <a href="https://olutosing.github.io/yorubafluent/blog/" class="post-back">← All posts</a>
-    <div class="post-eyebrow"><div class="eyebrow-tick"></div><span id="meta-category"></span><span id="meta-readtime"></span></div>
+    <div class="post-eyebrow"><div class="eyebrow-tick"></div><span id="meta-category"></span></div>
     <h1 class="post-title" id="meta-title"></h1>
     <div class="post-byline">
       <span>By Olutosin Akinwumi</span>
@@ -79,8 +79,8 @@ Therefore, **kú àárọ̀** when used for one person with honour becomes **ẹ
   <script>
     const meta = JSON.parse(document.getElementById('post-meta').textContent);
     document.title = meta.title + ' — YorubaFluent';
-    document.getElementById('meta-category').textContent = meta.category + ' · ';
-    document.getElementById('meta-readtime').textContent = meta.readTime;
+    document.getElementById('meta-category').textContent = meta.category;
+    
     document.getElementById('meta-title').textContent = meta.title;
     document.getElementById('meta-date').textContent = meta.date;
     document.getElementById('meta-readtime2').textContent = meta.readTime;
