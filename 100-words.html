@@ -200,7 +200,7 @@
 
     @media (max-width: 640px) {
       .quiz-opt { font-size: 1.15rem; padding: 22px 14px; }
-      .btn-nav { font-size: 0.88rem; padding: 16px 32px; }
+      /* browse nav btn override handled below */
       .btn-quiz-next { font-size: 0.95rem; padding: 20px; }
       .quiz-prompt { font-size: clamp(1.9rem, 6.5vw, 3rem); }
       .mode-tab { padding: 18px 20px; font-size: 0.82rem; }
@@ -241,7 +241,7 @@
     .browse-perspective { perspective: 1200px; margin-bottom: 18px; }
     .browse-card {
       position: relative; width: 100%;
-      height: clamp(420px, 58vw, 520px);
+      height: clamp(420px, 70vh, 520px);
       transform-style: preserve-3d;
       transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
@@ -256,17 +256,18 @@
     }
     /* card-front uses flex column with space distribution */
     .card-front { background: var(--teal); box-shadow: var(--shadow-lg); justify-content: space-between; text-align: center; }
-    .card-front-meta { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-    .card-cat-badge { font-size: 0.57rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.32); }
+    .card-front-meta { display: flex; justify-content: flex-end; align-items: center; flex-shrink: 0; min-height: 0; }
+    .card-cat-badge { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.28); text-align: center; }
     .card-seen-tag { font-size: 0.57rem; font-weight: 800; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 999px; background: var(--gold); color: var(--ink); border: 1.5px solid rgba(26,26,26,0.4); }
     /* Teal overrides for quiz-prog-row when inside card-front */
     .card-front .quiz-prog-row { margin-bottom: 0; }
     .card-front .quiz-q-num { color: rgba(255,255,255,0.6); }
     .card-front .quiz-prog-track { background: rgba(255,255,255,0.2); }
     .card-front .quiz-prog-fill { background: rgba(255,255,255,0.75); }
-    .card-word { font-weight: 900; font-size: clamp(2.8rem, 10vw, 5.8rem); color: #fff; line-height: 0.95; letter-spacing: -0.03em; word-break: break-word; max-width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; }
-    .card-front-footer { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-    .card-reveal-hint { font-size: 0.56rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
+    .card-word-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+    .card-word { font-weight: 900; font-size: clamp(2.8rem, 10vw, 5.8rem); color: #fff; line-height: 0.95; letter-spacing: -0.03em; word-break: break-word; max-width: 100%; }
+    .card-front-footer { display: flex; justify-content: flex-end; align-items: center; flex-shrink: 0; }
+    .card-reveal-hint { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
     .card-know-btn { font-family: var(--font); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.82); cursor: pointer; transition: background var(--dur), border-color var(--dur); z-index: 2; }
     @media (hover: hover) { .card-know-btn:hover { background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.7); } }
     .card-know-btn:active { background: rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.8); }
@@ -293,7 +294,7 @@
     .quiz-score strong { color: var(--teal); font-size: 1.05rem; font-weight: 900; }
     .btn-reset { font-family: var(--font); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; border: 2px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; transition: all var(--dur); box-shadow: 2px 2px 0 var(--ink); }
     .btn-reset:hover { background: var(--coral); border-color: var(--coral); color: #fff; box-shadow: none; transform: translate(2px, 2px); }
-    .quiz-card { background: var(--gold); border: 3px solid var(--ink); border-radius: 18px; padding: 20px 24px; text-align: center; box-shadow: var(--shadow-lg); min-height: clamp(420px, 58vw, 520px); display: flex; flex-direction: column; justify-content: space-between; }
+    .quiz-card { background: var(--gold); border: 3px solid var(--ink); border-radius: 18px; padding: 20px 24px; text-align: center; box-shadow: var(--shadow-lg); min-height: clamp(420px, 70vh, 520px); display: flex; flex-direction: column; justify-content: space-between; }
     .quiz-instruction { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,26,26,0.42); margin-bottom: 10px; }
     .quiz-prompt { font-size: clamp(1.6rem, 5.5vw, 2.6rem); font-weight: 900; color: var(--ink); line-height: 1.1; margin-bottom: 28px; letter-spacing: -0.03em; }
     .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; align-content: start; }
@@ -344,6 +345,10 @@
     }
     .quiz-opt.correct.anim { animation: opt-correct-pop 320ms ease both; }
     .quiz-opt.wrong.anim   { animation: opt-wrong-shake 280ms ease both; }
+    /* mobile btn-nav override — must come after base .btn-nav rule */
+    @media (max-width: 640px) {
+      .btn-nav { font-size: 1.25rem !important; padding: 22px 56px !important; }
+    }
   </style>
 </head>
 <body>
@@ -387,16 +392,18 @@
           <div class="browse-card" id="browse-card">
             <div class="card-face card-front">
               <div class="card-front-meta">
-                <span class="card-cat-badge" id="f-cat"></span>
-                <span class="card-seen-tag"  id="f-seen" style="display:none">✓ seen</span>
+                <span class="card-seen-tag" id="f-seen" style="display:none">✓ seen</span>
               </div>
               <div class="quiz-prog-row">
                 <span class="quiz-q-num" id="b-num">1 / 100</span>
                 <div class="quiz-prog-track"><div class="quiz-prog-fill" id="b-prog-fill"></div></div>
               </div>
-              <div class="card-word" id="f-word"></div>
-              <div class="card-front-footer">
+              <span class="card-cat-badge" id="f-cat"></span>
+              <div class="card-word-wrap">
+                <div class="card-word" id="f-word"></div>
                 <span class="card-reveal-hint">tap to reveal</span>
+              </div>
+              <div class="card-front-footer">
                 <button class="card-know-btn" id="btn-know">I know this ✓</button>
               </div>
             </div>
@@ -408,8 +415,8 @@
           </div>
         </div>
         <div class="browse-nav">
-          <button class="btn-nav"                 id="btn-prev">← prev</button>
-          <button class="btn-nav btn-nav-primary" id="btn-next">next →</button>
+          <button class="btn-nav"                 id="btn-prev">prev</button>
+          <button class="btn-nav btn-nav-primary" id="btn-next">next</button>
         </div>
       </div>
 
