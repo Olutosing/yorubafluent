@@ -159,43 +159,50 @@
     .sidebar-count { font-size: 0.58rem; font-weight: 800; padding: 1px 6px; border-radius: 999px; background: rgba(26,26,26,0.07); color: var(--ink-faint); }
     .sidebar-item.active .sidebar-count { background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.7); }
 
-    /* ── MOBILE CAT FAB ───────────────────────────────────── */
+    /* ── CATEGORY RADIAL FAB ──────────────────────────────── */
+    .mode-tabs-wrap { position: relative; margin-bottom: 24px; }
     .cat-fab-wrap {
-      display: none; position: fixed; bottom: 24px; right: 14px; z-index: 250;
-      flex-direction: column-reverse; align-items: flex-end; gap: 8px;
-      pointer-events: none; /* wrapper is a large invisible box — only children opt back in */
+      display: none; position: absolute; top: -12px; right: -12px;
+      z-index: 60; pointer-events: none;
     }
     .cat-fab {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 18px; border-radius: 999px;
+      width: 46px; height: 46px; border-radius: 50%;
       background: var(--ink); color: #fff; border: none;
-      font-family: var(--font); font-size: 0.65rem; font-weight: 800;
-      letter-spacing: 0.08em; text-transform: uppercase;
+      display: flex; align-items: center; justify-content: center;
       cursor: pointer; box-shadow: 3px 3px 0 var(--teal);
-      pointer-events: auto; /* re-enable on the actual button */
+      animation: fab-breathe 3s ease-in-out infinite;
+      pointer-events: auto; position: relative; z-index: 2;
     }
-    .cat-fab-icon { font-size: 0.6rem; opacity: 0.7; transition: transform 240ms ease; display: inline-block; }
-    .cat-fab-wrap.open .cat-fab-icon { transform: rotate(180deg); }
-    .cat-dd-backdrop { display: none; position: fixed; inset: 0; z-index: 238; }
+    @keyframes fab-breathe {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50%       { transform: scale(1.07) translateY(-2px); }
+    }
+    .cat-fab-wrap.open .cat-fab { animation-play-state: paused; }
+    .cat-dd-backdrop { display: none; position: fixed; inset: 0; z-index: 55; }
     .cat-dd-backdrop.open { display: block; }
-    .cat-dropdown { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .cat-dropdown { position: absolute; top: 23px; left: 23px; width: 0; height: 0; }
     .cat-dd-item {
-      display: block; padding: 8px 16px; border-radius: 999px;
+      position: absolute; padding: 7px 13px; border-radius: 999px;
       border: 2px solid var(--ink); background: var(--bg); color: var(--ink);
-      font-family: var(--font); font-size: 0.66rem; font-weight: 800;
+      font-family: var(--font); font-size: 0.6rem; font-weight: 800;
       letter-spacing: 0.06em; text-transform: uppercase;
       cursor: pointer; white-space: nowrap; box-shadow: 2px 2px 0 var(--ink);
-      transform: translateY(12px); opacity: 0; pointer-events: none;
-      transition: transform 210ms ease, opacity 210ms ease;
+      transform: translate(calc(-50% + var(--fan-x, 0px)), calc(-50% + var(--fan-y, 0px))) scale(0);
+      transform-origin: right center;
+      opacity: 0; pointer-events: none;
+      transition: transform 280ms cubic-bezier(0.34, 1.4, 0.64, 1), opacity 180ms ease;
     }
-    .cat-dd-item:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .cat-dd-item:hover:not(.active) { background: var(--teal); color: #fff; border-color: var(--teal); box-shadow: 2px 2px 0 var(--teal-deep); }
     .cat-dd-item.active { background: var(--ink); color: #fff; }
-    .cat-fab-wrap.open .cat-dd-item { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .cat-fab-wrap.open .cat-dd-item {
+      transform: translate(calc(-50% + var(--fan-x, 0px)), calc(-50% + var(--fan-y, 0px))) scale(1);
+      opacity: 1; pointer-events: auto;
+    }
 
     @media (max-width: 959px) {
       .app-layout { grid-template-columns: 1fr; max-width: 540px; }
       .cat-sidebar { display: none; }
-      .cat-fab-wrap { display: flex; }
+      .cat-fab-wrap { display: block; }
     }
 
     @media (max-width: 640px) {
@@ -209,8 +216,8 @@
       .page-title { margin-bottom: 12px; }
       .page-subtitle { font-size: 0.82rem; margin-bottom: 14px; }
       /* Tighter app chrome */
-      .app-outer { padding-top: 20px; }
-      .mode-tabs { margin-bottom: 16px; }
+      .app-outer { padding-top: 50px; padding-bottom: 50px; }
+      .mode-tabs-wrap { margin-bottom: 16px; }
       .quiz-meta { margin-bottom: 12px; }
       .progress-wrap { margin-bottom: 14px; }
       /* Bigger "I know this" tap target */
@@ -260,7 +267,7 @@
     .card-cat-badge { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.28); text-align: center; }
     .card-seen-tag { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); border: 1.5px solid rgba(255,255,255,0.35); align-self: center; margin-top: 4px; }
     /* Teal overrides for quiz-prog-row when inside card-front */
-    .card-front .quiz-prog-row { margin-bottom: 0; }
+    .card-front .quiz-prog-row { margin-bottom: 32px; }
     .card-front .quiz-q-num { color: rgba(255,255,255,0.6); }
     .card-front .quiz-prog-track { background: rgba(255,255,255,0.2); }
     .card-front .quiz-prog-fill { background: rgba(255,255,255,0.75); }
@@ -363,14 +370,6 @@
   </div>
 </div>
 
-<!-- CATEGORY FAB (mobile) -->
-<div class="cat-fab-wrap" id="cat-fab-wrap">
-  <button class="cat-fab" id="cat-fab">
-    <span id="cat-fab-label">All</span>
-    <span class="cat-fab-icon">▾</span>
-  </button>
-  <div class="cat-dropdown" id="cat-dropdown"></div>
-</div>
 <div class="cat-dd-backdrop" id="cat-dd-backdrop"></div>
 
 <!-- APP -->
@@ -381,9 +380,22 @@
 
     <div class="app-center">
 
-      <div class="mode-tabs">
-        <button class="mode-tab active" id="tab-browse">Browse</button>
-        <button class="mode-tab"        id="tab-quiz">Quiz</button>
+      <div class="mode-tabs-wrap">
+        <div class="mode-tabs">
+          <button class="mode-tab active" id="tab-browse">Browse</button>
+          <button class="mode-tab"        id="tab-quiz">Quiz</button>
+        </div>
+        <div class="cat-fab-wrap" id="cat-fab-wrap">
+          <button class="cat-fab" id="cat-fab" aria-label="Choose category">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18" aria-hidden="true">
+              <rect x="2" y="2" width="7" height="7" rx="1.5"/>
+              <rect x="11" y="2" width="7" height="7" rx="1.5"/>
+              <rect x="2" y="11" width="7" height="7" rx="1.5"/>
+              <rect x="11" y="11" width="7" height="7" rx="1.5"/>
+            </svg>
+          </button>
+          <div class="cat-dropdown" id="cat-dropdown"></div>
+        </div>
       </div>
 
       <!-- BROWSE -->
@@ -530,12 +542,16 @@ function buildCatSidebars() {
 }
 
 function buildCatDropdown() {
-  var allItems = [{ cat: 'all', label: 'All 100' }];
+  var allItems = [{ cat: 'all', label: 'All' }];
   CATS.forEach(function(cat){ allItems.push({ cat: cat, label: cat }); });
   var dropdown = document.getElementById('cat-dropdown');
-  allItems.forEach(function(item) {
+  var r = 270, n = allItems.length;
+  allItems.forEach(function(item, i) {
     var btn = document.createElement('button');
     btn.className = 'cat-dd-item'; btn.dataset.cat = item.cat; btn.textContent = item.label;
+    var angle = (180 + i * 70 / (n - 1)) * Math.PI / 180;
+    btn.style.setProperty('--fan-x', (r * Math.cos(angle)).toFixed(1) + 'px');
+    btn.style.setProperty('--fan-y', (-r * Math.sin(angle)).toFixed(1) + 'px');
     dropdown.appendChild(btn);
   });
 }
@@ -548,16 +564,30 @@ function setCategory(cat) {
   filtered  = cat === 'all' ? allWords.slice() : allWords.filter(function(w){ return w.category === cat; });
   document.querySelectorAll('.sidebar-item').forEach(function(b){ b.classList.toggle('active', b.dataset.cat === cat); });
   document.querySelectorAll('.cat-dd-item').forEach(function(b){ b.classList.toggle('active', b.dataset.cat === cat); });
-  var fabLabel = document.getElementById('cat-fab-label');
-  if (fabLabel) fabLabel.textContent = cat === 'all' ? 'All' : cat;
   bIndex   = Math.min(loadPos(cat), filtered.length - 1);
   bFlipped = false;
   renderBrowse();
   if (activeMode === 'quiz') startQuiz();
 }
 
-function openCatFab()  { document.getElementById('cat-fab-wrap').classList.add('open');    document.getElementById('cat-dd-backdrop').classList.add('open'); }
-function closeCatFab() { document.getElementById('cat-fab-wrap').classList.remove('open'); document.getElementById('cat-dd-backdrop').classList.remove('open'); }
+function openCatFab() {
+  var items = document.querySelectorAll('.cat-dd-item');
+  items.forEach(function(item, i) {
+    item.style.transitionDelay = (i * 28) + 'ms, ' + (i * 28) + 'ms';
+  });
+  document.getElementById('cat-fab-wrap').classList.add('open');
+  document.getElementById('cat-dd-backdrop').classList.add('open');
+}
+function closeCatFab() {
+  var items = document.querySelectorAll('.cat-dd-item');
+  var n = items.length;
+  items.forEach(function(item, i) {
+    var d = (n - 1 - i) * 20;
+    item.style.transitionDelay = d + 'ms, ' + d + 'ms';
+  });
+  document.getElementById('cat-fab-wrap').classList.remove('open');
+  document.getElementById('cat-dd-backdrop').classList.remove('open');
+}
 
 /* ════════════════════════════════════════════════════════
    BROWSE
