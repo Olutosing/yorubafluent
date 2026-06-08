@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your First 100 Words — YorubaFluent</title>
-  <meta name="description" content="Learn your first 100 Yoruba words with interactive flashcards and quizzes.">
+  <title>YorubaFluent — 100 Words</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
   <style>
     /* ── TOKENS ───────────────────────────────────────────── */
     :root {
@@ -22,24 +23,13 @@
       --ink-faint:  #ABABAB;
       --bg:         #F5F2EC;
       --surface:    #FFFFFF;
-      --divider:    rgba(26,26,26,0.12);
       --shadow-sm:  3px 3px 0 #1A1A1A;
       --shadow-md:  5px 5px 0 #1A1A1A;
       --shadow-lg:  8px 8px 0 #1A1A1A;
-      --font:       'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
-      --font-display: 'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
+      --font:       'Plus Jakarta Sans', sans-serif;
       --ease:       cubic-bezier(0.4, 0, 0.2, 1);
       --dur:        140ms;
-      --dur-fast:   140ms;
-      --dur-normal: 280ms;
       --pad:        clamp(16px, 5vw, 60px);
-      --page-pad:   clamp(16px, 5vw, 60px);
-    }
-
-    @font-face {
-      font-family: 'Flegrei';
-      src: url('Flegrei-Yoruba.otf') format('opentype');
-      font-weight: normal; font-style: normal;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,55 +41,27 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV (overrides blog-ui.js injected styles) ───────── */
+    /* ── NAV ──────────────────────────────────────────────── */
     .nav {
       position: sticky; top: 0; z-index: 100;
       background: var(--ink);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 var(--pad); height: 52px;
     }
-    .nav-logo-group { display: flex; flex-direction: column; }
     .nav-logo {
-      font-family: var(--font); font-size: 1.05rem; font-weight: 900;
-      letter-spacing: -0.03em; color: var(--gold); text-decoration: none;
+      font-size: 1.05rem; font-weight: 900; letter-spacing: -0.03em;
+      color: #fff; text-decoration: none; display: flex; align-items: baseline; gap: 1px;
     }
-    .nav-byline { font-size: 0.5rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 1px; }
-    .pill-nav { display: flex; gap: 8px; align-items: center; }
+    .nav-logo-accent { color: var(--gold); }
+    .pill-nav { display: flex; gap: 8px; }
     .pill {
-      font-family: var(--font); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em;
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em;
       text-transform: uppercase; padding: 6px 14px; border-radius: 999px;
       text-decoration: none; border: 1.5px solid rgba(255,255,255,0.22);
-      color: rgba(255,255,255,0.6); transition: all var(--dur); display: inline-block;
+      color: rgba(255,255,255,0.6); transition: all var(--dur);
     }
     .pill:hover { border-color: #fff; color: #fff; }
     .pill-home { background: var(--coral); border-color: var(--coral); color: #fff; }
-    .pill-about { background: var(--gold); border-color: var(--gold); color: var(--ink); }
-    .pill-blog  { border-color: rgba(255,255,255,0.3); }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all var(--dur-normal) var(--ease); }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display: none; flex-direction: column; gap: 10px; padding: 16px var(--pad); background: var(--ink); border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 52px; z-index: 99; }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu .pill { width: fit-content; }
-    @media (max-width: 600px) { .pill-nav { display: none; } .hamburger { display: flex; } }
-
-    /* ── FOOTER ───────────────────────────────────────────── */
-    .footer { border-top: 3px solid var(--ink); padding: 20px var(--pad); background: var(--ink); }
-    .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
-    .footer-brand-group { display: flex; flex-direction: column; }
-    .footer-brand { font-family: var(--font); font-size: 1.5rem; font-weight: 900; letter-spacing: -0.03em; color: var(--gold); text-decoration: none; }
-    .footer-byline { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 2px; }
-    .footer-nav { display: flex; flex-direction: column; gap: 10px; }
-    .footer-nav a { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); text-decoration: none; transition: color var(--dur); }
-    .footer-nav a:hover { color: var(--gold); }
-    .footer-social { display: flex; gap: 18px; align-items: center; margin-bottom: 20px; }
-    .footer-social a { display: flex; color: rgba(255,255,255,0.4); text-decoration: none; transition: color var(--dur); }
-    .footer-social a svg { width: 18px; height: 18px; display: block; }
-    .footer-social a:hover { color: var(--gold); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-    .footer-copy { font-size: 0.68rem; color: rgba(255,255,255,0.22); letter-spacing: 0.06em; }
 
     /* ── PAGE HEADER ──────────────────────────────────────── */
     .page-header {
@@ -108,55 +70,84 @@
       position: relative; overflow: hidden;
     }
     .page-header::before {
-      content: ''; position: absolute; right: -80px; top: -100px;
+      content: '';
+      position: absolute; right: -80px; top: -100px;
       width: 460px; height: 460px; border-radius: 50%;
-      border: 52px solid rgba(255,255,255,0.05); pointer-events: none;
+      border: 52px solid rgba(255,255,255,0.05);
+      pointer-events: none;
     }
     .page-header::after {
-      content: ''; position: absolute; right: 80px; bottom: -60px;
+      content: '';
+      position: absolute; right: 80px; bottom: -60px;
       width: 180px; height: 180px; border-radius: 50%;
-      border: 28px solid rgba(255,255,255,0.04); pointer-events: none;
+      border: 28px solid rgba(255,255,255,0.04);
+      pointer-events: none;
     }
-    .page-header-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .page-header-inner {
+      max-width: 1100px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
     .page-title {
       font-size: clamp(4.2rem, 15vw, 10.5rem);
       font-weight: 900; line-height: 0.84;
-      letter-spacing: -0.045em; color: #fff; margin-bottom: 20px;
+      letter-spacing: -0.045em; color: #fff;
+      margin-bottom: 20px;
     }
-    .page-subtitle { font-size: 0.9rem; color: rgba(255,255,255,0.62); max-width: 340px; line-height: 1.65; margin-bottom: 22px; }
+    .page-subtitle {
+      font-size: 0.9rem; color: rgba(255,255,255,0.62);
+      max-width: 340px; line-height: 1.65; margin-bottom: 22px;
+    }
     .stat-chip {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 0.64rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
       padding: 6px 14px; border-radius: 999px;
-      background: var(--gold); color: var(--ink); border: 2px solid var(--ink);
+      background: var(--gold); color: var(--ink);
+      border: 2px solid var(--ink);
     }
 
     /* ── APP LAYOUT ───────────────────────────────────────── */
     .app-outer { padding: clamp(24px, 4vw, 44px) var(--pad) 80px; }
     .app-layout {
       max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 172px 1fr 172px;
+      display: grid;
+      grid-template-columns: 172px 1fr 172px;
       gap: 0 40px; align-items: start;
     }
     .app-center { min-width: 0; }
 
     /* ── SIDEBARS ─────────────────────────────────────────── */
-    .cat-sidebar { position: sticky; top: 72px; display: flex; flex-direction: column; gap: 3px; }
+    .cat-sidebar {
+      position: sticky; top: 72px;
+      display: flex; flex-direction: column; gap: 3px;
+    }
     .cat-sidebar--left  { padding-top: 98px; }
     .cat-sidebar--right { padding-top: 115px; }
 
     .sidebar-item {
       display: flex; align-items: center; justify-content: space-between;
       padding: 7px 10px; border-radius: 8px;
-      border: 2px solid transparent; background: transparent; color: var(--ink-mid);
-      font-family: var(--font); font-size: 0.66rem; font-weight: 700;
-      letter-spacing: 0.03em; text-transform: uppercase;
+      border: 2px solid transparent;
+      background: transparent; color: var(--ink-mid);
+      font-family: var(--font);
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
       cursor: pointer; white-space: nowrap; transition: all var(--dur);
     }
-    .sidebar-item:hover { border-color: rgba(15,130,122,0.45); color: var(--teal); background: rgba(15,130,122,0.06); }
-    .sidebar-item.active { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: 3px 3px 0 var(--teal); }
-    .sidebar-count { font-size: 0.58rem; font-weight: 800; padding: 1px 6px; border-radius: 999px; background: rgba(26,26,26,0.07); color: var(--ink-faint); }
-    .sidebar-item.active .sidebar-count { background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.7); }
+    .sidebar-item:hover {
+      border-color: rgba(15,130,122,0.45); color: var(--teal);
+      background: rgba(15,130,122,0.06);
+    }
+    .sidebar-item.active {
+      background: var(--ink); color: #fff; border-color: var(--ink);
+      box-shadow: 3px 3px 0 var(--teal);
+    }
+    .sidebar-count {
+      font-size: 0.58rem; font-weight: 800;
+      padding: 1px 6px; border-radius: 999px;
+      background: rgba(26,26,26,0.07); color: var(--ink-faint);
+    }
+    .sidebar-item.active .sidebar-count {
+      background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.7);
+    }
 
     /* ── MOBILE CAT FAB ───────────────────────────────────── */
     .cat-fab-wrap {
@@ -167,11 +158,14 @@
       display: flex; align-items: center; gap: 8px;
       padding: 10px 18px; border-radius: 999px;
       background: var(--ink); color: #fff; border: none;
-      font-family: var(--font); font-size: 0.65rem; font-weight: 800;
-      letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: var(--font);
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
       cursor: pointer; box-shadow: 3px 3px 0 var(--teal);
     }
-    .cat-fab-icon { font-size: 0.6rem; opacity: 0.7; transition: transform 240ms ease; display: inline-block; }
+    .cat-fab-icon {
+      font-size: 0.6rem; opacity: 0.7;
+      transition: transform 240ms ease; display: inline-block;
+    }
     .cat-fab-wrap.open .cat-fab-icon { transform: rotate(180deg); }
     .cat-dd-backdrop { display: none; position: fixed; inset: 0; z-index: 238; }
     .cat-dd-backdrop.open { display: block; }
@@ -179,9 +173,10 @@
     .cat-dd-item {
       display: block; padding: 8px 16px; border-radius: 999px;
       border: 2px solid var(--ink); background: var(--bg); color: var(--ink);
-      font-family: var(--font); font-size: 0.66rem; font-weight: 800;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      cursor: pointer; white-space: nowrap; box-shadow: 2px 2px 0 var(--ink);
+      font-family: var(--font);
+      font-size: 0.66rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 2px 2px 0 var(--ink);
       transform: translateY(-12px); opacity: 0; pointer-events: none;
       transition: transform 210ms ease, opacity 210ms ease;
     }
@@ -197,15 +192,19 @@
 
     /* ── MODE TABS ────────────────────────────────────────── */
     .mode-tabs {
-      display: flex; border: 2.5px solid var(--ink);
+      display: flex;
+      border: 2.5px solid var(--ink);
       border-radius: 14px; overflow: hidden;
-      margin-bottom: 24px; box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
     }
     .mode-tab {
-      flex: 1; font-family: var(--font);
+      flex: 1;
+      font-family: var(--font);
       font-size: 0.75rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase;
       padding: 13px 20px; border: none; cursor: pointer;
-      background: var(--surface); color: var(--ink-mid); transition: all var(--dur);
+      background: var(--surface); color: var(--ink-mid);
+      transition: all var(--dur);
     }
     .mode-tab:first-child { border-right: 2.5px solid var(--ink); }
     .mode-tab.active { background: var(--ink); color: #fff; }
@@ -216,10 +215,20 @@
 
     /* ── PROGRESS ─────────────────────────────────────────── */
     .progress-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-    .progress-track { flex: 1; height: 7px; background: rgba(26,26,26,0.09); border-radius: 99px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--teal); border-radius: 99px; transition: width 0.5s var(--ease); width: 0%; }
+    .progress-track {
+      flex: 1; height: 7px;
+      background: rgba(26,26,26,0.09);
+      border-radius: 99px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; background: var(--teal);
+      border-radius: 99px; transition: width 0.5s var(--ease); width: 0%;
+    }
     .progress-fill.complete { background: var(--gold); }
-    .progress-label { font-size: 0.67rem; font-weight: 800; letter-spacing: 0.05em; color: var(--ink-mid); white-space: nowrap; min-width: 64px; text-align: right; }
+    .progress-label {
+      font-size: 0.67rem; font-weight: 800; letter-spacing: 0.05em;
+      color: var(--ink-mid); white-space: nowrap; min-width: 64px; text-align: right;
+    }
     .progress-label.complete { color: var(--gold-deep); }
 
     /* ── BROWSE CARD ──────────────────────────────────────── */
@@ -236,67 +245,190 @@
     .card-face {
       position: absolute; inset: 0; border-radius: 18px;
       backface-visibility: hidden; -webkit-backface-visibility: hidden;
-      border: 3px solid var(--ink); padding: 24px 28px;
+      border: 3px solid var(--ink);
+      padding: 24px 28px;
       display: flex; flex-direction: column;
     }
-    .card-front { background: var(--teal); box-shadow: var(--shadow-lg); align-items: center; justify-content: center; text-align: center; }
-    .card-front-meta { position: absolute; top: 18px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; }
-    .card-cat-badge { font-size: 0.57rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.32); }
-    .card-seen-tag { font-size: 0.57rem; font-weight: 800; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 999px; background: var(--gold); color: var(--ink); border: 1.5px solid rgba(26,26,26,0.4); }
-    .card-word { font-weight: 900; font-size: clamp(2.8rem, 10vw, 5.8rem); color: #fff; line-height: 0.95; letter-spacing: -0.03em; word-break: break-word; max-width: 100%; }
-    .card-reveal-hint { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; font-size: 0.56rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
-    .card-know-btn { position: absolute; bottom: 12px; right: 18px; font-family: var(--font); font-size: 0.57rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.82); cursor: pointer; transition: all var(--dur); z-index: 2; }
+
+    .card-front {
+      background: var(--teal);
+      box-shadow: var(--shadow-lg);
+      align-items: center; justify-content: center; text-align: center;
+    }
+    .card-front-meta {
+      position: absolute; top: 18px; left: 20px; right: 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .card-cat-badge {
+      font-size: 0.57rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9);
+      border: 1.5px solid rgba(255,255,255,0.32);
+    }
+    .card-seen-tag {
+      font-size: 0.57rem; font-weight: 800; letter-spacing: 0.06em;
+      padding: 4px 10px; border-radius: 999px;
+      background: var(--gold); color: var(--ink);
+      border: 1.5px solid rgba(26,26,26,0.4);
+    }
+    .card-word {
+      font-weight: 900;
+      font-size: clamp(2.8rem, 10vw, 5.8rem);
+      color: #fff; line-height: 0.95; letter-spacing: -0.03em;
+      word-break: break-word; max-width: 100%;
+    }
+    .card-reveal-hint {
+      position: absolute; bottom: 16px; left: 0; right: 0; text-align: center;
+      font-size: 0.56rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+    }
+    .card-know-btn {
+      position: absolute; bottom: 12px; right: 18px;
+      font-family: var(--font);
+      font-size: 0.57rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.82);
+      cursor: pointer; transition: all var(--dur); z-index: 2;
+    }
     .card-know-btn:hover { background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.7); }
-    .card-back { transform: rotateY(180deg); background: var(--surface); box-shadow: var(--shadow-lg); justify-content: center; gap: 12px; }
-    .card-meaning { font-weight: 900; font-size: clamp(2rem, 8vw, 4.2rem); color: var(--ink); line-height: 0.95; letter-spacing: -0.035em; }
-    .card-example-yo { font-size: 0.9rem; color: var(--teal); font-style: italic; line-height: 1.6; padding-top: 10px; border-top: 2px solid rgba(15,130,122,0.15); }
+
+    .card-back {
+      transform: rotateY(180deg);
+      background: var(--surface);
+      box-shadow: var(--shadow-lg);
+      justify-content: center; gap: 12px;
+    }
+    .card-meaning {
+      font-weight: 900;
+      font-size: clamp(2rem, 8vw, 4.2rem);
+      color: var(--ink); line-height: 0.95; letter-spacing: -0.035em;
+    }
+    .card-example-yo {
+      font-size: 0.9rem; color: var(--teal); font-style: italic; line-height: 1.6;
+      padding-top: 10px; border-top: 2px solid rgba(15,130,122,0.15);
+    }
     .card-example-en { font-size: 0.8rem; color: var(--ink-mid); line-height: 1.5; }
 
     /* ── BROWSE NAV ───────────────────────────────────────── */
     .browse-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .btn-nav { font-family: var(--font); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; padding: 11px 24px; border-radius: 999px; border: 2.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; transition: all var(--dur); flex-shrink: 0; box-shadow: var(--shadow-sm); }
+    .btn-nav {
+      font-family: var(--font);
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em;
+      padding: 11px 24px; border-radius: 999px;
+      border: 2.5px solid var(--ink);
+      background: var(--surface); color: var(--ink);
+      cursor: pointer; transition: all var(--dur);
+      flex-shrink: 0; box-shadow: var(--shadow-sm);
+    }
     .btn-nav:hover:not(:disabled) { background: var(--ink); color: #fff; box-shadow: none; transform: translate(3px, 3px); }
     .btn-nav:disabled { opacity: 0.25; cursor: not-allowed; box-shadow: none; }
     .btn-nav-primary { background: var(--teal); border-color: var(--teal); color: #fff; }
     .btn-nav-primary:hover:not(:disabled) { background: var(--teal-deep); border-color: var(--teal-deep); }
-    .browse-counter { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em; color: var(--ink-mid); text-align: center; flex-shrink: 0; }
+    .browse-counter {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em;
+      color: var(--ink-mid); text-align: center; flex-shrink: 0;
+    }
 
     /* ── QUIZ ─────────────────────────────────────────────── */
     .quiz-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
     .quiz-score { font-size: 0.8rem; font-weight: 700; color: var(--ink-mid); }
     .quiz-score strong { color: var(--teal); font-size: 1.05rem; font-weight: 900; }
-    .btn-reset { font-family: var(--font); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; border: 2px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; transition: all var(--dur); box-shadow: 2px 2px 0 var(--ink); }
+    .btn-reset {
+      font-family: var(--font);
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 7px 14px; border-radius: 999px;
+      border: 2px solid var(--ink); background: var(--surface); color: var(--ink);
+      cursor: pointer; transition: all var(--dur);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
     .btn-reset:hover { background: var(--coral); border-color: var(--coral); color: #fff; box-shadow: none; transform: translate(2px, 2px); }
-    .quiz-card { background: var(--gold); border: 3px solid var(--ink); border-radius: 18px; padding: clamp(28px, 5vw, 44px) clamp(20px, 4vw, 32px) clamp(24px, 4vw, 36px); text-align: center; box-shadow: var(--shadow-lg); }
-    .quiz-instruction { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,26,26,0.42); margin-bottom: 10px; }
-    .quiz-prompt { font-size: clamp(1.6rem, 5.5vw, 2.6rem); font-weight: 900; color: var(--ink); line-height: 1.1; margin-bottom: 28px; letter-spacing: -0.03em; }
+
+    .quiz-card {
+      background: var(--gold);
+      border: 3px solid var(--ink);
+      border-radius: 18px;
+      padding: clamp(28px, 5vw, 44px) clamp(20px, 4vw, 32px) clamp(24px, 4vw, 36px);
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+    .quiz-instruction {
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(26,26,26,0.42); margin-bottom: 10px;
+    }
+    .quiz-prompt {
+      font-size: clamp(1.6rem, 5.5vw, 2.6rem);
+      font-weight: 900; color: var(--ink);
+      line-height: 1.1; margin-bottom: 28px;
+      letter-spacing: -0.03em;
+    }
     .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 380px) { .quiz-options { grid-template-columns: 1fr; } }
-    .quiz-opt { font-family: var(--font); font-size: 1rem; font-weight: 800; padding: 18px 14px; border-radius: 12px; border: 2.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; text-align: center; line-height: 1.3; transition: all var(--dur); box-shadow: 3px 3px 0 var(--ink); }
+
+    .quiz-opt {
+      font-family: var(--font);
+      font-size: 1rem; font-weight: 800;
+      padding: 18px 14px; border-radius: 12px;
+      border: 2.5px solid var(--ink);
+      background: var(--surface); color: var(--ink);
+      cursor: pointer; text-align: center; line-height: 1.3;
+      transition: all var(--dur);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
     .quiz-opt:hover:not(:disabled) { background: var(--ink); color: #fff; box-shadow: none; transform: translate(3px, 3px); }
     .quiz-opt.correct { background: var(--teal); border-color: var(--teal-deep); color: #fff; box-shadow: 3px 3px 0 var(--teal-deep); }
     .quiz-opt.wrong   { background: var(--coral); border-color: var(--coral-deep); color: #fff; box-shadow: 3px 3px 0 var(--coral-deep); }
     .quiz-opt.dim     { background: rgba(255,255,255,0.35); border-color: rgba(26,26,26,0.12); color: rgba(26,26,26,0.32); box-shadow: none; }
     .quiz-opt:disabled { cursor: default; }
-    .btn-quiz-next { font-family: var(--font); width: 100%; margin-top: 18px; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; padding: 14px; border-radius: 12px; border: 2.5px solid var(--ink); background: var(--teal); color: #fff; cursor: pointer; transition: all var(--dur); box-shadow: var(--shadow-sm); }
+
+    .btn-quiz-next {
+      font-family: var(--font);
+      width: 100%; margin-top: 18px;
+      font-size: 0.74rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase;
+      padding: 14px; border-radius: 12px;
+      border: 2.5px solid var(--ink);
+      background: var(--teal); color: #fff;
+      cursor: pointer; transition: all var(--dur);
+      box-shadow: var(--shadow-sm);
+    }
     .btn-quiz-next:hover { background: var(--teal-deep); box-shadow: none; transform: translate(3px, 3px); }
+
     .quiz-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+
+    /* ── QUIZ DONE ────────────────────────────────────────── */
     .quiz-done { text-align: center; padding: clamp(28px, 5vw, 44px) 16px clamp(24px, 4vw, 32px); }
-    .quiz-done-glyph { font-size: clamp(2.2rem, 6vw, 3.5rem); font-weight: 900; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.04em; }
-    .quiz-done-title { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 900; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.04em; }
+    .quiz-done-glyph {
+      font-size: clamp(2.2rem, 6vw, 3.5rem); font-weight: 900;
+      color: var(--ink); margin-bottom: 10px; letter-spacing: -0.04em;
+    }
+    .quiz-done-title {
+      font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 900;
+      color: var(--ink); margin-bottom: 8px; letter-spacing: -0.04em;
+    }
     .quiz-done-sub { font-size: 0.9rem; color: rgba(26,26,26,0.55); margin-bottom: 28px; line-height: 1.5; }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    .footer { border-top: 3px solid var(--ink); padding: 20px var(--pad); background: var(--ink); }
+    .footer-copy { font-size: 0.64rem; color: rgba(255,255,255,0.32); }
   </style>
 </head>
 <body>
 
-<div id="site-nav"></div>
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">Yoruba<span class="nav-logo-accent">Fluent</span></a>
+  <div class="pill-nav">
+    <a href="#" class="pill pill-home">Home</a>
+    <a href="#" class="pill pill-blog">Blog</a>
+  </div>
+</nav>
 
 <!-- PAGE HEADER -->
 <div class="page-header">
   <div class="page-header-inner">
     <h1 class="page-title">100<br>Words</h1>
     <p class="page-subtitle">Build your Yorùbá vocabulary foundation one word at a time. Browse, flip, quiz yourself.</p>
-    <span class="stat-chip" id="global-stat">0 / 100 seen</span>
+    <span class="stat-chip" id="global-stat">0 / 20 seen</span>
   </div>
 </div>
 
@@ -327,8 +459,9 @@
       <div id="panel-browse" class="panel active">
         <div class="progress-wrap">
           <div class="progress-track"><div class="progress-fill" id="b-fill"></div></div>
-          <span class="progress-label" id="b-label">0 / 100</span>
+          <span class="progress-label" id="b-label">0 / 20</span>
         </div>
+
         <div class="browse-perspective">
           <div class="browse-card" id="browse-card">
             <div class="card-face card-front">
@@ -347,9 +480,10 @@
             </div>
           </div>
         </div>
+
         <div class="browse-nav">
           <button class="btn-nav"                 id="btn-prev">← prev</button>
-          <span   class="browse-counter"          id="b-counter">1 / 100</span>
+          <span   class="browse-counter"          id="b-counter">1 / 20</span>
           <button class="btn-nav btn-nav-primary" id="btn-next">next →</button>
         </div>
       </div>
@@ -360,11 +494,13 @@
           <span class="quiz-score" id="q-score">Score: <strong>0</strong> / 0</span>
           <button class="btn-reset" id="btn-reset">Reset</button>
         </div>
+
         <div class="quiz-card" id="quiz-card">
           <div class="quiz-instruction">Which Yoruba word means…</div>
           <div class="quiz-prompt" id="q-prompt"></div>
           <div class="quiz-options" id="q-options"></div>
         </div>
+
         <div class="quiz-card" id="quiz-done-screen" style="display:none">
           <div class="quiz-done">
             <div class="quiz-done-glyph">Ẹ ṣé</div>
@@ -373,6 +509,7 @@
             <button class="btn-quiz-next" id="btn-quiz-again">Play again →</button>
           </div>
         </div>
+
         <div class="quiz-nav">
           <button class="btn-nav" id="btn-qprev" style="display:none">← prev</button>
           <button class="btn-nav btn-nav-primary" id="btn-qnext" style="display:none">next →</button>
@@ -386,55 +523,21 @@
   </div>
 </div>
 
-<div id="site-footer"></div>
-<script src="blog/blog-ui.js"></script>
+<footer class="footer">
+  <span class="footer-copy">© 2026 YorubaFluent</span>
+</footer>
+
 <script>
-/* ════════════════════════════════════════════════════════
-   STATE
-   ════════════════════════════════════════════════════════ */
-var allWords   = [];
-var filtered   = [];
-var activeMode = 'browse';
-var activeCat  = 'all';
-
-var bIndex   = 0;
-var bFlipped = false;
-
-var qCorrect  = 0;
-var qTotal    = 0;
-var qOrder    = [];
-var qCursor   = 0;
-var qAnswered = false;
-var qHistory  = [];
-
-var STORAGE_SEEN = 'yfl-100-seen';
-var STORAGE_POS  = 'yfl-100-pos';
+/* ── STATE ─────────────────────────────────────────────── */
+var allWords = [], filtered = [], activeMode = 'browse', activeCat = 'all';
+var bIndex = 0, bFlipped = false;
+var qCorrect = 0, qTotal = 0, qOrder = [], qCursor = 0, qAnswered = false, qHistory = [];
 var seenIds = new Set();
-
-/* ════════════════════════════════════════════════════════
-   PERSISTENCE
-   ════════════════════════════════════════════════════════ */
-function loadSeen() {
-  try { JSON.parse(localStorage.getItem(STORAGE_SEEN) || '[]').forEach(function(id){ seenIds.add(id); }); } catch(e){}
-}
-function saveSeen() {
-  try { localStorage.setItem(STORAGE_SEEN, JSON.stringify(Array.from(seenIds))); } catch(e){}
-}
-function loadPos(cat) {
-  try { var raw = JSON.parse(localStorage.getItem(STORAGE_POS) || '{}'); return typeof raw[cat] === 'number' ? raw[cat] : 0; } catch(e){ return 0; }
-}
-function savePos(cat, idx) {
-  try { var raw = JSON.parse(localStorage.getItem(STORAGE_POS) || '{}'); raw[cat] = idx; localStorage.setItem(STORAGE_POS, JSON.stringify(raw)); } catch(e){}
-}
-
-/* ════════════════════════════════════════════════════════
-   INIT
-   ════════════════════════════════════════════════════════ */
 var CATS = ['Greetings','Family','Food & Drink','Body','Time','Places','Nature','Verbs','Adjectives','Concepts'];
 
+/* ── INIT ──────────────────────────────────────────────── */
 function init(words) {
   allWords = words;
-  loadSeen();
   buildCatSidebars();
   buildCatDropdown();
   setCategory('all');
@@ -445,26 +548,24 @@ function buildCatSidebars() {
   var allItems = [{ cat: 'all', label: 'All', n: allWords.length }];
   CATS.forEach(function(cat) {
     var n = allWords.filter(function(w){ return w.category === cat; }).length;
-    allItems.push({ cat: cat, label: cat, n: n });
+    if (n > 0) allItems.push({ cat: cat, label: cat, n: n });
   });
-
   function makeBtn(item) {
     var btn = document.createElement('button');
     btn.className = 'sidebar-item'; btn.dataset.cat = item.cat;
     btn.innerHTML = '<span>' + item.label + '</span><span class="sidebar-count">' + item.n + '</span>';
     return btn;
   }
-
-  var left  = document.getElementById('sidebar-left');
+  var left = document.getElementById('sidebar-left');
   var right = document.getElementById('sidebar-right');
-  allItems.slice(0, 6).forEach(function(item){ left.appendChild(makeBtn(item)); });
-  allItems.slice(6).forEach(function(item){ right.appendChild(makeBtn(item)); });
+  allItems.slice(0, Math.ceil(allItems.length / 2)).forEach(function(i){ left.appendChild(makeBtn(i)); });
+  allItems.slice(Math.ceil(allItems.length / 2)).forEach(function(i){ right.appendChild(makeBtn(i)); });
 }
 
 function buildCatDropdown() {
-  var allItems = [{ cat: 'all', label: 'All 100' }];
-  CATS.forEach(function(cat){ allItems.push({ cat: cat, label: cat }); });
   var dropdown = document.getElementById('cat-dropdown');
+  var allItems = [{ cat: 'all', label: 'All' }];
+  CATS.forEach(function(cat) { allItems.push({ cat: cat, label: cat }); });
   allItems.forEach(function(item) {
     var btn = document.createElement('button');
     btn.className = 'cat-dd-item'; btn.dataset.cat = item.cat; btn.textContent = item.label;
@@ -472,18 +573,15 @@ function buildCatDropdown() {
   });
 }
 
-/* ════════════════════════════════════════════════════════
-   CATEGORY
-   ════════════════════════════════════════════════════════ */
+/* ── CATEGORY ──────────────────────────────────────────── */
 function setCategory(cat) {
   activeCat = cat;
-  filtered  = cat === 'all' ? allWords.slice() : allWords.filter(function(w){ return w.category === cat; });
+  filtered = cat === 'all' ? allWords.slice() : allWords.filter(function(w){ return w.category === cat; });
   document.querySelectorAll('.sidebar-item').forEach(function(b){ b.classList.toggle('active', b.dataset.cat === cat); });
   document.querySelectorAll('.cat-dd-item').forEach(function(b){ b.classList.toggle('active', b.dataset.cat === cat); });
   var fabLabel = document.getElementById('cat-fab-label');
   if (fabLabel) fabLabel.textContent = cat === 'all' ? 'All' : cat;
-  bIndex   = Math.min(loadPos(cat), filtered.length - 1);
-  bFlipped = false;
+  bIndex = 0; bFlipped = false;
   renderBrowse();
   if (activeMode === 'quiz') startQuiz();
 }
@@ -491,9 +589,7 @@ function setCategory(cat) {
 function openCatFab()  { document.getElementById('cat-fab-wrap').classList.add('open');    document.getElementById('cat-dd-backdrop').classList.add('open'); }
 function closeCatFab() { document.getElementById('cat-fab-wrap').classList.remove('open'); document.getElementById('cat-dd-backdrop').classList.remove('open'); }
 
-/* ════════════════════════════════════════════════════════
-   BROWSE
-   ════════════════════════════════════════════════════════ */
+/* ── BROWSE ────────────────────────────────────────────── */
 function renderBrowse() {
   if (!filtered.length) return;
   var w = filtered[bIndex];
@@ -517,9 +613,9 @@ function renderBrowse() {
 }
 
 function updateBrowseProgress() {
-  var seen  = filtered.filter(function(w){ return seenIds.has(w.id); }).length;
+  var seen = filtered.filter(function(w){ return seenIds.has(w.id); }).length;
   var total = filtered.length, pct = total ? (seen / total * 100) : 0;
-  var fill  = document.getElementById('b-fill'), label = document.getElementById('b-label');
+  var fill = document.getElementById('b-fill'), label = document.getElementById('b-label');
   fill.style.width = pct + '%';
   var done = seen === total && total > 0;
   fill.classList.toggle('complete', done); label.classList.toggle('complete', done);
@@ -537,7 +633,7 @@ function flipCard() {
   if (bFlipped && filtered.length) {
     var w = filtered[bIndex];
     if (!seenIds.has(w.id)) {
-      seenIds.add(w.id); saveSeen();
+      seenIds.add(w.id);
       document.getElementById('f-seen').style.display = '';
       updateBrowseProgress(); updateGlobalStat();
     }
@@ -549,7 +645,7 @@ function navBrowse(dir) {
   if (next < 0 || next >= filtered.length) return;
   var card = document.getElementById('browse-card'), wasFlipped = bFlipped;
   if (bFlipped) { card.style.transition = 'none'; card.classList.remove('flipped'); bFlipped = false; }
-  function doSwap() { bIndex = next; savePos(activeCat, bIndex); renderBrowse(); }
+  function doSwap() { bIndex = next; renderBrowse(); }
   if (wasFlipped) {
     var outA = dir > 0 ? 'rotateY(90deg)' : 'rotateY(-90deg)', inA = dir > 0 ? 'rotateY(-90deg)' : 'rotateY(90deg)';
     card.style.transition = 'transform 170ms ease-in'; card.style.transform = outA;
@@ -568,14 +664,12 @@ function markKnown(e) {
   e.stopPropagation();
   if (!filtered.length) return;
   var w = filtered[bIndex];
-  if (!seenIds.has(w.id)) { seenIds.add(w.id); saveSeen(); updateBrowseProgress(); updateGlobalStat(); }
+  if (!seenIds.has(w.id)) { seenIds.add(w.id); updateBrowseProgress(); updateGlobalStat(); }
   if (bIndex < filtered.length - 1) navBrowse(1);
   else document.getElementById('f-seen').style.display = '';
 }
 
-/* ════════════════════════════════════════════════════════
-   QUIZ
-   ════════════════════════════════════════════════════════ */
+/* ── QUIZ ──────────────────────────────────────────────── */
 function shuffle(a) {
   var arr = a.slice();
   for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
@@ -592,9 +686,9 @@ function startQuiz() {
 }
 
 function getDistractors(word, count) {
-  var same   = allWords.filter(function(w){ return w.category === word.category && w.id !== word.id; });
+  var same = allWords.filter(function(w){ return w.category === word.category && w.id !== word.id; });
   var others = allWords.filter(function(w){ return w.category !== word.category; });
-  var pool   = shuffle(same.concat(others)), seen = new Set([word.yoruba]), result = [];
+  var pool = shuffle(same.concat(others)), seen = new Set([word.yoruba]), result = [];
   for (var i = 0; i < pool.length && result.length < count; i++) {
     if (!seen.has(pool[i].yoruba)) { seen.add(pool[i].yoruba); result.push(pool[i]); }
   }
@@ -606,7 +700,7 @@ function renderQuiz() {
   if (qCursor >= qOrder.length) {
     document.getElementById('quiz-card').style.display = 'none';
     document.getElementById('quiz-done-screen').style.display = '';
-    document.getElementById('quiz-done-sub').textContent = qCorrect + ' correct out of ' + qTotal + ' · ' + filtered.length + ' words';
+    document.getElementById('quiz-done-sub').textContent = qCorrect + ' correct out of ' + qTotal;
     btnPrev.style.display = qHistory.length > 0 ? '' : 'none'; btnPrev.disabled = false;
     btnNext.style.display = 'none'; return;
   }
@@ -651,9 +745,7 @@ function advanceQuiz()  { if (!qAnswered) return; qCursor++; renderQuiz(); }
 function retreatQuiz()  { if (qCursor > 0) { qCursor--; renderQuiz(); } }
 function updateQuizScore() { document.getElementById('q-score').innerHTML = 'Score: <strong>' + qCorrect + '</strong> / ' + qTotal; }
 
-/* ════════════════════════════════════════════════════════
-   EVENTS
-   ════════════════════════════════════════════════════════ */
+/* ── EVENTS ────────────────────────────────────────────── */
 function bindEvents() {
   document.getElementById('tab-browse').addEventListener('click', function() {
     if (activeMode === 'browse') return; activeMode = 'browse';
@@ -681,12 +773,31 @@ function bindEvents() {
   document.getElementById('btn-qprev').addEventListener('click', retreatQuiz);
 }
 
-fetch('./yoruba-100.json')
-  .then(r => r.json())
-  .then(words => init(words))
-  .catch(() => {
-    document.getElementById('global-stat').textContent = 'Could not load — open via local server';
-  });
+/* ── VOCABULARY ────────────────────────────────────────── */
+var WORDS = [
+  { id:1,  yoruba:"Ẹ káàárọ̀",  meaning:"Good morning",      category:"Greetings",    sent_yo:"Ẹ káàárọ̀, ṣé daadaa ni?",      sent_en:"Good morning, how are you?" },
+  { id:5,  yoruba:"O dàbọ̀",    meaning:"Goodbye",            category:"Greetings",    sent_yo:"O dàbọ̀, a maa padà wá.",        sent_en:"Goodbye, we will come back." },
+  { id:12, yoruba:"Ìyá",        meaning:"Mother",             category:"Family",       sent_yo:"Ìyá mi ń jẹun.",                 sent_en:"My mother is eating." },
+  { id:13, yoruba:"Bàbá",       meaning:"Father",             category:"Family",       sent_yo:"Bàbá mi jẹ́ olùkọ̀.",           sent_en:"My father is a teacher." },
+  { id:21, yoruba:"Oúnjẹ",      meaning:"Food",               category:"Food & Drink", sent_yo:"Oúnjẹ náà dára.",                sent_en:"The food is good." },
+  { id:26, yoruba:"Ìyán",       meaning:"Pounded yam",        category:"Food & Drink", sent_yo:"Ìyán àti ọbẹ̀ dára.",           sent_en:"Pounded yam and soup is good." },
+  { id:31, yoruba:"Orí",        meaning:"Head",               category:"Body",         sent_yo:"Orí ń fọ́ mi.",                  sent_en:"I have a headache." },
+  { id:33, yoruba:"Ọwọ́",       meaning:"Hand",               category:"Body",         sent_yo:"Fọ ọwọ́ rẹ dáadáa.",            sent_en:"Wash your hands well." },
+  { id:41, yoruba:"Ọjọ́",       meaning:"Day",                category:"Time",         sent_yo:"Ọjọ́ tuntun, àǹfààní tuntun.", sent_en:"A new day, a new opportunity." },
+  { id:50, yoruba:"Ọ̀la",       meaning:"Tomorrow",           category:"Time",         sent_yo:"Ọ̀la a maa padà.",              sent_en:"Tomorrow we will return." },
+  { id:51, yoruba:"Ilé",        meaning:"Home / House",       category:"Places",       sent_yo:"Ilé mi wà nísàlẹ̀ òkè náà.",   sent_en:"My home is at the foot of the hill." },
+  { id:54, yoruba:"Ọjà",        meaning:"Market",             category:"Places",       sent_yo:"Ìyá mi ń tà nkan ní ọjà.",      sent_en:"My mother sells at the market." },
+  { id:60, yoruba:"Òjò",        meaning:"Rain",               category:"Nature",       sent_yo:"Òjò ń rọ̀.",                    sent_en:"It is raining." },
+  { id:62, yoruba:"Igi",        meaning:"Tree / Wood",        category:"Nature",       sent_yo:"Igi náà ga.",                    sent_en:"The tree is tall." },
+  { id:68, yoruba:"Lọ",         meaning:"To go",              category:"Verbs",        sent_yo:"Mo lọ sí ọjà.",                 sent_en:"I went to the market." },
+  { id:80, yoruba:"Fẹ́",        meaning:"To want / love",     category:"Verbs",        sent_yo:"Mo fẹ́ kọ́ Yorùbá.",            sent_en:"I want to learn Yoruba." },
+  { id:81, yoruba:"Dára",       meaning:"Good / Beautiful",   category:"Adjectives",   sent_yo:"Ohun gbogbo dára.",              sent_en:"Everything is good." },
+  { id:83, yoruba:"Tóbi",       meaning:"Big / Large",        category:"Adjectives",   sent_yo:"Ilé rẹ tóbi.",                  sent_en:"Your house is big." },
+  { id:97, yoruba:"Èdè",        meaning:"Language",           category:"Concepts",     sent_yo:"Èdè Yorùbá dára.",              sent_en:"The Yoruba language is beautiful." },
+  { id:100,yoruba:"Àlàáfíà",    meaning:"Peace / Wellbeing",  category:"Concepts",     sent_yo:"Kí alàáfíà Ọlọrun wà pẹ̀lú rẹ.", sent_en:"May the peace of God be with you." }
+];
+
+init(WORDS);
 </script>
 
 </body>

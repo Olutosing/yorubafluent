@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YorubaFluent — 100 Words Quiz (for redesign)</title>
+
+  <!--
+  ================================================================
+  REDESIGN BRIEF
+  ================================================================
+  Please redesign this Yoruba vocabulary game. Keep all the JS
+  logic exactly as-is — only change the visual design and layout.
+
+  THE GAME has two modes:
+
+  BROWSE — flip-card flashcards. User taps a card to reveal the
+  English meaning, then navigates prev/next. Progress is tracked.
+
+  QUIZ — multiple choice. A meaning is shown, user picks the
+  correct Yoruba word from 4 options. Score is tracked.
+
+  Categories (10 total) let the user filter to a word group.
+  On desktop: category list in left/right sidebars.
+  On mobile: floating button that opens a dropdown.
+
+  WHAT TO REDESIGN:
+  - Full visual redesign — layout, cards, typography, spacing
+  - Mobile-first and fully responsive (phone is the primary use)
+  - The category sidebar pattern can change on mobile as long as
+    the filtering still works
+  - Keep the teal/coral/gold palette or evolve it — your call
+  - Font: Plus Jakarta Sans (already loaded from Google Fonts)
+
+  WHAT NOT TO TOUCH:
+  - All function names, element IDs, and JS logic must stay the same
+  - The WORDS array at the bottom — do not modify it
+  - The Google Fonts link
+
+  Return a single self-contained HTML file.
+
+  VOCABULARY DATA is the WORDS array at the bottom of this file.
+  In production it loads from yoruba-100.json (100 words).
+  These 20 sample words cover all 10 categories.
+
+  FONTS in use:
+  - Plus Jakarta Sans (Google Fonts) — UI and body
+  - Flegrei (custom .otf) — display/logo only; safe to replace
+
+  COLORS:
+  --teal:   #0F827A  (primary)
+  --coral:  #E07A5F  (accent)
+  --gold:   #FFB300  (quiz card bg, progress complete)
+  ================================================================
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── TOKENS ────────────────────────────────────────── */
+    :root {
+      --bg:             #FDFDFD;
+      --ink:            #212121;
+      --ink-muted:      #636363;
+      --ink-mid:        #767676;
+      --ink-faint:      #BDBDBD;
+      --card-bg:        #F5F5F5;
+      --divider:        rgba(33,33,33,0.14);
+      --gold:           #FFB300;
+      --teal:           #0F827A;
+      --teal-deep:      #0A5C56;
+      --coral:          #E07A5F;
+      --coral-deep:     #C45E44;
+      --ease:           cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-out:       cubic-bezier(0.34, 1.56, 0.64, 1);
+      --dur-fast:       150ms;
+      --dur-normal:     280ms;
+      --card-shadow:    0 18px 44px -28px rgba(28,18,10,0.40);
+      --font-sans:      'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
+      --page-pad:       clamp(16px, 4vw, 48px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ───────────────────────────────────────────── */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem var(--page-pad);
+      border-bottom: 1px solid var(--divider);
+      background: var(--bg);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { font-size: 1.4rem; font-weight: 900; color: var(--ink); letter-spacing: -0.03em; text-decoration: none; }
+    .pill-nav { display: flex; gap: 8px; }
+    .pill { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.38rem 1rem; border-radius: 999px; border: none; cursor: pointer; text-decoration: none; }
+    .pill-home  { background: var(--coral); color: #fff; }
+    .pill-blog  { background: var(--teal);  color: #fff; }
+
+    /* ─── PAGE HEADER ───────────────────────────────────── */
+    .page-header {
+      background: var(--teal);
+      padding: 48px var(--page-pad) 44px;
+    }
+    .page-header-inner { max-width: 640px; margin: 0 auto; }
+    .page-title {
+      font-weight: 900;
+      font-size: clamp(2.8rem, 9vw, 5.5rem);
+      color: #fff; line-height: 0.9; letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .page-subtitle { font-size: 1rem; color: rgba(255,255,255,0.75); max-width: 380px; line-height: 1.6; margin-bottom: 24px; }
+    .stat-chip {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px;
+      background: rgba(255,255,255,0.25); color: rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    /* ─── APP LAYOUT ────────────────────────────────────── */
+    .app-outer { padding: 36px var(--page-pad) 80px; }
+    .app-layout {
+      max-width: 980px; margin: 0 auto;
+      display: grid; grid-template-columns: 164px 1fr 164px;
+      gap: 0 36px; align-items: start;
+    }
+    .app-center { min-width: 0; max-width: 580px; }
+
+    /* ─── CAT SIDEBAR ───────────────────────────────────── */
+    .cat-sidebar { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 5px; }
+    .cat-sidebar--left  { align-items: flex-end;   padding-top: 110px; }
+    .cat-sidebar--right { align-items: flex-start; padding-top: 127px; }
+
+    .sidebar-item {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border-radius: 999px;
+      border: 1.5px solid var(--divider); background: transparent; color: var(--ink-mid);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap;
+      transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
+    }
+    .sidebar-item:hover { border-color: var(--teal); color: var(--teal); }
+    .sidebar-item.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .sidebar-count { font-size: 0.58rem; opacity: 0.55; }
+    .sidebar-item.active .sidebar-count { opacity: 0.85; }
+
+    /* ─── CAT FAB (mobile) ──────────────────────────────── */
+    .cat-fab-wrap {
+      display: none; position: fixed; top: 80px; right: 16px; z-index: 250;
+      flex-direction: column; align-items: flex-end; gap: 9px;
+    }
+    .cat-fab {
+      display: flex; align-items: center; gap: 7px;
+      padding: 9px 16px; border-radius: 999px;
+      background: var(--teal); color: #fff; border: none;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+      cursor: pointer; box-shadow: 0 4px 20px rgba(15,130,122,0.35);
+    }
+    .cat-fab-icon { font-size: 0.6rem; opacity: 0.75; transition: transform 240ms ease; display: inline-block; }
+    .cat-fab-wrap.open .cat-fab-icon { transform: rotate(180deg); }
+    .cat-dd-backdrop { display: none; position: fixed; inset: 0; z-index: 238; }
+    .cat-dd-backdrop.open { display: block; }
+    .cat-dropdown { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
+    .cat-dd-item {
+      display: block; padding: 8px 14px; border-radius: 999px;
+      border: 1.5px solid var(--divider); background: var(--bg); color: var(--ink-mid);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transform: translateY(-14px); opacity: 0; pointer-events: none;
+      transition: transform 210ms ease, opacity 210ms ease;
+    }
+    .cat-dd-item:hover { border-color: var(--teal); color: var(--teal); }
+    .cat-dd-item.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .cat-fab-wrap.open .cat-dd-item { transform: translateY(0); opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 959px) {
+      .app-layout { grid-template-columns: 1fr; max-width: 580px; }
+      .cat-sidebar { display: none; }
+      .cat-fab-wrap { display: flex; }
+    }
+
+    /* ─── MODE TABS ─────────────────────────────────────── */
+    .mode-tabs { display: flex; background: var(--card-bg); border-radius: 12px; padding: 4px; gap: 4px; margin-bottom: 24px; }
+    .mode-tab {
+      flex: 1; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 10px 16px; border: none; border-radius: 9px; cursor: pointer;
+      background: transparent; color: var(--ink-mid);
+      transition: background var(--dur-fast), color var(--dur-fast);
+    }
+    .mode-tab.active { background: var(--bg); color: var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,0.12); }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ─── PROGRESS BAR ──────────────────────────────────── */
+    .progress-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .progress-track { flex: 1; height: 4px; background: var(--card-bg); border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--teal); border-radius: 99px; transition: width 0.5s var(--ease); width: 0%; }
+    .progress-fill.complete { background: var(--gold); }
+    .progress-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.06em; color: var(--ink-mid); white-space: nowrap; min-width: 60px; text-align: right; }
+    .progress-label.complete { color: var(--gold); }
+
+    /* ─── BROWSE CARD ───────────────────────────────────── */
+    .browse-perspective { perspective: 900px; margin-bottom: 20px; }
+    .browse-card {
+      position: relative; width: 100%; height: 300px;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    .browse-card.flipped { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; inset: 0; border-radius: 20px;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      padding: 24px 28px; display: flex; flex-direction: column;
+    }
+    .card-front { background: var(--teal); align-items: center; justify-content: center; text-align: center; }
+    .card-front-meta { position: absolute; top: 20px; left: 22px; right: 22px; display: flex; justify-content: space-between; align-items: center; }
+    .card-cat-badge { font-size: 0.58rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.85); }
+    .card-seen-tag { font-size: 0.58rem; font-weight: 800; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.28); color: #fff; }
+    .card-word { font-weight: 900; font-size: clamp(2rem, 9vw, 3.6rem); color: #fff; line-height: 1.1; letter-spacing: -0.02em; word-break: break-word; max-width: 100%; }
+    .card-reveal-hint { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
+    .card-know-btn { position: absolute; bottom: 14px; right: 22px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; border: none; cursor: pointer; background: rgba(255,255,255,0.22); color: rgba(255,255,255,0.9); transition: background var(--dur-fast); z-index: 2; }
+    .card-know-btn:hover { background: rgba(255,255,255,0.35); }
+    .card-back { transform: rotateY(180deg); background: #fff; border: 1.5px solid var(--divider); box-shadow: var(--card-shadow); justify-content: center; gap: 10px; }
+    .card-meaning { font-weight: 800; font-size: clamp(1.7rem, 6vw, 2.6rem); color: var(--ink); line-height: 1.1; letter-spacing: -0.02em; }
+    .card-example-yo { font-size: 0.88rem; color: var(--teal); font-style: italic; line-height: 1.55; }
+    .card-example-en { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.5; }
+
+    /* ─── BROWSE NAV ────────────────────────────────────── */
+    .browse-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .btn-nav { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: lowercase; padding: 10px 22px; border-radius: 999px; border: 1.5px solid var(--divider); background: transparent; color: var(--ink-mid); cursor: pointer; transition: all var(--dur-fast) var(--ease); flex-shrink: 0; }
+    .btn-nav:hover:not(:disabled) { border-color: var(--ink-mid); color: var(--ink); }
+    .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+    .btn-nav-primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .btn-nav-primary:hover:not(:disabled) { background: var(--teal-deep); border-color: var(--teal-deep); color: #fff; }
+    .browse-counter { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; color: var(--ink-faint); text-align: center; flex-shrink: 0; }
+
+    /* ─── QUIZ ──────────────────────────────────────────── */
+    .quiz-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .quiz-score { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.04em; color: var(--ink-mid); }
+    .quiz-score strong { color: var(--teal); font-size: 1rem; }
+    .btn-reset { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 13px; border-radius: 999px; border: 1.5px solid var(--divider); background: transparent; color: var(--ink-mid); cursor: pointer; transition: all var(--dur-fast); }
+    .btn-reset:hover { border-color: var(--coral); color: var(--coral); }
+    .quiz-card { background: var(--gold); border-radius: 20px; padding: 44px 32px 36px; text-align: center; box-shadow: var(--card-shadow); }
+    .quiz-instruction { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 10px; }
+    .quiz-prompt { font-size: 1.4rem; font-weight: 900; color: #fff; line-height: 1.4; margin-bottom: 36px; }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    @media (max-width: 380px) { .quiz-options { grid-template-columns: 1fr; } }
+    .quiz-opt { font-size: 1rem; padding: 18px 20px; border-radius: 14px; border: 1.5px solid rgba(0,0,0,0.15); background: #fff; color: #1a1200; cursor: pointer; text-align: center; line-height: 1.3; transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast); font-weight: 600; }
+    .quiz-opt:hover:not(:disabled) { border-color: rgba(0,0,0,0.35); background: rgba(255,255,255,0.8); }
+    .quiz-opt.correct { background: var(--teal); border-color: transparent; color: #fff; }
+    .quiz-opt.wrong   { background: var(--coral); border-color: transparent; color: #fff; }
+    .quiz-opt.dim     { background: rgba(255,255,255,0.45); border-color: transparent; color: rgba(26,18,0,0.4); }
+    .quiz-opt:disabled { cursor: default; }
+    .btn-quiz-next { width: 100%; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; text-transform: lowercase; padding: 14px; border-radius: 12px; border: none; background: var(--teal); color: #fff; cursor: pointer; transition: background var(--dur-fast); }
+    .btn-quiz-next:hover { background: var(--teal-deep); }
+    .quiz-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
+    .quiz-done { text-align: center; padding: 40px 16px 28px; }
+    .quiz-done-glyph { font-weight: 900; font-size: 3rem; color: var(--teal); margin-bottom: 8px; }
+    .quiz-done-title { font-weight: 900; font-size: 2rem; color: var(--ink); margin-bottom: 8px; }
+    .quiz-done-sub { font-size: 0.9rem; color: var(--ink-muted); margin-bottom: 28px; line-height: 1.5; }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    .footer { border-top: 1px solid var(--divider); padding: 28px var(--page-pad) 24px; }
+    .footer-copy { font-size: 0.68rem; color: var(--ink-faint); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">YorubaFluent</a>
+  <div class="pill-nav">
+    <a href="#" class="pill pill-home">Home</a>
+    <a href="#" class="pill pill-blog">Blog</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1 class="page-title">100 Words</h1>
+    <p class="page-subtitle">Build your Yorùbá vocabulary foundation one word at a time. Browse, flip, quiz yourself.</p>
+    <span class="stat-chip" id="global-stat">0 / 20 seen</span>
+  </div>
+</div>
+
+<!-- CATEGORY FAB (mobile) -->
+<div class="cat-fab-wrap" id="cat-fab-wrap">
+  <button class="cat-fab" id="cat-fab">
+    <span id="cat-fab-label">All</span>
+    <span class="cat-fab-icon">▾</span>
+  </button>
+  <div class="cat-dropdown" id="cat-dropdown"></div>
+</div>
+<div class="cat-dd-backdrop" id="cat-dd-backdrop"></div>
+
+<!-- APP -->
+<div class="app-outer">
+  <div class="app-layout">
+
+    <aside class="cat-sidebar cat-sidebar--left" id="sidebar-left"></aside>
+
+    <div class="app-center">
+
+      <div class="mode-tabs">
+        <button class="mode-tab active" id="tab-browse">Browse</button>
+        <button class="mode-tab"        id="tab-quiz">Quiz</button>
+      </div>
+
+      <!-- BROWSE -->
+      <div id="panel-browse" class="panel active">
+        <div class="progress-wrap">
+          <div class="progress-track"><div class="progress-fill" id="b-fill"></div></div>
+          <span class="progress-label" id="b-label">0 / 20</span>
+        </div>
+        <div class="browse-perspective">
+          <div class="browse-card" id="browse-card">
+            <div class="card-face card-front">
+              <div class="card-front-meta">
+                <span class="card-cat-badge" id="f-cat"></span>
+                <span class="card-seen-tag"  id="f-seen" style="display:none">✓ seen</span>
+              </div>
+              <div class="card-word" id="f-word"></div>
+              <div class="card-reveal-hint">tap to reveal</div>
+              <button class="card-know-btn" id="btn-know">I already know this</button>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-meaning"    id="b-meaning"></div>
+              <div class="card-example-yo" id="b-sent-yo"></div>
+              <div class="card-example-en" id="b-sent-en"></div>
+            </div>
+          </div>
+        </div>
+        <div class="browse-nav">
+          <button class="btn-nav"                 id="btn-prev">← prev</button>
+          <span   class="browse-counter"          id="b-counter">1 / 20</span>
+          <button class="btn-nav btn-nav-primary" id="btn-next">next →</button>
+        </div>
+      </div>
+
+      <!-- QUIZ -->
+      <div id="panel-quiz" class="panel">
+        <div class="quiz-meta">
+          <span class="quiz-score" id="q-score">Score: <strong>0</strong> / 0</span>
+          <button class="btn-reset" id="btn-reset">Reset</button>
+        </div>
+        <div class="quiz-card" id="quiz-card">
+          <div class="quiz-instruction">Which Yoruba word means…</div>
+          <div class="quiz-prompt"  id="q-prompt"></div>
+          <div class="quiz-options" id="q-options"></div>
+        </div>
+        <div class="quiz-card" id="quiz-done-screen" style="display:none">
+          <div class="quiz-done">
+            <div class="quiz-done-glyph">Ẹ ṣé</div>
+            <div class="quiz-done-title">Round complete!</div>
+            <div class="quiz-done-sub" id="quiz-done-sub"></div>
+            <button class="btn-quiz-next" id="btn-quiz-again">Play again →</button>
+          </div>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn-nav" id="btn-qprev" style="display:none">← prev</button>
+          <button class="btn-nav btn-nav-primary" id="btn-qnext" style="display:none">next →</button>
+        </div>
+      </div>
+
+    </div>
+
+    <aside class="cat-sidebar cat-sidebar--right" id="sidebar-right"></aside>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <span class="footer-copy">© 2026 YorubaFluent</span>
+</footer>
+
+<script>
+/* ── STATE ─────────────────────────────────────────────── */
+var allWords = [], filtered = [], activeMode = 'browse', activeCat = 'all';
+var bIndex = 0, bFlipped = false;
+var qCorrect = 0, qTotal = 0, qOrder = [], qCursor = 0, qAnswered = false, qHistory = [];
+var seenIds = new Set();
+var CATS = ['Greetings','Family','Food & Drink','Body','Time','Places','Nature','Verbs','Adjectives','Concepts'];
+
+/* ── INIT ──────────────────────────────────────────────── */
+function init(words) {
+  allWords = words;
+  buildCatSidebars();
+  buildCatDropdown();
+  setCategory('all');
+  bindEvents();
+}
+
+function buildCatSidebars() {
+  var allItems = [{ cat: 'all', label: 'All', n: allWords.length }];
+  CATS.forEach(function(cat) {
+    var n = allWords.filter(function(w){ return w.category === cat; }).length;
+    if (n > 0) allItems.push({ cat: cat, label: cat, n: n });
+  });
+  function makeBtn(item) {
+    var btn = document.createElement('button');
+    btn.className = 'sidebar-item'; btn.dataset.cat = item.cat;
+    btn.innerHTML = '<span>' + item.label + '</span><span class="sidebar-count">' + item.n + '</span>';
+    return btn;
+  }
+  var left = document.getElementById('sidebar-left');
+  var right = document.getElementById('sidebar-right');
+  allItems.slice(0, Math.ceil(allItems.length / 2)).forEach(function(i){ left.appendChild(makeBtn(i)); });
+  allItems.slice(Math.ceil(allItems.length / 2)).forEach(function(i){ right.appendChild(makeBtn(i)); });
+}
+
+function buildCatDropdown() {
+  var dropdown = document.getElementById('cat-dropdown');
+  var allItems = [{ cat: 'all', label: 'All' }];
+  CATS.forEach(function(cat) { allItems.push({ cat: cat, label: cat }); });
+  allItems.forEach(function(item) {
+    var btn = document.createElement('button');
+    btn.className = 'cat-dd-item'; btn.dataset.cat = item.cat; btn.textContent = item.label;
+    dropdown.appendChild(btn);
+  });
+}
+
+/* ── CATEGORY ──────────────────────────────────────────── */
+function setCategory(cat) {
+  activeCat = cat;
+  filtered = cat === 'all' ? allWords.slice() : allWords.filter(function(w){ return w.category === cat; });
+  document.querySelectorAll('.sidebar-item').forEach(function(b){ b.classList.toggle('active', b.dataset.cat === cat); });
+  document.querySelectorAll('.cat-dd-item').forEach(function(b){ b.classList.toggle('active', b.dataset.cat === cat); });
+  var fabLabel = document.getElementById('cat-fab-label');
+  if (fabLabel) fabLabel.textContent = cat === 'all' ? 'All' : cat;
+  bIndex = 0; bFlipped = false;
+  renderBrowse();
+  if (activeMode === 'quiz') startQuiz();
+}
+
+function openCatFab()  { document.getElementById('cat-fab-wrap').classList.add('open');    document.getElementById('cat-dd-backdrop').classList.add('open'); }
+function closeCatFab() { document.getElementById('cat-fab-wrap').classList.remove('open'); document.getElementById('cat-dd-backdrop').classList.remove('open'); }
+
+/* ── BROWSE ────────────────────────────────────────────── */
+function renderBrowse() {
+  if (!filtered.length) return;
+  var w = filtered[bIndex];
+  document.getElementById('f-word').textContent    = w.yoruba;
+  document.getElementById('f-cat').textContent     = w.category;
+  document.getElementById('b-meaning').textContent = w.meaning;
+  document.getElementById('b-sent-yo').textContent = w.sent_yo;
+  document.getElementById('b-sent-en').textContent = w.sent_en;
+  document.getElementById('f-seen').style.display  = seenIds.has(w.id) ? '' : 'none';
+  document.getElementById('b-counter').textContent = (bIndex + 1) + ' / ' + filtered.length;
+  document.getElementById('btn-prev').disabled = bIndex === 0;
+  document.getElementById('btn-next').disabled = bIndex === filtered.length - 1;
+  updateBrowseProgress();
+  updateGlobalStat();
+  var card = document.getElementById('browse-card');
+  bFlipped = false;
+  if (card.classList.contains('flipped')) {
+    card.style.transition = 'none'; card.classList.remove('flipped');
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ card.style.transition = ''; }); });
+  }
+}
+
+function updateBrowseProgress() {
+  var seen = filtered.filter(function(w){ return seenIds.has(w.id); }).length;
+  var total = filtered.length, pct = total ? (seen / total * 100) : 0;
+  var fill = document.getElementById('b-fill'), label = document.getElementById('b-label');
+  fill.style.width = pct + '%';
+  var done = seen === total && total > 0;
+  fill.classList.toggle('complete', done); label.classList.toggle('complete', done);
+  label.textContent = done ? 'All seen ✓' : seen + ' / ' + total;
+}
+
+function updateGlobalStat() {
+  var el = document.getElementById('global-stat');
+  if (el) el.textContent = seenIds.size + ' / ' + allWords.length + ' seen';
+}
+
+function flipCard() {
+  var card = document.getElementById('browse-card');
+  bFlipped = !bFlipped; card.classList.toggle('flipped', bFlipped);
+  if (bFlipped && filtered.length) {
+    var w = filtered[bIndex];
+    if (!seenIds.has(w.id)) {
+      seenIds.add(w.id);
+      document.getElementById('f-seen').style.display = '';
+      updateBrowseProgress(); updateGlobalStat();
+    }
+  }
+}
+
+function navBrowse(dir) {
+  var next = bIndex + dir;
+  if (next < 0 || next >= filtered.length) return;
+  var card = document.getElementById('browse-card'), wasFlipped = bFlipped;
+  if (bFlipped) { card.style.transition = 'none'; card.classList.remove('flipped'); bFlipped = false; }
+  function doSwap() { bIndex = next; renderBrowse(); }
+  if (wasFlipped) {
+    var outA = dir > 0 ? 'rotateY(90deg)' : 'rotateY(-90deg)', inA = dir > 0 ? 'rotateY(-90deg)' : 'rotateY(90deg)';
+    card.style.transition = 'transform 170ms ease-in'; card.style.transform = outA;
+    setTimeout(function(){ doSwap(); card.style.transition = 'none'; card.style.transform = inA;
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ card.style.transition = 'transform 170ms ease-out'; card.style.transform = ''; }); }); }, 175);
+  } else {
+    var outX = dir > 0 ? '52px' : '-52px', inX = dir > 0 ? '-52px' : '52px';
+    card.style.transition = 'transform 150ms ease-in, opacity 150ms ease-in';
+    card.style.transform = 'translateX(' + outX + ')'; card.style.opacity = '0';
+    setTimeout(function(){ doSwap(); card.style.transition = 'none'; card.style.transform = 'translateX(' + inX + ')'; card.style.opacity = '0';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ card.style.transition = 'transform 150ms ease-out, opacity 150ms ease-out'; card.style.transform = ''; card.style.opacity = ''; }); }); }, 155);
+  }
+}
+
+function markKnown(e) {
+  e.stopPropagation();
+  if (!filtered.length) return;
+  var w = filtered[bIndex];
+  if (!seenIds.has(w.id)) { seenIds.add(w.id); updateBrowseProgress(); updateGlobalStat(); }
+  if (bIndex < filtered.length - 1) navBrowse(1);
+  else document.getElementById('f-seen').style.display = '';
+}
+
+/* ── QUIZ ──────────────────────────────────────────────── */
+function shuffle(a) {
+  var arr = a.slice();
+  for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+  return arr;
+}
+
+function startQuiz() {
+  qCorrect = 0; qTotal = 0; qAnswered = false; qHistory = [];
+  qOrder = shuffle(filtered.map(function(_, i){ return i; })); qCursor = 0;
+  updateQuizScore();
+  document.getElementById('quiz-card').style.display = '';
+  document.getElementById('quiz-done-screen').style.display = 'none';
+  renderQuiz();
+}
+
+function getDistractors(word, count) {
+  var same = allWords.filter(function(w){ return w.category === word.category && w.id !== word.id; });
+  var others = allWords.filter(function(w){ return w.category !== word.category; });
+  var pool = shuffle(same.concat(others)), seen = new Set([word.yoruba]), result = [];
+  for (var i = 0; i < pool.length && result.length < count; i++) {
+    if (!seen.has(pool[i].yoruba)) { seen.add(pool[i].yoruba); result.push(pool[i]); }
+  }
+  return result;
+}
+
+function renderQuiz() {
+  var btnPrev = document.getElementById('btn-qprev'), btnNext = document.getElementById('btn-qnext');
+  if (qCursor >= qOrder.length) {
+    document.getElementById('quiz-card').style.display = 'none';
+    document.getElementById('quiz-done-screen').style.display = '';
+    document.getElementById('quiz-done-sub').textContent = qCorrect + ' correct out of ' + qTotal;
+    btnPrev.style.display = qHistory.length > 0 ? '' : 'none'; btnPrev.disabled = false;
+    btnNext.style.display = 'none'; return;
+  }
+  document.getElementById('quiz-card').style.display = '';
+  document.getElementById('quiz-done-screen').style.display = 'none';
+  var word = filtered[qOrder[qCursor]], alreadyAnswered = qCursor < qHistory.length, options;
+  if (alreadyAnswered) { options = qHistory[qCursor].options; qAnswered = true; }
+  else { options = shuffle([word].concat(getDistractors(word, 3))); qAnswered = false; }
+  document.getElementById('q-prompt').textContent = word.meaning;
+  var optEl = document.getElementById('q-options'); optEl.innerHTML = '';
+  options.forEach(function(opt) {
+    var btn = document.createElement('button'); btn.className = 'quiz-opt';
+    btn.textContent = opt.yoruba; btn.dataset.id = String(opt.id);
+    if (alreadyAnswered) {
+      btn.disabled = true; var h = qHistory[qCursor];
+      if (opt.id === h.correctId) btn.classList.add('correct');
+      else if (opt.id === h.selectedId) btn.classList.add('wrong');
+      else btn.classList.add('dim');
+    } else { btn.addEventListener('click', function(){ selectOpt(opt.id, word.id, options); }); }
+    optEl.appendChild(btn);
+  });
+  if (qHistory.length === 0) { btnPrev.style.display = 'none'; btnNext.style.display = 'none'; }
+  else { btnPrev.style.display = ''; btnPrev.disabled = (qCursor === 0); btnNext.style.display = ''; btnNext.disabled = !qAnswered; }
+}
+
+function selectOpt(selectedId, correctId, options) {
+  if (qAnswered) return; qAnswered = true;
+  qHistory.push({ selectedId: selectedId, correctId: correctId, options: options });
+  qTotal++; if (selectedId === correctId) qCorrect++;
+  updateQuizScore();
+  document.querySelectorAll('.quiz-opt').forEach(function(btn) {
+    btn.disabled = true; var id = parseInt(btn.dataset.id, 10);
+    if (id === correctId) btn.classList.add('correct');
+    else if (id === selectedId) btn.classList.add('wrong');
+    else btn.classList.add('dim');
+  });
+  document.getElementById('btn-qprev').style.display = ''; document.getElementById('btn-qprev').disabled = (qCursor === 0);
+  document.getElementById('btn-qnext').style.display = ''; document.getElementById('btn-qnext').disabled = false;
+}
+
+function advanceQuiz()  { if (!qAnswered) return; qCursor++; renderQuiz(); }
+function retreatQuiz()  { if (qCursor > 0) { qCursor--; renderQuiz(); } }
+function updateQuizScore() { document.getElementById('q-score').innerHTML = 'Score: <strong>' + qCorrect + '</strong> / ' + qTotal; }
+
+/* ── EVENTS ────────────────────────────────────────────── */
+function bindEvents() {
+  document.getElementById('tab-browse').addEventListener('click', function() {
+    if (activeMode === 'browse') return; activeMode = 'browse';
+    document.getElementById('tab-browse').classList.add('active'); document.getElementById('tab-quiz').classList.remove('active');
+    document.getElementById('panel-browse').classList.add('active'); document.getElementById('panel-quiz').classList.remove('active');
+  });
+  document.getElementById('tab-quiz').addEventListener('click', function() {
+    if (activeMode === 'quiz') return; activeMode = 'quiz';
+    document.getElementById('tab-quiz').classList.add('active'); document.getElementById('tab-browse').classList.remove('active');
+    document.getElementById('panel-quiz').classList.add('active'); document.getElementById('panel-browse').classList.remove('active');
+    startQuiz();
+  });
+  document.getElementById('sidebar-left').addEventListener('click', function(e) { var b = e.target.closest('.sidebar-item'); if (b) setCategory(b.dataset.cat); });
+  document.getElementById('sidebar-right').addEventListener('click', function(e) { var b = e.target.closest('.sidebar-item'); if (b) setCategory(b.dataset.cat); });
+  document.getElementById('cat-fab').addEventListener('click', function(e) { e.stopPropagation(); document.getElementById('cat-fab-wrap').classList.contains('open') ? closeCatFab() : openCatFab(); });
+  document.getElementById('cat-dropdown').addEventListener('click', function(e) { var b = e.target.closest('.cat-dd-item'); if (b) { setCategory(b.dataset.cat); closeCatFab(); } });
+  document.getElementById('cat-dd-backdrop').addEventListener('click', closeCatFab);
+  document.getElementById('browse-card').addEventListener('click', function(e) { if (e.target.closest('.card-know-btn')) return; flipCard(); });
+  document.getElementById('btn-prev').addEventListener('click', function(e) { e.stopPropagation(); navBrowse(-1); });
+  document.getElementById('btn-next').addEventListener('click', function(e) { e.stopPropagation(); navBrowse(1); });
+  document.getElementById('btn-know').addEventListener('click', markKnown);
+  document.getElementById('btn-reset').addEventListener('click', startQuiz);
+  document.getElementById('btn-quiz-again').addEventListener('click', startQuiz);
+  document.getElementById('btn-qnext').addEventListener('click', advanceQuiz);
+  document.getElementById('btn-qprev').addEventListener('click', retreatQuiz);
+}
+
+/* ── VOCABULARY (20 sample words across all 10 categories) */
+var WORDS = [
+  { id:1,  yoruba:"Ẹ káàárọ̀",  meaning:"Good morning",      category:"Greetings",    sent_yo:"Ẹ káàárọ̀, ṣé daadaa ni?",      sent_en:"Good morning, how are you?" },
+  { id:5,  yoruba:"O dàbọ̀",    meaning:"Goodbye",            category:"Greetings",    sent_yo:"O dàbọ̀, a maa padà wá.",        sent_en:"Goodbye, we will come back." },
+  { id:12, yoruba:"Ìyá",        meaning:"Mother",             category:"Family",       sent_yo:"Ìyá mi ń jẹun.",                 sent_en:"My mother is eating." },
+  { id:13, yoruba:"Bàbá",       meaning:"Father",             category:"Family",       sent_yo:"Bàbá mi jẹ́ olùkọ̀.",           sent_en:"My father is a teacher." },
+  { id:21, yoruba:"Oúnjẹ",      meaning:"Food",               category:"Food & Drink", sent_yo:"Oúnjẹ náà dára.",                sent_en:"The food is good." },
+  { id:26, yoruba:"Ìyán",       meaning:"Pounded yam",        category:"Food & Drink", sent_yo:"Ìyán àti ọbẹ̀ dára.",           sent_en:"Pounded yam and soup is good." },
+  { id:31, yoruba:"Orí",        meaning:"Head",               category:"Body",         sent_yo:"Orí ń fọ́ mi.",                  sent_en:"I have a headache." },
+  { id:33, yoruba:"Ọwọ́",       meaning:"Hand",               category:"Body",         sent_yo:"Fọ ọwọ́ rẹ dáadáa.",            sent_en:"Wash your hands well." },
+  { id:41, yoruba:"Ọjọ́",       meaning:"Day",                category:"Time",         sent_yo:"Ọjọ́ tuntun, àǹfààní tuntun.", sent_en:"A new day, a new opportunity." },
+  { id:50, yoruba:"Ọ̀la",       meaning:"Tomorrow",           category:"Time",         sent_yo:"Ọ̀la a maa padà.",              sent_en:"Tomorrow we will return." },
+  { id:51, yoruba:"Ilé",        meaning:"Home / House",       category:"Places",       sent_yo:"Ilé mi wà nísàlẹ̀ òkè náà.",   sent_en:"My home is at the foot of the hill." },
+  { id:54, yoruba:"Ọjà",        meaning:"Market",             category:"Places",       sent_yo:"Ìyá mi ń tà nkan ní ọjà.",      sent_en:"My mother sells at the market." },
+  { id:60, yoruba:"Òjò",        meaning:"Rain",               category:"Nature",       sent_yo:"Òjò ń rọ̀.",                    sent_en:"It is raining." },
+  { id:62, yoruba:"Igi",        meaning:"Tree / Wood",        category:"Nature",       sent_yo:"Igi náà ga.",                    sent_en:"The tree is tall." },
+  { id:68, yoruba:"Lọ",         meaning:"To go",              category:"Verbs",        sent_yo:"Mo lọ sí ọjà.",                 sent_en:"I went to the market." },
+  { id:80, yoruba:"Fẹ́",        meaning:"To want / love",     category:"Verbs",        sent_yo:"Mo fẹ́ kọ́ Yorùbá.",            sent_en:"I want to learn Yoruba." },
+  { id:81, yoruba:"Dára",       meaning:"Good / Beautiful",   category:"Adjectives",   sent_yo:"Ohun gbogbo dára.",              sent_en:"Everything is good." },
+  { id:83, yoruba:"Tóbi",       meaning:"Big / Large",        category:"Adjectives",   sent_yo:"Ilé rẹ tóbi.",                  sent_en:"Your house is big." },
+  { id:97, yoruba:"Èdè",        meaning:"Language",           category:"Concepts",     sent_yo:"Èdè Yorùbá dára.",              sent_en:"The Yoruba language is beautiful." },
+  { id:100,yoruba:"Àlàáfíà",    meaning:"Peace / Wellbeing",  category:"Concepts",     sent_yo:"Kí alàáfíà Ọlọrun wà pẹ̀lú rẹ.", sent_en:"May the peace of God be with you." }
+];
+
+init(WORDS);
+</script>
+
+</body>
+</html>
