@@ -167,8 +167,8 @@
 
     /* ── MOBILE CAT FAB ───────────────────────────────────── */
     .cat-fab-wrap {
-      display: none; position: fixed; top: 66px; right: 14px; z-index: 250;
-      flex-direction: column; align-items: flex-end; gap: 8px;
+      display: none; position: fixed; bottom: 24px; right: 14px; z-index: 250;
+      flex-direction: column-reverse; align-items: flex-end; gap: 8px;
     }
     .cat-fab {
       display: flex; align-items: center; gap: 8px;
@@ -189,7 +189,7 @@
       font-family: var(--font); font-size: 0.66rem; font-weight: 800;
       letter-spacing: 0.06em; text-transform: uppercase;
       cursor: pointer; white-space: nowrap; box-shadow: 2px 2px 0 var(--ink);
-      transform: translateY(-12px); opacity: 0; pointer-events: none;
+      transform: translateY(12px); opacity: 0; pointer-events: none;
       transition: transform 210ms ease, opacity 210ms ease;
     }
     .cat-dd-item:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
@@ -200,6 +200,17 @@
       .app-layout { grid-template-columns: 1fr; max-width: 540px; }
       .cat-sidebar { display: none; }
       .cat-fab-wrap { display: flex; }
+    }
+
+    @media (max-width: 640px) {
+      /* Bigger quiz option buttons */
+      .quiz-opt { font-size: 1.15rem; padding: 22px 14px; }
+      /* Bigger next/prev buttons */
+      .btn-nav { font-size: 0.88rem; padding: 16px 32px; }
+      /* Bigger "Next question" button */
+      .btn-quiz-next { font-size: 0.9rem; padding: 18px; }
+      /* Slightly larger quiz prompt word */
+      .quiz-prompt { font-size: clamp(1.9rem, 6.5vw, 3rem); }
     }
 
     /* ── MODE TABS ────────────────────────────────────────── */
