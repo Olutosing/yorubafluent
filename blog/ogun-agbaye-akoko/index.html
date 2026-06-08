@@ -90,14 +90,13 @@ Wọ́n dékùn ìjà jíjà ní ọdún 1918 nígbà tí àwọn ẹgbẹ́ Cen
     document.getElementById('meta-readtime2').textContent = meta.readTime;
 
     const heroSlot = document.getElementById('post-hero-slot');
-    if (meta.image) {
-      heroSlot.innerHTML = `<img class="post-hero" src="${meta.image}" alt="${meta.title}">`;
-    } else {
-      heroSlot.innerHTML = `
-        <div class="post-hero-placeholder" style="background:${meta.color}">
-          <span class="post-hero-glyph" aria-hidden="true">${meta.glyph}</span>
-        </div>`;
-    }
+    heroSlot.innerHTML = `
+      <div class="post-hero-placeholder" style="background:${meta.color}" id="hero-placeholder">
+        <span class="post-hero-glyph" aria-hidden="true">${meta.glyph}</span>
+      </div>
+      <img class="post-hero" src="./image.jpg" alt="${meta.title}" style="display:none"
+           onload="this.style.display='block';document.getElementById('hero-placeholder').style.display='none';"
+           onerror="this.style.display='none'">`;
 
     const raw = document.getElementById('post-content').textContent;
     document.getElementById('post-body').innerHTML = marked.parse(raw.trim());

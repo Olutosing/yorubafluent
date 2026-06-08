@@ -53,27 +53,18 @@
       a.className = 'post-card';
       a.href = url;
 
-      if (post.image) {
-        a.innerHTML = `
-          <img class="post-card-img" src="${post.image}" alt="${post.title}" loading="lazy">
-          <div class="post-card-overlay"></div>
-          <div class="post-card-label">
-            <div class="post-card-category">${post.category}</div>
-            <div class="post-card-title">${post.title}</div>
-            <div class="post-card-meta">${post.date} &nbsp;·&nbsp; ${post.readTime}</div>
-          </div>`;
-      } else {
-        a.innerHTML = `
-          <div class="post-card-bg" style="background:${post.color}">
-            <span class="post-card-glyph" aria-hidden="true">${post.glyph}</span>
-          </div>
-          <div class="post-card-overlay"></div>
-          <div class="post-card-label">
-            <div class="post-card-category">${post.category}</div>
-            <div class="post-card-title">${post.title}</div>
-            <div class="post-card-meta">${post.date} &nbsp;·&nbsp; ${post.readTime}</div>
-          </div>`;
-      }
+      a.innerHTML = `
+        <div class="post-card-bg" style="background:${post.color}">
+          <span class="post-card-glyph" aria-hidden="true">${post.glyph}</span>
+        </div>
+        <img class="post-card-img" src="${post.slug}/image.jpg" alt="${post.title}" loading="lazy"
+             style="position:absolute;inset:0;" onerror="this.style.display='none'">
+        <div class="post-card-overlay"></div>
+        <div class="post-card-label">
+          <div class="post-card-category">${post.category}</div>
+          <div class="post-card-title">${post.title}</div>
+          <div class="post-card-meta">${post.date} &nbsp;·&nbsp; ${post.readTime}</div>
+        </div>`;
       return a;
     }
 
@@ -128,21 +119,24 @@
         `${n} post${n !== 1 ? 's' : ''}`;
     }
 
+    const POSTS_DATA = [
+      {"slug":"yoruba-greetings-1","title":"Greetings in Yoruba 1","category":"Culture","date":"Jun 2026","readTime":"5 min read","glyph":"Ì","color":"#C3D5C2","image":null,"excerpt":"Yoruba greetings encode honour, prayers and good wishes — not just salutations. Learn how kú works."},
+      {"slug":"yoruba-greetings-2","title":"Yoruba Greetings II","category":"Culture","date":"Jun 2026","readTime":"6 min read","glyph":"Ẹ","color":"#D5C3B4","image":null,"excerpt":"How kú is used for compliments, felicitations and survival — and the role of Ẹ in Yoruba greetings."},
+      {"slug":"ogun-agbaye-akoko","title":"Ogun Àgbáyé àkọ́kọ́","category":"History","date":"Jun 2026","readTime":"6 min read","glyph":"Ọ","color":"#C5C3D5","image":null,"excerpt":"Ní ọ̀sán ọjọ́ kan ní ọdún 1914, ọdọmọkùnrin kan yí ìtàn gbogbo agbáyé padà."},
+      {"slug":"ai-ati-igbe-aye","title":"AI ati igbe aye awa ẹda","category":"Tech","date":"Jun 2026","readTime":"6 min read","glyph":"Á","color":"#B4C3D5","image":null,"excerpt":"Ilo AI kii ṣe ohun tuntun — ṣugbọn dide ChatGPT ni o waa jẹ ki o gbagbugbaja ninu awujọ ayelujara."}
+    ];
+
+    function loadPosts(posts) {
+      allPosts = posts;
+      buildFilters(posts);
+      renderPosts(posts);
+      updateCount(posts.length);
+    }
+
     fetch('./posts.json')
       .then(r => r.json())
-      .then(posts => {
-        allPosts = posts;
-        buildFilters(posts);
-        renderPosts(posts);
-        updateCount(posts.length);
-      })
-      .catch(() => {
-        document.getElementById('postsGrid').innerHTML = `
-          <div class="empty-state">
-            <div class="empty-glyph">Ọ</div>
-            <div class="empty-text">Could not load posts</div>
-          </div>`;
-      });
+      .then(loadPosts)
+      .catch(() => loadPosts(POSTS_DATA));
   </script>
 
 </body>

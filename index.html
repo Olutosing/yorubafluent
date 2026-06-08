@@ -235,12 +235,12 @@
     }
 
     .hero-tagline {
-      font-size: 1.125rem;
+      font-size: 1.55rem;
       font-weight: 400;
       color: rgba(255,255,255,0.82);
       margin-bottom: 2.2rem;
       max-width: 400px;
-      line-height: 1.6;
+      line-height: 1.4;
     }
 
     .hero-cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -321,8 +321,8 @@
     .feature-title .accent-coral { color: var(--coral); }
 
     .feature-desc {
-      font-size: 0.95rem;
-      line-height: 1.65;
+      font-size: 1.55rem;
+      line-height: 1.4;
       color: var(--ink-muted);
       max-width: 320px;
       margin-bottom: 1.8rem;
@@ -503,33 +503,62 @@
 
     .blog-placeholder-glyph {
       font-family: var(--font-display);
-      font-size: 5rem;
+      font-size: clamp(5rem, 12vw, 9rem);
       color: var(--ink);
-      opacity: 0.2;
+      opacity: 0.18;
       user-select: none;
+      line-height: 1;
+    }
+
+    .blog-card-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 650ms var(--ease);
+    }
+
+    .blog-card:hover .blog-card-img { transform: scale(1.04); }
+
+    .blog-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+      pointer-events: none;
     }
 
     .blog-card-label {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      padding: 12px 14px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.72));
+      padding: 16px 18px;
       color: #fff;
+    }
+
+    .blog-card-category {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
     }
 
     .blog-card-title {
       font-weight: 800;
-      font-size: 1.125rem;
+      font-size: 1.25rem;
       line-height: 1.25;
       letter-spacing: -0.01em;
     }
 
     .blog-card-meta {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      opacity: 0.65;
+      color: rgba(255,255,255,0.55);
       margin-top: 4px;
     }
 
@@ -729,7 +758,6 @@
     .iliwe-body {
       position: relative;
       z-index: 1;
-      margin-top: auto;
     }
 
     .iliwe-title {
@@ -743,11 +771,11 @@
     }
 
     .iliwe-sub {
-      font-size: 1.125rem;
+      font-size: 1.25rem;
       font-weight: 400;
       color: rgba(255,255,255,0.5);
-      line-height: 1.6;
-      max-width: 280px;
+      line-height: 1.4;
+      max-width: 360px;
       margin-bottom: 2rem;
     }
 
@@ -879,7 +907,7 @@
     }
 
     .wotd-sent-en {
-      font-size: 1.2rem;
+      font-size: 1.55rem;
       color: rgba(255,255,255,0.5);
       line-height: 1.5;
       max-width: 540px;
@@ -1090,7 +1118,7 @@
     }
 
     .hq-prompt {
-      font-size: 1.05rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: #1a1200;
       line-height: 1.4;
@@ -1222,10 +1250,18 @@
           <span>Conversation</span>
           <span>Pronunciation</span>
           <span>Culture</span>
+          <span>Vocabulary</span>
+          <span>Speaking</span>
+          <span>Listening</span>
+          <span>Yoruba</span>
           <span>Grammar</span>
           <span>Conversation</span>
           <span>Pronunciation</span>
           <span>Culture</span>
+          <span>Vocabulary</span>
+          <span>Speaking</span>
+          <span>Listening</span>
+          <span>Yoruba</span>
         </div>
       </div>
       <div class="iliwe-body">
@@ -1506,25 +1542,18 @@
           card.href = url;
           card.target = '_top';
 
-          if (post.image) {
-            card.innerHTML = `
-              <div class="blog-placeholder" style="background:${post.color}">
-                <img src="${post.image}" alt="${post.title}" style="width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div class="blog-card-label">
-                <div class="blog-card-title">${post.title}</div>
-                <div class="blog-card-meta">${post.category} · ${post.date}</div>
-              </div>`;
-          } else {
-            card.innerHTML = `
-              <div class="blog-placeholder" style="background:${post.color}">
-                <span class="blog-placeholder-glyph">${post.glyph}</span>
-              </div>
-              <div class="blog-card-label">
-                <div class="blog-card-title">${post.title}</div>
-                <div class="blog-card-meta">${post.category} · ${post.date}</div>
-              </div>`;
-          }
+          card.innerHTML = `
+            <div class="blog-placeholder" style="background:${post.color}">
+              <span class="blog-placeholder-glyph">${post.glyph}</span>
+            </div>
+            <img class="blog-card-img" src="blog/${post.slug}/image.jpg" alt="${post.title}" loading="lazy"
+                 onerror="this.style.display='none'">
+            <div class="blog-card-overlay"></div>
+            <div class="blog-card-label">
+              <div class="blog-card-category">${post.category}</div>
+              <div class="blog-card-title">${post.title}</div>
+              <div class="blog-card-meta">${post.date}</div>
+            </div>`;
           grid.appendChild(card);
         });
       })
