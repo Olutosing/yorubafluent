@@ -295,7 +295,7 @@
     .btn-reset { position: absolute; bottom: 20px; right: 24px; font-family: var(--font); font-size: 1rem; font-weight: 800; padding: 8px 20px; border-radius: 999px; border: 1.5px solid rgba(26,26,26,0.35); background: rgba(26,26,26,0.1); color: rgba(26,26,26,0.7); cursor: pointer; transition: background var(--dur), border-color var(--dur); z-index: 2; }
     @media (hover: hover) { .btn-reset:hover { background: rgba(26,26,26,0.2); border-color: rgba(26,26,26,0.6); } }
     .btn-reset:active { background: rgba(26,26,26,0.25); }
-    .quiz-card { background: var(--gold); border: 3px solid var(--ink); border-radius: 18px; padding: 20px 24px; text-align: center; box-shadow: var(--shadow-lg); min-height: clamp(420px, 70vh, 520px); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+    .quiz-card { background: var(--gold); border: 3px solid var(--ink); border-radius: 18px; padding: 20px 24px; text-align: center; box-shadow: var(--shadow-lg); height: clamp(420px, 70vh, 520px); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
     .quiz-instruction { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,26,26,0.42); margin-bottom: 24px; }
     .quiz-prompt { font-size: clamp(1.6rem, 5.5vw, 2.6rem); font-weight: 900; color: var(--ink); line-height: 1.1; margin-bottom: 28px; letter-spacing: -0.03em; }
     .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; align-content: start; }
