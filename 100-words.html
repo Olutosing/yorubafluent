@@ -343,6 +343,10 @@
     @media (min-width: 641px) {
       .btn-nav { font-size: 0.7rem; padding: 11px 24px; flex: 0 0 auto; }
     }
+    /* mobile: swipe replaces prev/next buttons */
+    @media (max-width: 640px) {
+      .browse-nav { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -741,6 +745,101 @@ function bindEvents() {
   document.getElementById('btn-quiz-again').addEventListener('click', startQuiz);
   document.getElementById('btn-quiz-next').addEventListener('click', advanceQuiz);
   document.getElementById('btn-qprev').addEventListener('click', retreatQuiz);
+
+  /* ── SWIPE GESTURES ───────────────────────────────── */
+  (function () {
+    var THRESHOLD = 72, FLY_MS = 220, SNAP_MS = 300;
+
+    function swipeable(touchEl, dragEl, opts) {
+      var sx, sy, active = false;
+
+      touchEl.addEventListener('touchstart', function (e) {
+        if (opts.ignore && opts.ignore(e.target)) return;
+        sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+        active = true; dragEl.style.transition = 'none';
+      }, { passive: true });
+
+      touchEl.addEventListener('touchmove', function (e) {
+        if (!active) return;
+        var dx = e.touches[0].clientX - sx, dy = e.touches[0].clientY - sy;
+        if (Math.abs(dx) > Math.abs(dy)) {
+          e.preventDefault();
+          dragEl.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx * 0.04) + 'deg)';
+        }
+      }, { passive: false });
+
+      function snapBack() {
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
+          dragEl.style.transition = 'transform ' + SNAP_MS + 'ms cubic-bezier(.25,.46,.45,.94)';
+          dragEl.style.transform  = '';
+          setTimeout(function () { dragEl.style.transition = ''; }, SNAP_MS + 20);
+        }); });
+      }
+
+      function slideIn(fromRight) {
+        dragEl.style.transition = 'none';
+        dragEl.style.transform  = 'translateX(' + (fromRight ? '40px' : '-40px') + ')';
+        dragEl.style.opacity    = '0';
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
+          dragEl.style.transition = 'transform 200ms ease-out, opacity 180ms ease-out';
+          dragEl.style.transform  = '';
+          dragEl.style.opacity    = '';
+          setTimeout(function () { dragEl.style.transition = ''; }, 220);
+        }); });
+      }
+
+      touchEl.addEventListener('touchend', function (e) {
+        if (!active) return; active = false;
+        var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+        var isLeft = dx < 0, dist = Math.abs(dx);
+        if (dist <= THRESHOLD || dist <= Math.abs(dy) * 1.2) { snapBack(); return; }
+        var can = isLeft ? (!opts.canLeft || opts.canLeft()) : (!opts.canRight || opts.canRight());
+        if (!can) { snapBack(); return; }
+        var flyX = isLeft ? '-115%' : '115%', flyR = isLeft ? '-16deg' : '16deg';
+        dragEl.style.transition = 'transform ' + FLY_MS + 'ms ease-in, opacity ' + (FLY_MS - 30) + 'ms ease-in';
+        dragEl.style.transform  = 'translateX(' + flyX + ') rotate(' + flyR + ')';
+        dragEl.style.opacity    = '0';
+        setTimeout(function () {
+          dragEl.style.transition = 'none';
+          dragEl.style.opacity    = '';
+          dragEl.style.transform  = '';
+          if (isLeft) opts.onLeft && opts.onLeft();
+          else        opts.onRight && opts.onRight();
+          slideIn(isLeft);
+        }, FLY_MS);
+      }, { passive: true });
+    }
+
+    /* Browse */
+    var browsePersp = document.querySelector('.browse-perspective');
+    var browseCard  = document.getElementById('browse-card');
+    if (browsePersp && browseCard) {
+      swipeable(browseCard, browsePersp, {
+        canLeft:  function () { return bIndex < filtered.length - 1; },
+        canRight: function () { return bIndex > 0; },
+        onLeft: function () {
+          bIndex++; bFlipped = false; browseCard.classList.remove('flipped');
+          savePos(activeCat, bIndex); renderBrowse();
+        },
+        onRight: function () {
+          bIndex--; bFlipped = false; browseCard.classList.remove('flipped');
+          savePos(activeCat, bIndex); renderBrowse();
+        }
+      });
+    }
+
+    /* Quiz */
+    var quizCard = document.getElementById('quiz-card');
+    if (quizCard) {
+      swipeable(quizCard, quizCard, {
+        canLeft:  function () { return !!qAnswered; },
+        canRight: function () { return qCursor > 0; },
+        onLeft:  function () { advanceQuiz(); },
+        onRight: function () { retreatQuiz(); },
+        ignore:  function (t) { return !!t.closest('.quiz-opt, .btn-reset'); }
+      });
+    }
+  })();
 }
 
 fetch('./yoruba-100.json')
