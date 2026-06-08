@@ -134,6 +134,15 @@
     }
     .page-subtitle { font-size: 0.9rem; color: rgba(255,255,255,0.62); max-width: 340px; line-height: 1.65; margin-bottom: 22px; }
 
+    /* ── ADIRE HERO PATTERN ──────────────────────────────── */
+    .adire-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M30 12L48 30L30 48L12 30Z' fill='none' stroke='white' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='5' fill='none' stroke='white' stroke-width='0.8'/%3E%3Ccircle cx='30' cy='30' r='2' fill='white'/%3E%3Ccircle cx='30' cy='0' r='2.5' fill='white'/%3E%3Ccircle cx='60' cy='30' r='2.5' fill='white'/%3E%3Ccircle cx='30' cy='60' r='2.5' fill='white'/%3E%3Ccircle cx='0' cy='30' r='2.5' fill='white'/%3E%3Cline x1='39' y1='21' x2='42' y2='24' stroke='white' stroke-width='0.8'/%3E%3Cline x1='21' y1='21' x2='18' y2='24' stroke='white' stroke-width='0.8'/%3E%3Cline x1='39' y1='39' x2='42' y2='36' stroke='white' stroke-width='0.8'/%3E%3Cline x1='21' y1='39' x2='18' y2='36' stroke='white' stroke-width='0.8'/%3E%3Ccircle cx='39' cy='21' r='1.2' fill='white'/%3E%3Ccircle cx='21' cy='21' r='1.2' fill='white'/%3E%3Ccircle cx='39' cy='39' r='1.2' fill='white'/%3E%3Ccircle cx='21' cy='39' r='1.2' fill='white'/%3E%3C/svg%3E");
+      background-size: 60px 60px;
+      background-repeat: repeat;
+      opacity: 0.15;
+    }
+
     /* ── APP LAYOUT ───────────────────────────────────────── */
     .app-outer { padding: clamp(24px, 4vw, 44px) var(--pad) 80px; }
     .app-layout {
@@ -393,6 +402,7 @@
 
 <!-- PAGE HEADER -->
 <div class="page-header">
+  <div class="adire-bg" aria-hidden="true"></div>
   <div class="page-header-inner">
     <h1 class="page-title"><span class="page-title-yo">Ọgọrun ọrọ</span>100 Words</h1>
     <p class="page-subtitle">Build your Yorùbá vocabulary foundation one word at a time. Browse, flip, quiz yourself.</p>
