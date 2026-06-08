@@ -650,7 +650,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      padding: 44px var(--page-pad);
+      padding: 56px var(--page-pad) 60px;
     }
 
     .wotd-right::before {
@@ -668,7 +668,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       font-weight: 800;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -692,48 +692,38 @@
       60%       { box-shadow: 0 0 0 7px rgba(74,222,128,0); }
     }
 
-    .iliwe-chips {
+    .iliwe-bg-words {
       position: absolute;
-      inset: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 55%;
+      overflow: hidden;
       pointer-events: none;
       z-index: 0;
     }
 
-    .iliwe-chip {
-      position: absolute;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.55);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      padding: 6px 14px;
-      border-radius: 999px;
-      pointer-events: all;
-      cursor: default;
+    .iliwe-bg-track {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      animation: words-up 18s linear infinite;
+    }
+
+    .iliwe-bg-track span {
+      font-family: var(--font-sans);
+      font-weight: 900;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      color: rgba(255,255,255,0.07);
       white-space: nowrap;
-      animation: chip-float var(--chip-dur) ease-in-out infinite var(--chip-delay);
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      display: block;
     }
 
-    .iliwe-chip .chip-yo { display: none; }
-    .iliwe-chip:hover .chip-en { display: none; }
-    .iliwe-chip:hover .chip-yo { display: inline; }
-    .iliwe-chip:hover {
-      background: rgba(255,179,0,0.14);
-      border-color: rgba(255,179,0,0.35);
-      color: var(--gold);
-    }
-
-    .iliwe-chip:nth-child(1) { top: 18%; right: 16%; --chip-dur: 6s;   --chip-delay: 0s; }
-    .iliwe-chip:nth-child(2) { top: 36%; right: 6%;  --chip-dur: 7.5s; --chip-delay: -2.5s; }
-    .iliwe-chip:nth-child(3) { top: 28%; right: 42%; --chip-dur: 5.5s; --chip-delay: -1.2s; }
-    .iliwe-chip:nth-child(4) { top: 55%; right: 12%; --chip-dur: 6.8s; --chip-delay: -3.5s; }
-
-    @keyframes chip-float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      33%       { transform: translateY(-9px) rotate(-0.4deg); }
-      66%       { transform: translateY(-4px) rotate(0.4deg); }
+    @keyframes words-up {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
     }
 
     .iliwe-body {
@@ -753,7 +743,7 @@
     }
 
     .iliwe-sub {
-      font-size: 0.95rem;
+      font-size: 1.125rem;
       font-weight: 400;
       color: rgba(255,255,255,0.5);
       line-height: 1.6;
@@ -815,8 +805,7 @@
     .wotd-eyebrow {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 800;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -824,9 +813,21 @@
       margin-bottom: 5rem;
     }
 
-    .wotd-eyebrow-left { display: flex; align-items: center; gap: 0.5rem; }
+    .wotd-eyebrow-left { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 
-    .wotd-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    .wotd-eyebrow-sep { opacity: 0.4; }
+
+    .wotd-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      flex-shrink: 0;
+      animation: wotd-pulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes wotd-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
+      60%       { box-shadow: 0 0 0 6px rgba(255,255,255,0); }
+    }
 
     .wotd-word {
       font-family: var(--font-sans);
@@ -840,8 +841,8 @@
 
     .wotd-meaning {
       display: inline-block;
-      background: var(--gold);
-      color: #1a1200;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
       font-size: 0.65rem;
       font-weight: 800;
       letter-spacing: 0.14em;
@@ -916,7 +917,7 @@
 
     .wotd-date {
       color: rgba(255,255,255,0.55);
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 800;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -1184,8 +1185,7 @@
     <div class="wotd-card" id="wotd-card" role="button" tabindex="0" aria-label="Expand word of the day">
       <div class="wotd-inner">
         <div class="wotd-eyebrow">
-          <span class="wotd-date" id="wotd-date-card"></span>
-          <span class="wotd-eyebrow-left"><span class="wotd-dot"></span>Yoruba Word of the Day</span>
+          <span class="wotd-eyebrow-left"><span class="wotd-dot"></span>Yoruba Word of the Day<span class="wotd-eyebrow-sep">·</span><span class="wotd-date" id="wotd-date-card"></span></span>
         </div>
         <div class="wotd-word" id="wotd-word-card"></div>
         <div class="wotd-meaning" id="wotd-meaning-card"></div>
@@ -1216,11 +1216,17 @@
       <div class="iliwe-live">
         <span class="iliwe-pulse"></span>Classes open
       </div>
-      <div class="iliwe-chips" aria-hidden="true">
-        <div class="iliwe-chip"><span class="chip-en">Grammar</span><span class="chip-yo">Gírámà</span></div>
-        <div class="iliwe-chip"><span class="chip-en">Conversation</span><span class="chip-yo">Ìjíròrò</span></div>
-        <div class="iliwe-chip"><span class="chip-en">Pronunciation</span><span class="chip-yo">Ìmọ̀ Ohun</span></div>
-        <div class="iliwe-chip"><span class="chip-en">Culture</span><span class="chip-yo">Àṣà</span></div>
+      <div class="iliwe-bg-words" aria-hidden="true">
+        <div class="iliwe-bg-track">
+          <span>Grammar</span>
+          <span>Conversation</span>
+          <span>Pronunciation</span>
+          <span>Culture</span>
+          <span>Grammar</span>
+          <span>Conversation</span>
+          <span>Pronunciation</span>
+          <span>Culture</span>
+        </div>
       </div>
       <div class="iliwe-body">
         <div class="iliwe-title">Ilé-Ìwé</div>
@@ -1236,8 +1242,7 @@
       <button class="wotd-close" id="wotd-close" aria-label="Close">×</button>
       <div class="wotd-inner">
         <div class="wotd-eyebrow">
-          <span class="wotd-date" id="wotd-date-modal"></span>
-          <span class="wotd-eyebrow-left"><span class="wotd-dot"></span>Yoruba Word of the Day</span>
+          <span class="wotd-eyebrow-left"><span class="wotd-dot"></span>Yoruba Word of the Day<span class="wotd-eyebrow-sep">·</span><span class="wotd-date" id="wotd-date-modal"></span></span>
         </div>
         <div class="wotd-word" id="wotd-word-modal"></div>
         <div class="wotd-meaning" id="wotd-meaning-modal"></div>
