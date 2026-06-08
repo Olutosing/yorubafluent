@@ -203,14 +203,11 @@
     }
 
     @media (max-width: 640px) {
-      /* Bigger quiz option buttons */
       .quiz-opt { font-size: 1.15rem; padding: 22px 14px; }
-      /* Bigger next/prev buttons */
       .btn-nav { font-size: 0.88rem; padding: 16px 32px; }
-      /* Bigger "Next question" button */
-      .btn-quiz-next { font-size: 0.9rem; padding: 18px; }
-      /* Slightly larger quiz prompt word */
+      .btn-quiz-next { font-size: 0.95rem; padding: 20px; }
       .quiz-prompt { font-size: clamp(1.9rem, 6.5vw, 3rem); }
+      .mode-tab { padding: 18px 20px; font-size: 0.82rem; }
     }
 
     /* ── MODE TABS ────────────────────────────────────────── */
@@ -227,7 +224,8 @@
     }
     .mode-tab:first-child { border-right: 2.5px solid var(--ink); }
     .mode-tab.active { background: var(--ink); color: #fff; }
-    .mode-tab:hover:not(.active) { background: rgba(26,26,26,0.04); color: var(--ink); }
+    @media (hover: hover) { .mode-tab:hover:not(.active) { background: rgba(26,26,26,0.04); color: var(--ink); } }
+    .mode-tab:active:not(.active) { background: rgba(26,26,26,0.1); color: var(--ink); }
 
     .panel { display: none; }
     .panel.active { display: block; }
@@ -272,8 +270,11 @@
 
     /* ── BROWSE NAV ───────────────────────────────────────── */
     .browse-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .btn-nav { font-family: var(--font); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; padding: 11px 24px; border-radius: 999px; border: 2.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; transition: all var(--dur); flex-shrink: 0; box-shadow: var(--shadow-sm); }
-    .btn-nav:hover:not(:disabled) { background: var(--ink); color: #fff; box-shadow: none; transform: translate(3px, 3px); }
+    .btn-nav { font-family: var(--font); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; padding: 11px 24px; border-radius: 999px; border: 2.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; transition: background var(--dur), color var(--dur), box-shadow var(--dur), transform var(--dur); flex-shrink: 0; box-shadow: var(--shadow-sm); }
+    @media (hover: hover) {
+      .btn-nav:hover:not(:disabled) { background: var(--ink); color: #fff; box-shadow: none; transform: translate(3px, 3px); }
+    }
+    .btn-nav:active:not(:disabled) { background: var(--ink); color: #fff; box-shadow: none; transform: translate(3px, 3px); }
     .btn-nav:disabled { opacity: 0.25; cursor: not-allowed; box-shadow: none; }
     .btn-nav-primary { background: var(--teal); border-color: var(--teal); color: #fff; }
     .btn-nav-primary:hover:not(:disabled) { background: var(--teal-deep); border-color: var(--teal-deep); }
@@ -289,15 +290,21 @@
     .quiz-instruction { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,26,26,0.42); margin-bottom: 10px; }
     .quiz-prompt { font-size: clamp(1.6rem, 5.5vw, 2.6rem); font-weight: 900; color: var(--ink); line-height: 1.1; margin-bottom: 28px; letter-spacing: -0.03em; }
     .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 380px) { .quiz-options { grid-template-columns: 1fr; } }
-    .quiz-opt { font-family: var(--font); font-size: 1rem; font-weight: 800; padding: 18px 14px; border-radius: 12px; border: 2.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; text-align: center; line-height: 1.3; transition: all var(--dur); box-shadow: 3px 3px 0 var(--ink); }
-    .quiz-opt:hover:not(:disabled) { background: var(--ink); color: #fff; box-shadow: none; transform: translate(3px, 3px); }
+    @media (max-width: 480px) { .quiz-options { grid-template-columns: 1fr; } }
+    .quiz-opt { font-family: var(--font); font-size: 1rem; font-weight: 800; padding: 18px 14px; border-radius: 12px; border: 2.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; text-align: center; line-height: 1.3; transition: background var(--dur), color var(--dur), border-color var(--dur), box-shadow var(--dur); box-shadow: 3px 3px 0 var(--ink); }
+    @media (hover: hover) {
+      .quiz-opt:hover:not(:disabled) { background: var(--ink); color: #fff; box-shadow: none; transform: translate(3px, 3px); }
+    }
+    .quiz-opt:active:not(:disabled) { background: var(--ink); color: #fff; box-shadow: none; transform: translate(3px, 3px); }
     .quiz-opt.correct { background: var(--teal); border-color: var(--teal-deep); color: #fff; box-shadow: 3px 3px 0 var(--teal-deep); }
     .quiz-opt.wrong   { background: var(--coral); border-color: var(--coral-deep); color: #fff; box-shadow: 3px 3px 0 var(--coral-deep); }
     .quiz-opt.dim     { background: rgba(255,255,255,0.35); border-color: rgba(26,26,26,0.12); color: rgba(26,26,26,0.32); box-shadow: none; }
     .quiz-opt:disabled { cursor: default; }
-    .btn-quiz-next { font-family: var(--font); width: 100%; margin-top: 18px; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; padding: 14px; border-radius: 12px; border: 2.5px solid var(--ink); background: var(--teal); color: #fff; cursor: pointer; transition: all var(--dur); box-shadow: var(--shadow-sm); }
-    .btn-quiz-next:hover { background: var(--teal-deep); box-shadow: none; transform: translate(3px, 3px); }
+    .btn-quiz-next { font-family: var(--font); width: 100%; margin-top: 18px; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; padding: 14px; border-radius: 12px; border: 2.5px solid var(--ink); background: var(--teal); color: #fff; cursor: pointer; transition: background var(--dur), box-shadow var(--dur), transform var(--dur); box-shadow: var(--shadow-sm); }
+    @media (hover: hover) {
+      .btn-quiz-next:hover { background: var(--teal-deep); box-shadow: none; transform: translate(3px, 3px); }
+    }
+    .btn-quiz-next:active { background: var(--teal-deep); box-shadow: none; transform: translate(3px, 3px); }
     .quiz-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
     .quiz-done { text-align: center; padding: clamp(28px, 5vw, 44px) 16px clamp(24px, 4vw, 32px); }
     .quiz-done-glyph { font-size: clamp(2.2rem, 6vw, 3.5rem); font-weight: 900; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.04em; }
@@ -382,6 +389,7 @@
           <div class="quiz-instruction">Which Yoruba word means…</div>
           <div class="quiz-prompt" id="q-prompt"></div>
           <div class="quiz-options" id="q-options"></div>
+          <button class="btn-quiz-next" id="btn-quiz-next" style="display:none">Next question →</button>
         </div>
         <div class="quiz-card" id="quiz-done-screen" style="display:none">
           <div class="quiz-done">
@@ -392,8 +400,7 @@
           </div>
         </div>
         <div class="quiz-nav">
-          <button class="btn-nav" id="btn-qprev" style="display:none">← prev</button>
-          <button class="btn-nav btn-nav-primary" id="btn-qnext" style="display:none">next →</button>
+          <button class="btn-nav" id="btn-qprev" style="display:none">← Back</button>
         </div>
       </div>
 
@@ -620,7 +627,8 @@ function getDistractors(word, count) {
 }
 
 function renderQuiz() {
-  var btnPrev = document.getElementById('btn-qprev'), btnNext = document.getElementById('btn-qnext');
+  var btnPrev = document.getElementById('btn-qprev');
+  var btnNext = document.getElementById('btn-quiz-next');
   if (qCursor >= qOrder.length) {
     document.getElementById('quiz-card').style.display = 'none';
     document.getElementById('quiz-done-screen').style.display = '';
@@ -646,8 +654,14 @@ function renderQuiz() {
     } else { btn.addEventListener('click', function(){ selectOpt(opt.id, word.id, options); }); }
     optEl.appendChild(btn);
   });
-  if (qHistory.length === 0) { btnPrev.style.display = 'none'; btnNext.style.display = 'none'; }
-  else { btnPrev.style.display = ''; btnPrev.disabled = (qCursor === 0); btnNext.style.display = ''; btnNext.disabled = !qAnswered; }
+  if (alreadyAnswered) {
+    btnNext.style.display = '';
+    btnNext.textContent = (qCursor === qOrder.length - 1) ? 'See results →' : 'Next question →';
+  } else {
+    btnNext.style.display = 'none';
+  }
+  btnPrev.style.display = qHistory.length === 0 ? 'none' : '';
+  btnPrev.disabled = (qCursor === 0);
 }
 
 function selectOpt(selectedId, correctId, options) {
@@ -661,8 +675,10 @@ function selectOpt(selectedId, correctId, options) {
     else if (id === selectedId) btn.classList.add('wrong');
     else btn.classList.add('dim');
   });
+  var btnNext = document.getElementById('btn-quiz-next');
+  btnNext.style.display = '';
+  btnNext.textContent = (qCursor === qOrder.length - 1) ? 'See results →' : 'Next question →';
   document.getElementById('btn-qprev').style.display = ''; document.getElementById('btn-qprev').disabled = (qCursor === 0);
-  document.getElementById('btn-qnext').style.display = ''; document.getElementById('btn-qnext').disabled = false;
 }
 
 function advanceQuiz()  { if (!qAnswered) return; qCursor++; renderQuiz(); }
@@ -695,7 +711,7 @@ function bindEvents() {
   document.getElementById('btn-know').addEventListener('click', markKnown);
   document.getElementById('btn-reset').addEventListener('click', startQuiz);
   document.getElementById('btn-quiz-again').addEventListener('click', startQuiz);
-  document.getElementById('btn-qnext').addEventListener('click', advanceQuiz);
+  document.getElementById('btn-quiz-next').addEventListener('click', advanceQuiz);
   document.getElementById('btn-qprev').addEventListener('click', retreatQuiz);
 }
 
