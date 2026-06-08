@@ -244,7 +244,7 @@
     "yoruba": "Orí",
     "meaning": "Head",
     "category": "Body",
-    "sent_yo": "Orí mi ń fọ́.",
+    "sent_yo": "Orí ń fọ́ mi.",
     "sent_en": "I have a headache."
   },
   {
@@ -253,7 +253,7 @@
     "meaning": "Eye / Face",
     "category": "Body",
     "sent_yo": "Ojú rẹ ń sọ ìtàn.",
-    "sent_en": "Your face tells a story."
+    "sent_en": "Your face is telling a story."
   },
   {
     "id": 33,
@@ -268,7 +268,7 @@
     "yoruba": "Ẹsẹ̀",
     "meaning": "Leg / Foot",
     "category": "Body",
-    "sent_yo": "Ẹsẹ̀ mi ń fọ́.",
+    "sent_yo": "Ẹsẹ̀ mi ń ro mi.",
     "sent_en": "My leg is hurting."
   },
   {
@@ -276,8 +276,8 @@
     "yoruba": "Ẹnu",
     "meaning": "Mouth",
     "category": "Body",
-    "sent_yo": "Ẹnu rẹ tóbi.",
-    "sent_en": "Your mouth is big."
+    "sent_yo": "Ẹnu rẹ̀ tóbi.",
+    "sent_en": "His mouth is big."
   },
   {
     "id": 36,
@@ -292,15 +292,15 @@
     "yoruba": "Imú",
     "meaning": "Nose",
     "category": "Body",
-    "sent_yo": "Imú rẹ gùn.",
-    "sent_en": "Your nose is long."
+    "sent_yo": "Imú mi gùn.",
+    "sent_en": "My nose is long."
   },
   {
     "id": 38,
     "yoruba": "Ara",
     "meaning": "Body",
     "category": "Body",
-    "sent_yo": "Ara mi kò dára lónìí.",
+    "sent_yo": "Ara mi kò ya lónìí.",
     "sent_en": "My body is not well today."
   },
   {
@@ -316,7 +316,7 @@
     "yoruba": "Ẹ̀yìn",
     "meaning": "Back",
     "category": "Body",
-    "sent_yo": "Ẹ̀yìn mi ń fọ́.",
+    "sent_yo": "Ẹ̀yìn mi ń ro mi.",
     "sent_en": "My back is aching."
   },
   {
@@ -340,7 +340,7 @@
     "yoruba": "Alẹ́",
     "meaning": "Night / Evening",
     "category": "Time",
-    "sent_yo": "Alẹ́ ti dé.",
+    "sent_yo": "Alẹ́ ti dé (Ilẹ ti ṣu).",
     "sent_en": "Night has come."
   },
   {
@@ -372,15 +372,15 @@
     "yoruba": "Ọ̀sẹ̀",
     "meaning": "Week",
     "category": "Time",
-    "sent_yo": "Ọ̀sẹ̀ kan ni ọjọ́ méje.",
-    "sent_en": "One week is seven days."
+    "sent_yo": "Ọ̀sẹ̀ kan ní ọjọ́ méje.",
+    "sent_en": "One week has seven days."
   },
   {
     "id": 48,
     "yoruba": "Àkókò",
     "meaning": "Time / Moment",
     "category": "Time",
-    "sent_yo": "Àkókò jẹ́ ọrọ ìyebíyè.",
+    "sent_yo": "Àkókò jẹ́ nkan ọrọ ìyebíyè.",
     "sent_en": "Time is precious."
   },
   {
@@ -388,7 +388,7 @@
     "yoruba": "Òní",
     "meaning": "Today",
     "category": "Time",
-    "sent_yo": "Òní ọjọ́ dára.",
+    "sent_yo": "Ọjọ́ oni dára.",
     "sent_en": "Today is a good day."
   },
   {
@@ -396,7 +396,7 @@
     "yoruba": "Ọ̀la",
     "meaning": "Tomorrow",
     "category": "Time",
-    "sent_yo": "Ọ̀la a ó padà.",
+    "sent_yo": "Ọ̀la a maa padà.",
     "sent_en": "Tomorrow we will return."
   },
   {
@@ -405,7 +405,7 @@
     "meaning": "Home / House",
     "category": "Places",
     "sent_yo": "Ilé mi wà nísàlẹ̀ òkè náà.",
-    "sent_en": "My home is at the foot of that hill."
+    "sent_en": "My home is at the foot of the hill."
   },
   {
     "id": 52,
@@ -428,7 +428,7 @@
     "yoruba": "Ọjà",
     "meaning": "Market",
     "category": "Places",
-    "sent_yo": "Ìyá mi ń tà ní ọjà.",
+    "sent_yo": "Ìyá mi ń tà nkan ní ọjà.",
     "sent_en": "My mother sells at the market."
   },
   {
@@ -452,7 +452,7 @@
     "yoruba": "Òkè",
     "meaning": "Hill / Mountain",
     "category": "Places",
-    "sent_yo": "Ilé wà lórí òkè.",
+    "sent_yo": "Ilé naa wà lórí òkè.",
     "sent_en": "The house is on the hill."
   },
   {
@@ -460,7 +460,7 @@
     "yoruba": "Odò",
     "meaning": "River",
     "category": "Places",
-    "sent_yo": "Odò tóbi wà nísàlẹ̀.",
+    "sent_yo": "Odò ti ó tóbi wà nísàlẹ̀.",
     "sent_en": "A large river is below."
   },
   {
@@ -468,7 +468,7 @@
     "yoruba": "Ọ̀run",
     "meaning": "Sky / Heaven",
     "category": "Nature",
-    "sent_yo": "Ọ̀run wà lókè.",
+    "sent_yo": "Ojú Ọ̀run wà lókè.",
     "sent_en": "The sky is above."
   },
   {
@@ -492,7 +492,7 @@
     "yoruba": "Igi",
     "meaning": "Tree / Wood",
     "category": "Nature",
-    "sent_yo": "Igi náà gùn.",
+    "sent_yo": "Igi náà ga.",
     "sent_en": "The tree is tall."
   },
   {
@@ -500,7 +500,7 @@
     "yoruba": "Ilẹ̀",
     "meaning": "Ground / Earth",
     "category": "Nature",
-    "sent_yo": "Ilẹ̀ wa ní àwa.",
+    "sent_yo": "Ilẹ̀ yii jẹ ti àwa.",
     "sent_en": "This land is ours."
   },
   {
@@ -524,7 +524,7 @@
     "yoruba": "Jẹ",
     "meaning": "To eat",
     "category": "Verbs",
-    "sent_yo": "Mo jẹ oúnjẹ lóojúmọ́.",
+    "sent_yo": "Mo maa n jẹ oúnjẹ lóojúmọ́.",
     "sent_en": "I eat food every day."
   },
   {
@@ -556,7 +556,7 @@
     "yoruba": "Rí",
     "meaning": "To see",
     "category": "Verbs",
-    "sent_yo": "Mo rí rẹ lánàá.",
+    "sent_yo": "Mo rí ẹ lánàá.",
     "sent_en": "I saw you yesterday."
   },
   {
@@ -613,7 +613,7 @@
     "meaning": "To sleep",
     "category": "Verbs",
     "sent_yo": "Mo sùn lẹ́yìn oúnjẹ.",
-    "sent_en": "I sleep after eating."
+    "sent_en": "I sleep after eating (food)."
   },
   {
     "id": 78,
@@ -652,8 +652,8 @@
     "yoruba": "Búburú",
     "meaning": "Bad / Evil",
     "category": "Adjectives",
-    "sent_yo": "Ìṣẹ̀ náà búburú.",
-    "sent_en": "That work is bad."
+    "sent_yo": "Ìṣẹ̀ náà jẹ iṣẹ búburú.",
+    "sent_en": "That work is a bad work."
   },
   {
     "id": 83,
@@ -668,7 +668,7 @@
     "yoruba": "Kékeré",
     "meaning": "Small / Little",
     "category": "Adjectives",
-    "sent_yo": "Ọmọ kékeré ń kọrin.",
+    "sent_yo": "Ọmọ kékeré naa ń kọrin.",
     "sent_en": "The small child is singing."
   },
   {
@@ -724,7 +724,7 @@
     "yoruba": "Ìfẹ́",
     "meaning": "Love",
     "category": "Concepts",
-    "sent_yo": "Ìfẹ́ ń gbé wa papọ̀.",
+    "sent_yo": "Ìfẹ́ mu wa papọ̀.",
     "sent_en": "Love keeps us together."
   },
   {
@@ -741,14 +741,14 @@
     "meaning": "Mercy / Compassion",
     "category": "Concepts",
     "sent_yo": "Àánú Ọlọ́run tó wa.",
-    "sent_en": "God's mercy is with us."
+    "sent_en": "God's mercy enough for us."
   },
   {
     "id": 94,
     "yoruba": "Orúkọ",
     "meaning": "Name",
     "category": "Concepts",
-    "sent_yo": "Orúkọ rẹ ni kí?",
+    "sent_yo": "Ki ni orúkọ rẹ?",
     "sent_en": "What is your name?"
   },
   {
@@ -756,16 +756,16 @@
     "yoruba": "Owó",
     "meaning": "Money",
     "category": "Concepts",
-    "sent_yo": "Owó kò tó iṣẹ́.",
-    "sent_en": "Money is not everything."
+    "sent_yo": "Mo maa na owo mi.",
+    "sent_en": "I will spend my money."
   },
   {
     "id": 96,
     "yoruba": "Àṣà",
     "meaning": "Culture / Tradition",
     "category": "Concepts",
-    "sent_yo": "Àṣà wa ń ṣàpẹẹrẹ wa.",
-    "sent_en": "Our culture defines us."
+    "sent_yo": "Àṣà wa ń ṣe afihan wa.",
+    "sent_en": "Our culture expresses us."
   },
   {
     "id": 97,
@@ -788,7 +788,7 @@
     "yoruba": "Ìmọ̀",
     "meaning": "Knowledge / Wisdom",
     "category": "Concepts",
-    "sent_yo": "Ìmọ̀ ń ṣe àyípadà.",
+    "sent_yo": "Ìmọ̀ maa ń ṣe àyípadà.",
     "sent_en": "Knowledge brings change."
   },
   {
@@ -796,7 +796,7 @@
     "yoruba": "Àlàáfíà",
     "meaning": "Peace / Wellbeing",
     "category": "Concepts",
-    "sent_yo": "Àlàáfíà wà pẹ̀lú rẹ.",
-    "sent_en": "Peace be with you."
+    "sent_yo": "Kí alàáfíà Ọlọrun wà pẹ̀lú rẹ.",
+    "sent_en": "May the peace of God be with you."
   }
 ]

@@ -60,8 +60,8 @@
     }
     .nav-logo-group { display: flex; flex-direction: column; }
     .nav-logo {
-      font-family: var(--font); font-size: 1.05rem; font-weight: 900;
-      letter-spacing: -0.03em; color: var(--gold); text-decoration: none;
+      font-family: 'Flegrei', Georgia, serif; font-size: 1.5rem; font-weight: normal;
+      letter-spacing: -0.02em; color: var(--gold); text-decoration: none; line-height: 1;
     }
     .nav-byline { font-size: 0.5rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 1px; }
     .pill-nav { display: flex; gap: 8px; align-items: center; }
@@ -89,7 +89,7 @@
     .footer { border-top: 3px solid var(--ink); padding: 20px var(--pad); background: var(--ink); }
     .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
     .footer-brand-group { display: flex; flex-direction: column; }
-    .footer-brand { font-family: var(--font); font-size: 1.5rem; font-weight: 900; letter-spacing: -0.03em; color: var(--gold); text-decoration: none; }
+    .footer-brand { font-family: 'Flegrei', Georgia, serif; font-size: 1.8rem; font-weight: normal; letter-spacing: -0.02em; color: var(--gold); text-decoration: none; }
     .footer-byline { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 2px; }
     .footer-nav { display: flex; flex-direction: column; gap: 10px; }
     .footer-nav a { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); text-decoration: none; transition: color var(--dur); }
@@ -119,9 +119,15 @@
     }
     .page-header-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
     .page-title {
-      font-size: clamp(4.2rem, 15vw, 10.5rem);
-      font-weight: 900; line-height: 0.84;
+      font-size: clamp(2rem, 7vw, 5rem);
+      font-weight: 900; line-height: 0.9;
       letter-spacing: -0.045em; color: #fff; margin-bottom: 20px;
+    }
+    .page-title-yo {
+      display: block;
+      font-family: 'Flegrei', Georgia, serif; font-size: clamp(0.85rem, 2.5vw, 1.3rem);
+      font-weight: normal; letter-spacing: 0.01em; color: var(--gold);
+      margin-bottom: 4px;
     }
     .page-subtitle { font-size: 0.9rem; color: rgba(255,255,255,0.62); max-width: 340px; line-height: 1.65; margin-bottom: 22px; }
     .stat-chip {
@@ -294,7 +300,7 @@
 <!-- PAGE HEADER -->
 <div class="page-header">
   <div class="page-header-inner">
-    <h1 class="page-title">100<br>Words</h1>
+    <h1 class="page-title"><span class="page-title-yo">Ọgọrun ọrọ</span>100 Words</h1>
     <p class="page-subtitle">Build your Yorùbá vocabulary foundation one word at a time. Browse, flip, quiz yourself.</p>
     <span class="stat-chip" id="global-stat">0 / 100 seen</span>
   </div>
