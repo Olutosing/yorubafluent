@@ -714,7 +714,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      padding: 56px var(--page-pad) 60px;
+      padding: 56px var(--page-pad);
     }
 
     .wotd-right::before {
@@ -793,6 +793,12 @@
     .iliwe-body {
       position: relative;
       z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     .iliwe-title {
@@ -844,6 +850,8 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
       transition: background var(--dur-normal) var(--ease);
     }
 
@@ -863,7 +871,11 @@
     .wotd-inner {
       position: relative;
       z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
+    .wotd-center { margin-top: auto; margin-bottom: auto; }
 
     .wotd-eyebrow {
       display: flex;
@@ -1260,10 +1272,12 @@
         <div class="wotd-eyebrow">
           <span class="wotd-eyebrow-left"><span class="wotd-dot"></span>Yoruba Word of the Day<span class="wotd-eyebrow-sep">·</span><span class="wotd-date" id="wotd-date-card"></span></span>
         </div>
-        <div class="wotd-word" id="wotd-word-card"></div>
-        <div class="wotd-meaning" id="wotd-meaning-card"></div>
-        <p class="wotd-sent-yo" id="wotd-sent-yo-card"></p>
-        <p class="wotd-sent-en" id="wotd-sent-en-card"></p>
+        <div class="wotd-center">
+          <div class="wotd-word" id="wotd-word-card"></div>
+          <div class="wotd-meaning" id="wotd-meaning-card"></div>
+          <p class="wotd-sent-yo" id="wotd-sent-yo-card"></p>
+          <p class="wotd-sent-en" id="wotd-sent-en-card"></p>
+        </div>
         <div class="wotd-footer">
           <div class="wotd-share-wrap">
             <button class="wotd-share-btn" id="wotd-share-toggle-card">
