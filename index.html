@@ -1530,36 +1530,49 @@
       }, 4000);
     })();
 
-    // Blog preview — fetch latest 4 posts from posts.json
-    fetch('https://olutosing.github.io/yorubafluent/blog/posts.json')
-      .then(r => r.json())
-      .then(posts => {
-        const grid = document.getElementById('homepage-blog-grid');
-        posts.slice(0, 4).forEach(post => {
-          const url = 'https://olutosing.github.io/yorubafluent/blog/' + post.slug + '/';
-          const card = document.createElement('a');
-          card.className = 'blog-card';
-          card.href = url;
-          card.target = '_top';
+    // Blog preview — single source of truth: blog/posts.json
+    // Falls back to GitHub Pages URL, then inline data (for file:// or offline)
+    const BLOG_POSTS_FALLBACK = [
+      {"slug":"yoruba-greetings-1","title":"Greetings in Yoruba 1","category":"Culture","date":"Jun 2026","readTime":"5 min read","glyph":"Ì","color":"#C3D5C2"},
+      {"slug":"yoruba-greetings-2","title":"Yoruba Greetings II","category":"Culture","date":"Jun 2026","readTime":"6 min read","glyph":"Ẹ","color":"#D5C3B4"},
+      {"slug":"ogun-agbaye-akoko","title":"Ogun Àgbáyé àkọ́kọ́","category":"History","date":"Jun 2026","readTime":"6 min read","glyph":"Ọ","color":"#C5C3D5"},
+      {"slug":"ai-ati-igbe-aye","title":"AI ati igbe aye awa ẹda","category":"Tech","date":"Jun 2026","readTime":"6 min read","glyph":"Á","color":"#B4C3D5"}
+    ];
 
-          card.innerHTML = `
-            <div class="blog-placeholder" style="background:${post.color}">
-              <span class="blog-placeholder-glyph">${post.glyph}</span>
-            </div>
-            <img class="blog-card-img" src="blog/${post.slug}/image.jpg" alt="${post.title}" loading="lazy"
-                 onerror="this.style.display='none'">
-            <div class="blog-card-overlay"></div>
-            <div class="blog-card-label">
-              <div class="blog-card-category">${post.category}</div>
-              <div class="blog-card-title">${post.title}</div>
-              <div class="blog-card-meta">${post.date}</div>
-            </div>`;
-          grid.appendChild(card);
-        });
-      })
-      .catch(() => {
-        // Silently fail — grid stays empty rather than breaking the page
+    function renderBlogCards(posts) {
+      const grid = document.getElementById('homepage-blog-grid');
+      grid.innerHTML = '';
+      posts.slice(0, 4).forEach(post => {
+        const url = 'https://olutosing.github.io/yorubafluent/blog/' + post.slug + '/';
+        const card = document.createElement('a');
+        card.className = 'blog-card';
+        card.href = url;
+        card.target = '_top';
+        card.innerHTML = `
+          <div class="blog-placeholder" style="background:${post.color}">
+            <span class="blog-placeholder-glyph">${post.glyph}</span>
+          </div>
+          <img class="blog-card-img" src="blog/${post.slug}/image.jpg" alt="${post.title}" loading="lazy"
+               onerror="this.style.display='none'">
+          <div class="blog-card-overlay"></div>
+          <div class="blog-card-label">
+            <div class="blog-card-category">${post.category}</div>
+            <div class="blog-card-title">${post.title}</div>
+            <div class="blog-card-meta">${post.date}</div>
+          </div>`;
+        grid.appendChild(card);
       });
+    }
+
+    fetch('blog/posts.json')
+      .then(r => r.json())
+      .then(renderBlogCards)
+      .catch(() =>
+        fetch('https://olutosing.github.io/yorubafluent/blog/posts.json')
+          .then(r => r.json())
+          .then(renderBlogCards)
+          .catch(() => renderBlogCards(BLOG_POSTS_FALLBACK))
+      );
 
     // ── HOMEPAGE QUIZ CARD ───────────────────────────
     (function () {
