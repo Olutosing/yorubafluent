@@ -269,11 +269,9 @@
     /* ── FEATURES ────────────────────────────────────── */
     .features {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       border-top: 1px solid var(--divider);
     }
-
-    @media (max-width: 640px) { .features { grid-template-columns: 1fr; } }
 
     .feature-card {
       padding: 52px var(--page-pad);
@@ -282,7 +280,6 @@
       transition: background var(--dur-normal) var(--ease);
     }
 
-    .feature-card:first-child { border-right: 1px solid var(--divider); }
     .feature-card:hover { background: var(--card-bg); }
 
     .feature-ghost {
@@ -348,6 +345,83 @@
 
     .feature-link.teal:hover  { color: var(--teal);  border-color: var(--teal); }
     .feature-link.coral:hover { color: var(--coral); border-color: var(--coral); }
+
+    /* ── RESOURCES SECTION ───────────────────────────── */
+    .resources-section { padding: 72px 0 0; }
+
+    .resources-carousel {
+      display: flex;
+      gap: 16px;
+      padding: 0 var(--page-pad) 32px;
+      margin-top: 28px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .resources-carousel::-webkit-scrollbar { display: none; }
+
+    .resource-card {
+      flex-shrink: 0;
+      width: 260px;
+      background: var(--bg);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--divider);
+      scroll-snap-align: start;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow var(--dur-normal) var(--ease), transform var(--dur-normal) var(--ease);
+    }
+
+    .resource-card:hover {
+      box-shadow: var(--card-shadow);
+      transform: translateY(-2px);
+    }
+
+    .resource-cover {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      display: block;
+    }
+
+    .resource-body {
+      padding: 18px 20px 22px;
+    }
+
+    .resource-category {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: 0.35rem;
+    }
+
+    .resource-title {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+
+    .resource-dl {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border-bottom: 2px solid var(--teal);
+      padding-bottom: 2px;
+      transition: color var(--dur-fast);
+    }
+
+    .resource-dl:hover { color: var(--teal); }
 
     /* ── BLOG SECTION ────────────────────────────────── */
     .blog-section { padding: 72px 0 0; }
@@ -571,8 +645,144 @@
     @media (max-width: 640px) { .wotd-section { grid-template-columns: 1fr; } .wotd-right { display: none; } }
 
     .wotd-right {
-      background: var(--bg);
-      border-left: 1px solid var(--divider);
+      background: #1a1200;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 44px var(--page-pad);
+    }
+
+    .wotd-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 300px 300px;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .iliwe-live {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 5rem;
+    }
+
+    .iliwe-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      flex-shrink: 0;
+      animation: iliwe-pulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes iliwe-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.7); }
+      60%       { box-shadow: 0 0 0 7px rgba(74,222,128,0); }
+    }
+
+    .iliwe-chips {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .iliwe-chip {
+      position: absolute;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.55);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 6px 14px;
+      border-radius: 999px;
+      pointer-events: all;
+      cursor: default;
+      white-space: nowrap;
+      animation: chip-float var(--chip-dur) ease-in-out infinite var(--chip-delay);
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .iliwe-chip .chip-yo { display: none; }
+    .iliwe-chip:hover .chip-en { display: none; }
+    .iliwe-chip:hover .chip-yo { display: inline; }
+    .iliwe-chip:hover {
+      background: rgba(255,179,0,0.14);
+      border-color: rgba(255,179,0,0.35);
+      color: var(--gold);
+    }
+
+    .iliwe-chip:nth-child(1) { top: 18%; right: 16%; --chip-dur: 6s;   --chip-delay: 0s; }
+    .iliwe-chip:nth-child(2) { top: 36%; right: 6%;  --chip-dur: 7.5s; --chip-delay: -2.5s; }
+    .iliwe-chip:nth-child(3) { top: 28%; right: 42%; --chip-dur: 5.5s; --chip-delay: -1.2s; }
+    .iliwe-chip:nth-child(4) { top: 55%; right: 12%; --chip-dur: 6.8s; --chip-delay: -3.5s; }
+
+    @keyframes chip-float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33%       { transform: translateY(-9px) rotate(-0.4deg); }
+      66%       { transform: translateY(-4px) rotate(0.4deg); }
+    }
+
+    .iliwe-body {
+      position: relative;
+      z-index: 1;
+      margin-top: auto;
+    }
+
+    .iliwe-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 9vw, 6rem);
+      font-weight: normal;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .iliwe-sub {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+      max-width: 280px;
+      margin-bottom: 2rem;
+    }
+
+    .iliwe-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #1a1200;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.75rem 1.6rem;
+      min-width: 160px;
+      border-radius: 999px;
+      transition: background 0.15s, transform 0.15s;
+    }
+
+    .iliwe-cta:hover {
+      background: #ffc933;
+      transform: translateY(-2px);
     }
 
     .wotd-card {
@@ -1002,7 +1212,22 @@
         </div>
       </div>
     </div>
-    <div class="wotd-right"></div>
+    <div class="wotd-right">
+      <div class="iliwe-live">
+        <span class="iliwe-pulse"></span>Classes open
+      </div>
+      <div class="iliwe-chips" aria-hidden="true">
+        <div class="iliwe-chip"><span class="chip-en">Grammar</span><span class="chip-yo">Gírámà</span></div>
+        <div class="iliwe-chip"><span class="chip-en">Conversation</span><span class="chip-yo">Ìjíròrò</span></div>
+        <div class="iliwe-chip"><span class="chip-en">Pronunciation</span><span class="chip-yo">Ìmọ̀ Ohun</span></div>
+        <div class="iliwe-chip"><span class="chip-en">Culture</span><span class="chip-yo">Àṣà</span></div>
+      </div>
+      <div class="iliwe-body">
+        <div class="iliwe-title">Ilé-Ìwé</div>
+        <p class="iliwe-sub">Live Yoruba classes with a real teacher. From beginner to fluent.</p>
+        <a href="https://www.yorubafluent.com/members-area/my/my-bookings" target="_top" class="iliwe-cta">Join</a>
+      </div>
+    </div>
   </section>
 
   <!-- WORD OF THE DAY MODAL -->
@@ -1051,13 +1276,6 @@
         </div>
       </div>
     </div>
-    <div class="feature-card">
-      <div class="feature-ghost" aria-hidden="true">2</div>
-      <div class="feature-eyebrow"><span class="feature-dot"></span>Free Resources</div>
-      <h2 class="feature-title">Free<br><span class="accent-coral">Freebies</span></h2>
-      <p class="feature-desc">Downloadable word lists, phrase cards, and audio guides — no sign-up needed. Just take and use.</p>
-      <a href="https://www.yorubafluent.com/vocabularies" target="_top" class="feature-link coral">Get freebies →</a>
-    </div>
   </div>
 
   <!-- BLOG PREVIEW -->
@@ -1071,6 +1289,42 @@
     </div>
     <div class="blog-grid" id="homepage-blog-grid">
       <!-- Loaded dynamically from posts.json -->
+    </div>
+  </section>
+
+  <!-- FREE RESOURCES -->
+  <section class="resources-section">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow"><span class="eyebrow-tick-sm"></span>Free Resources</div>
+        <div class="section-title">Download yours</div>
+      </div>
+    </div>
+    <div class="resources-carousel">
+      <a class="resource-card" href="https://www.yorubafluent.com/_files/ugd/2cf81b_3f7e1e86d95944968b51f00940ee4f07.pdf" target="_blank" rel="noopener">
+        <img class="resource-cover" src="thumbnail1.png" alt="Ẹya Ara — Body Parts worksheet">
+        <div class="resource-body">
+          <div class="resource-category">Vocabulary</div>
+          <div class="resource-title">Ẹya Ara — Body Parts</div>
+          <span class="resource-dl">Download PDF →</span>
+        </div>
+      </a>
+      <a class="resource-card" href="https://www.yorubafluent.com/_files/ugd/2cf81b_221f6a7846904f26890739622e91c7af.pdf" target="_blank" rel="noopener">
+        <img class="resource-cover" src="thumbnail2.png" alt="Action Words in Yoruba worksheet">
+        <div class="resource-body">
+          <div class="resource-category">Vocabulary</div>
+          <div class="resource-title">Action Words in Yoruba</div>
+          <span class="resource-dl">Download PDF →</span>
+        </div>
+      </a>
+      <a class="resource-card" href="https://www.yorubafluent.com/_files/ugd/2cf81b_176d7f5226c442cea8593af6c542755a.pdf" target="_blank" rel="noopener">
+        <img class="resource-cover" src="thumbnail3.png" alt="Òrò Ìdàkejì — Words and Opposites worksheet">
+        <div class="resource-body">
+          <div class="resource-category">Vocabulary</div>
+          <div class="resource-title">Òrò Ìdàkejì — Words and Opposites</div>
+          <span class="resource-dl">Download PDF →</span>
+        </div>
+      </a>
     </div>
   </section>
 
