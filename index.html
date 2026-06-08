@@ -567,158 +567,186 @@
     }
 
     /* ── WORD OF THE DAY ─────────────────────────── */
-    .wotd-section { border-top: 1px solid var(--divider); }
+    .wotd-section { border-top: none; display: grid; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 640px) { .wotd-section { grid-template-columns: 1fr; } .wotd-right { display: none; } }
+
+    .wotd-right {
+      background: var(--bg);
+      border-left: 1px solid var(--divider);
+    }
 
     .wotd-card {
-      padding: 48px var(--page-pad) 64px;
+      background: var(--teal);
+      padding: 56px var(--page-pad) 60px;
       cursor: pointer;
-      transition: background var(--dur-normal) var(--ease);
       position: relative;
       overflow: hidden;
+      transition: background var(--dur-normal) var(--ease);
     }
-    .wotd-card:hover { background: var(--card-bg); }
+
+    .wotd-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 300px 300px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .wotd-card:hover { background: var(--teal-deep); }
+
+    .wotd-inner {
+      position: relative;
+      z-index: 1;
+    }
 
     .wotd-eyebrow {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: space-between;
       font-size: 0.65rem;
       font-weight: 800;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--ink-mid);
-      margin-bottom: 2rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 5rem;
     }
-    .wotd-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+    .wotd-eyebrow-left { display: flex; align-items: center; gap: 0.5rem; }
+
+    .wotd-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
 
     .wotd-word {
       font-family: var(--font-sans);
-      font-size: clamp(3rem, 11vw, 7rem);
       font-weight: 900;
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-      color: var(--ink);
-      margin-bottom: 0.6rem;
+      font-size: clamp(4rem, 15vw, 9rem);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1.2rem;
     }
 
     .wotd-meaning {
-      font-size: 0.72rem;
+      display: inline-block;
+      background: var(--gold);
+      color: #1a1200;
+      font-size: 0.65rem;
       font-weight: 800;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--teal);
-      margin-top: 0;
-      margin-bottom: 2rem;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 3.6rem;
     }
 
-    .wotd-rule { border: none; border-top: 1.5px solid var(--divider); width: 100%; margin: 0 0 1.8rem 0; }
+    .wotd-rule {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      width: 100%;
+      margin: 0 0 1.8rem 0;
+    }
 
     .wotd-example-label {
       font-size: 0.6rem;
       font-weight: 800;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--ink-faint);
+      color: rgba(255,255,255,0.38);
       margin-bottom: 0.75rem;
     }
 
     .wotd-sent-yo {
-      font-size: 1.05rem;
-      font-weight: 500;
-      font-style: italic;
-      color: var(--ink);
-      margin-bottom: 0.4rem;
+      font-size: 1.55rem;
+      font-weight: 400;
+      font-style: normal;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 0.2rem;
       line-height: 1.5;
+      max-width: 540px;
     }
+
     .wotd-sent-en {
-      font-size: 0.875rem;
-      color: var(--ink-muted);
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-left: 0;
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.5);
       line-height: 1.5;
+      max-width: 540px;
+    }
+
+    .wotd-watermark {
+      text-align: right;
+      margin-top: 1rem;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.18;
+    }
+    .wotd-watermark-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+    .wotd-watermark-by {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-top: 3px;
     }
 
     .wotd-footer {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-top: 2rem;
+      justify-content: flex-end;
+      margin-top: 2.6rem;
     }
 
     .wotd-date {
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      letter-spacing: -0.01em;
-      color: var(--ink-faint);
-    }
-
-    .wotd-watermark {
-      position: absolute;
-      bottom: -0.1em;
-      right: -0.05em;
-      font-family: var(--font-display);
-      font-size: clamp(5rem, 22vw, 10rem);
-      letter-spacing: -0.04em;
-      line-height: 0.85;
-      color: rgba(33,33,33,0.06);
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .wotd-credit {
-      position: absolute;
-      bottom: 20px;
-      right: var(--page-pad);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      opacity: 0.3;
-      pointer-events: none;
-      user-select: none;
-    }
-    .wotd-credit-brand {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      line-height: 1;
-    }
-    .wotd-credit-byline {
-      font-size: 0.5rem;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.65rem;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--ink);
-      margin-top: 3px;
     }
 
     .wotd-share-wrap { position: relative; display: inline-block; }
 
     .wotd-share-btn {
-      background: none;
-      border: 1.5px solid var(--divider);
-      padding: 0.5rem;
-      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.28);
+      padding: 0.45rem 1.1rem 0.45rem 0.85rem;
+      border-radius: 999px;
       font-family: var(--font-sans);
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--ink-mid);
+      color: rgba(255,255,255,0.62);
       cursor: pointer;
-      transition: border-color var(--dur-fast), color var(--dur-fast);
+      transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
     }
-    .wotd-share-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .wotd-share-btn:hover {
+      border-color: rgba(255,255,255,0.68);
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
 
     .wotd-share-menu {
       position: absolute;
       bottom: calc(100% + 8px);
-      left: 0;
+      right: 0;
       background: var(--bg);
       border: 1px solid var(--divider);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.14);
       min-width: 190px;
+      overflow: hidden;
       z-index: 300;
       opacity: 0;
       transform: translateY(6px);
@@ -764,32 +792,48 @@
     .wotd-overlay.open { background: rgba(0,0,0,0.65); pointer-events: all; }
 
     .wotd-modal {
-      background: var(--bg);
-      max-width: 620px;
+      background: var(--teal);
+      max-width: 600px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-      padding: 40px 32px;
+      padding: 0;
+      border-radius: 20px;
       position: relative;
+      overflow: hidden;
       transform: scale(0.92) translateY(16px);
       opacity: 0;
       transition: transform var(--dur-normal) var(--ease-overshoot), opacity var(--dur-normal) var(--ease);
     }
     .wotd-overlay.open .wotd-modal { transform: scale(1) translateY(0); opacity: 1; }
-
-    .wotd-modal .wotd-word { font-size: clamp(3.5rem, 12vw, 7rem); line-height: 1; margin-bottom: 0.75rem; }
-    .wotd-modal .wotd-meaning { font-size: 1.25rem; }
-    .wotd-modal .wotd-sent-yo { font-size: 1.1rem; }
-    .wotd-modal .wotd-sent-en { font-size: 1rem; }
+    .wotd-modal::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 300px 300px;
+      opacity: 0.5; pointer-events: none;
+    }
+    .wotd-modal .wotd-inner {
+      position: relative; z-index: 1;
+      padding: 40px 36px 36px;
+    }
+    .wotd-modal .wotd-word {
+      font-size: clamp(3.5rem, 12vw, 6.5rem);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+    .wotd-modal .wotd-sent-yo { max-width: none; }
+    .wotd-modal .wotd-sent-en { max-width: none; }
+    .wotd-modal .wotd-footer { justify-content: flex-end; }
 
     .wotd-close {
       position: absolute;
       top: 16px;
       right: 16px;
-      background: none;
+      z-index: 2;
+      background: rgba(255,255,255,0.12);
       border: none;
       font-size: 1.4rem;
-      color: var(--ink-mid);
+      color: rgba(255,255,255,0.75);
       cursor: pointer;
       width: 36px;
       height: 36px;
@@ -800,7 +844,89 @@
       transition: background var(--dur-fast);
       line-height: 1;
     }
-    .wotd-close:hover { background: var(--card-bg); }
+    .wotd-close:hover { background: rgba(255,255,255,0.22); }
+
+    /* ── HOMEPAGE QUIZ CARD ──────────────────────────── */
+    @keyframes hq-vibrate {
+      0%,100% { transform: translateX(0) rotate(0deg); }
+      15%     { transform: translateX(-6px) rotate(-2deg); }
+      30%     { transform: translateX(6px) rotate(2deg); }
+      45%     { transform: translateX(-6px) rotate(-2deg); }
+      60%     { transform: translateX(6px) rotate(2deg); }
+      80%     { transform: translateX(-3px) rotate(-1deg); }
+    }
+
+    .hq-card {
+      background: var(--gold);
+      border-radius: 20px;
+      border: none;
+      padding: 52px 32px 48px;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+    }
+
+    .hq-instruction {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: normal;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    .hq-prompt {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1a1200;
+      line-height: 1.4;
+      margin-bottom: 40px;
+    }
+
+    .hq-options {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hq-opt {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 12px 40px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      background: #fff;
+      color: #1a1200;
+      cursor: pointer;
+      text-align: center;
+      line-height: 1.3;
+      transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .hq-opt--yes {
+      border-color: rgba(0,0,0,0.12);
+      color: var(--teal-deep);
+      font-weight: 700;
+    }
+
+    .hq-opt--yes:hover {
+      background: var(--teal);
+      color: #fff;
+      border-color: var(--teal);
+    }
+
+    .hq-opt--no:hover { border-color: rgba(0,0,0,0.25); }
+
+    .hq-opt--no.vibrating {
+      animation: hq-vibrate 480ms ease;
+    }
 
   </style>
 </head>
@@ -846,49 +972,55 @@
   <!-- WORD OF THE DAY -->
   <section class="wotd-section">
     <div class="wotd-card" id="wotd-card" role="button" tabindex="0" aria-label="Expand word of the day">
-      <div class="wotd-eyebrow"><span class="wotd-dot"></span>Yoruba Word of the Day</div>
-      <div class="wotd-word" id="wotd-word-card"></div>
-      <div class="wotd-meaning" id="wotd-meaning-card"></div>
-      <hr class="wotd-rule">
-      <div class="wotd-example-label">In a sentence</div>
-      <p class="wotd-sent-yo" id="wotd-sent-yo-card"></p>
-      <p class="wotd-sent-en" id="wotd-sent-en-card"></p>
-      <div class="wotd-footer">
-        <span class="wotd-date" id="wotd-date-card"></span>
-        <div class="wotd-share-wrap">
-          <button class="wotd-share-btn" id="wotd-share-toggle-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px;display:block"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
-          <div class="wotd-share-menu" id="wotd-share-menu-card">
-            <a class="wotd-menu-item" id="wotd-wa-card" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
-            <a class="wotd-menu-item" id="wotd-x-card" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
-            <a class="wotd-menu-item" id="wotd-fb-card" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a>
-            <button class="wotd-menu-item" id="wotd-ig-card"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Instagram</button>
-            <button class="wotd-menu-item" id="wotd-copy-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy link</button>
+      <div class="wotd-inner">
+        <div class="wotd-eyebrow">
+          <span class="wotd-date" id="wotd-date-card"></span>
+          <span class="wotd-eyebrow-left"><span class="wotd-dot"></span>Yoruba Word of the Day</span>
+        </div>
+        <div class="wotd-word" id="wotd-word-card"></div>
+        <div class="wotd-meaning" id="wotd-meaning-card"></div>
+        <p class="wotd-sent-yo" id="wotd-sent-yo-card"></p>
+        <p class="wotd-sent-en" id="wotd-sent-en-card"></p>
+        <div class="wotd-footer">
+          <div class="wotd-share-wrap">
+            <button class="wotd-share-btn" id="wotd-share-toggle-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;display:block"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              Share
+            </button>
+            <div class="wotd-share-menu" id="wotd-share-menu-card">
+              <a class="wotd-menu-item" id="wotd-wa-card" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
+              <a class="wotd-menu-item" id="wotd-x-card" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
+              <a class="wotd-menu-item" id="wotd-fb-card" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a>
+              <button class="wotd-menu-item" id="wotd-ig-card"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Instagram</button>
+              <button class="wotd-menu-item" id="wotd-copy-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy link</button>
+            </div>
           </div>
         </div>
+        <div class="wotd-watermark">
+          <div class="wotd-watermark-logo">YorubaFluent</div>
+          <div class="wotd-watermark-by">By Olutosin Akinwumi</div>
+        </div>
       </div>
-      <div class="wotd-credit">
-        <span class="wotd-credit-brand">YorubaFluent</span>
-        <span class="wotd-credit-byline">By Olutosin Akinwumi</span>
-      </div>
-      <div class="wotd-watermark">YorubaFluent</div>
     </div>
+    <div class="wotd-right"></div>
   </section>
 
   <!-- WORD OF THE DAY MODAL -->
   <div class="wotd-overlay" id="wotd-overlay">
     <div class="wotd-modal">
       <button class="wotd-close" id="wotd-close" aria-label="Close">×</button>
-      <div class="wotd-eyebrow"><span class="wotd-dot"></span>Yoruba Word of the Day</div>
-      <div class="wotd-word" id="wotd-word-modal"></div>
-      <div class="wotd-meaning" id="wotd-meaning-modal"></div>
-      <hr class="wotd-rule">
-      <div class="wotd-example-label">In a sentence</div>
-      <p class="wotd-sent-yo" id="wotd-sent-yo-modal"></p>
-      <p class="wotd-sent-en" id="wotd-sent-en-modal"></p>
-      <div class="wotd-footer">
-        <span class="wotd-date" id="wotd-date-modal"></span>
-        <div class="wotd-share-wrap">
-          <button class="wotd-share-btn" id="wotd-share-toggle-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px;display:block"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+      <div class="wotd-inner">
+        <div class="wotd-eyebrow">
+          <span class="wotd-date" id="wotd-date-modal"></span>
+          <span class="wotd-eyebrow-left"><span class="wotd-dot"></span>Yoruba Word of the Day</span>
+        </div>
+        <div class="wotd-word" id="wotd-word-modal"></div>
+        <div class="wotd-meaning" id="wotd-meaning-modal"></div>
+        <p class="wotd-sent-yo" id="wotd-sent-yo-modal"></p>
+        <p class="wotd-sent-en" id="wotd-sent-en-modal"></p>
+        <div class="wotd-footer">
+          <div class="wotd-share-wrap">
+          <button class="wotd-share-btn" id="wotd-share-toggle-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;display:block"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</button>
           <div class="wotd-share-menu" id="wotd-share-menu-modal">
             <a class="wotd-menu-item" id="wotd-wa-modal" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
             <a class="wotd-menu-item" id="wotd-x-modal" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
@@ -898,22 +1030,26 @@
           </div>
         </div>
       </div>
-      <div class="wotd-credit">
-        <span class="wotd-credit-brand">YorubaFluent</span>
-        <span class="wotd-credit-byline">By Olutosin Akinwumi</span>
+      <div class="wotd-watermark">
+        <div class="wotd-watermark-logo">YorubaFluent</div>
+        <div class="wotd-watermark-by">By Olutosin Akinwumi</div>
       </div>
-      <div class="wotd-watermark">YorubaFluent</div>
     </div>
   </div>
+</div>
 
   <!-- FEATURES -->
   <div class="features">
     <div class="feature-card">
-      <div class="feature-ghost" aria-hidden="true">1</div>
-      <div class="feature-eyebrow"><span class="feature-dot"></span>Beginner</div>
-      <h2 class="feature-title">Your First<br><span class="accent-teal">100 Words</span></h2>
-      <p class="feature-desc">The most essential Yoruba vocabulary — greetings, numbers, family, food — built to stick from day one.</p>
-      <a href="https://www.yorubafluent.com/members-area/my/my-bookings" target="_top" class="feature-link teal">Start here →</a>
+      <div class="feature-ghost" aria-hidden="true">?</div>
+      <div class="hq-card">
+        <div class="hq-instruction">Ọgọrun ọrọ</div>
+        <div class="hq-prompt">Are you ready to learn / play 100 words?</div>
+        <div class="hq-options">
+          <a href="100-words.html" class="hq-opt hq-opt--yes">Yes</a>
+          <button class="hq-opt hq-opt--no" id="hq-no-btn">No</button>
+        </div>
+      </div>
     </div>
     <div class="feature-card">
       <div class="feature-ghost" aria-hidden="true">2</div>
@@ -1003,7 +1139,7 @@
       ['card', 'modal'].forEach(s => {
         document.getElementById('wotd-word-' + s).textContent = w.yoruba;
         document.getElementById('wotd-meaning-' + s).textContent = w.meaning;
-        document.getElementById('wotd-sent-yo-' + s).textContent = '"' + w.sent_yo + '"';
+        document.getElementById('wotd-sent-yo-' + s).textContent = w.sent_yo;
         document.getElementById('wotd-sent-en-' + s).textContent = w.sent_en;
         document.getElementById('wotd-date-' + s).textContent = dateStr;
         document.getElementById('wotd-wa-' + s).href = waUrl;
@@ -1136,6 +1272,20 @@
       .catch(() => {
         // Silently fail — grid stays empty rather than breaking the page
       });
+
+    // ── HOMEPAGE QUIZ CARD ───────────────────────────
+    (function () {
+      const noBtn = document.getElementById('hq-no-btn');
+      if (!noBtn) return;
+      noBtn.addEventListener('click', function () {
+        noBtn.classList.remove('vibrating');
+        void noBtn.offsetWidth;
+        noBtn.classList.add('vibrating');
+      });
+      noBtn.addEventListener('animationend', function () {
+        noBtn.classList.remove('vibrating');
+      });
+    })();
   </script>
 </body>
 </html>

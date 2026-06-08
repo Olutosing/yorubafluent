@@ -114,10 +114,21 @@
     }
     .eyebrow-tick { width: 24px; height: 2px; background: var(--gold); flex-shrink: 0; }
     .page-title {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
+      font-weight: 900;
       font-size: clamp(2.8rem, 9vw, 5.5rem);
       color: #fff; line-height: 0.9; letter-spacing: -0.03em;
       margin-bottom: 16px;
+    }
+    .page-title-yo {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: normal;
+      font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+      letter-spacing: -0.01em;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 0.3em;
+      line-height: 1;
     }
     .page-subtitle {
       font-size: 1rem; color: rgba(255,255,255,0.75);
@@ -350,9 +361,10 @@
       background: rgba(255,255,255,0.28); color: #fff;
     }
     .card-word {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
+      font-weight: 900;
       font-size: clamp(2rem, 9vw, 3.6rem);
-      color: #fff; line-height: 1.1; letter-spacing: -0.01em;
+      color: #fff; line-height: 1.1; letter-spacing: -0.02em;
       word-break: break-word; max-width: 100%;
     }
     .card-reveal-hint {
@@ -379,7 +391,8 @@
       justify-content: center; gap: 10px;
     }
     .card-meaning {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
+      font-weight: 800;
       font-size: clamp(1.7rem, 6vw, 2.6rem);
       color: var(--ink); line-height: 1.1; letter-spacing: -0.02em;
     }
@@ -430,36 +443,44 @@
     .btn-reset:hover { border-color: var(--coral); color: var(--coral); }
 
     .quiz-card {
-      background: var(--card-bg); border-radius: 20px;
-      padding: 32px 24px 24px;
+      background: var(--gold); border-radius: 20px;
+      padding: 44px 32px 36px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
     }
     .quiz-instruction {
-      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--ink-faint); margin-bottom: 10px;
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 10px;
+      line-height: 1;
     }
     .quiz-prompt {
-      font-size: 1.05rem; font-weight: 700; color: var(--ink);
-      line-height: 1.4; margin-bottom: 28px;
+      font-size: 1.4rem; font-weight: 900; color: #fff;
+      line-height: 1.4; margin-bottom: 36px;
     }
     .quiz-options {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 10px; margin-bottom: 16px;
+      gap: 12px; margin-bottom: 20px;
     }
     @media (max-width: 380px) { .quiz-options { grid-template-columns: 1fr; } }
 
     .quiz-opt {
-      font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700;
-      padding: 14px 16px; border-radius: 12px;
-      border: 1.5px solid var(--divider);
-      background: var(--bg); color: var(--ink);
-      cursor: pointer; text-align: left; line-height: 1.3;
+      font-family: var(--font-sans); font-size: 1rem;
+      padding: 18px 20px; border-radius: 14px;
+      border: 1.5px solid rgba(0,0,0,0.15);
+      background: #fff; color: #1a1200;
+      cursor: pointer; text-align: center; line-height: 1.3;
       transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
-      font-family: var(--font-display);
+      font-weight: 600;
     }
-    .quiz-opt:hover:not(:disabled) { border-color: var(--teal); color: var(--teal); }
-    .quiz-opt.correct { background: #e6f4f1; border-color: var(--teal); color: var(--teal-deep); }
-    .quiz-opt.wrong   { background: #fdf0ed; border-color: var(--coral); color: var(--coral-deep); }
-    .quiz-opt.dim     { opacity: 0.35; }
+    .quiz-opt:hover:not(:disabled) { border-color: rgba(0,0,0,0.35); background: rgba(255,255,255,0.8); }
+    .quiz-opt.correct { background: var(--teal); border-color: transparent; color: #fff; }
+    .quiz-opt.wrong   { background: var(--coral); border-color: transparent; color: #fff; }
+    .quiz-opt.dim     { background: rgba(255,255,255,0.45); border-color: transparent; color: rgba(26,18,0,0.4); }
     .quiz-opt:disabled { cursor: default; }
 
     .btn-quiz-next {
@@ -479,8 +500,8 @@
 
     /* Quiz done state */
     .quiz-done { text-align: center; padding: 40px 16px 28px; }
-    .quiz-done-glyph { font-family: var(--font-display); font-size: 3rem; color: var(--teal); margin-bottom: 8px; }
-    .quiz-done-title { font-family: var(--font-display); font-size: 2rem; color: var(--ink); margin-bottom: 8px; }
+    .quiz-done-glyph { font-family: var(--font-sans); font-weight: 900; font-size: 3rem; color: var(--teal); margin-bottom: 8px; }
+    .quiz-done-title { font-family: var(--font-sans); font-weight: 900; font-size: 2rem; color: var(--ink); margin-bottom: 8px; }
     .quiz-done-sub { font-size: 0.9rem; color: var(--ink-muted); margin-bottom: 28px; line-height: 1.5; }
   </style>
 </head>
@@ -492,12 +513,9 @@
 <div class="page-header">
   <div class="page-header-inner">
     <div class="page-eyebrow"><span class="eyebrow-tick"></span>YorubaFluent</div>
-    <h1 class="page-title">Your First<br>100 Words</h1>
-    <p class="page-subtitle">Build your Yoruba foundation one word at a time. Browse, flip, quiz yourself.</p>
+    <h1 class="page-title"><span class="page-title-yo">Ọgọrun ọrọ</span>100 Words</h1>
+    <p class="page-subtitle">Build your Yorùbá vocabulary foundation one word at a time. Browse, flip, quiz yourself.</p>
     <div class="page-stats">
-      <span class="stat-chip">100 words</span>
-      <span class="stat-chip">10 categories</span>
-      <span class="stat-chip">No login needed</span>
       <span class="stat-chip stat-chip-live" id="global-stat">0 / 100 seen</span>
     </div>
   </div>
@@ -626,7 +644,6 @@ var qOrder        = [];
 var qCursor       = 0;
 var qAnswered     = false;
 var qHistory      = [];  /* [{selectedId, correctId, options}] per answered question */
-var qBothNavShown = false; /* true once user clicks next for the first time */
 
 var STORAGE_SEEN = 'yfl-100-seen';
 var STORAGE_POS  = 'yfl-100-pos';   /* "category:index" */
@@ -913,7 +930,6 @@ function startQuiz() {
   qTotal        = 0;
   qAnswered     = false;
   qHistory      = [];
-  qBothNavShown = false;
   qOrder        = shuffle(filtered.map(function(_, i){ return i; }));
   qCursor       = 0;
   updateQuizScore();
@@ -945,9 +961,9 @@ function renderQuiz() {
     document.getElementById('quiz-done-screen').style.display = '';
     document.getElementById('quiz-done-sub').textContent =
       qCorrect + ' correct out of ' + qTotal + ' · ' + filtered.length + ' words';
-    if (qBothNavShown) {
+    if (qHistory.length > 0) {
       btnPrev.style.display = '';  btnPrev.disabled = false;
-      btnNext.style.display = '';  btnNext.disabled = true;  /* no more questions */
+      btnNext.style.display = 'none';
     } else {
       btnPrev.style.display = 'none';
       btnNext.style.display = 'none';
@@ -991,14 +1007,12 @@ function renderQuiz() {
     optEl.appendChild(btn);
   });
 
-  if (qBothNavShown) {
+  if (qHistory.length === 0) {
+    btnPrev.style.display = 'none';
+    btnNext.style.display = 'none';
+  } else {
     btnPrev.style.display = '';  btnPrev.disabled = (qCursor === 0);
     btnNext.style.display = '';  btnNext.disabled = !qAnswered;
-  } else {
-    /* before first next-click: prev hidden, next only after answering Q1 */
-    btnPrev.style.display = 'none';
-    btnNext.style.display = alreadyAnswered ? '' : 'none';
-    btnNext.disabled      = false;
   }
 }
 
@@ -1020,16 +1034,14 @@ function selectOpt(selectedId, correctId, options) {
     else                         btn.classList.add('dim');
   });
 
-  if (qBothNavShown) {
-    document.getElementById('btn-qnext').disabled = false;
-  } else {
-    document.getElementById('btn-qnext').style.display = '';
-  }
+  document.getElementById('btn-qprev').style.display = '';
+  document.getElementById('btn-qprev').disabled = (qCursor === 0);
+  document.getElementById('btn-qnext').style.display = '';
+  document.getElementById('btn-qnext').disabled = false;
 }
 
 function advanceQuiz() {
-  if (!qAnswered) return;          /* can't skip unanswered questions */
-  if (!qBothNavShown) qBothNavShown = true;
+  if (!qAnswered) return;
   qCursor++;
   renderQuiz();
 }
