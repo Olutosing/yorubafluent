@@ -545,11 +545,11 @@ function buildCatDropdown() {
   var allItems = [{ cat: 'all', label: 'All' }];
   CATS.forEach(function(cat){ allItems.push({ cat: cat, label: cat }); });
   var dropdown = document.getElementById('cat-dropdown');
-  var r = 270, n = allItems.length;
+  var r = 300, n = allItems.length;
   allItems.forEach(function(item, i) {
     var btn = document.createElement('button');
     btn.className = 'cat-dd-item'; btn.dataset.cat = item.cat; btn.textContent = item.label;
-    var angle = (180 + i * 70 / (n - 1)) * Math.PI / 180;
+    var angle = (185 + i * 70 / (n - 1)) * Math.PI / 180;
     btn.style.setProperty('--fan-x', (r * Math.cos(angle)).toFixed(1) + 'px');
     btn.style.setProperty('--fan-y', (-r * Math.sin(angle)).toFixed(1) + 'px');
     dropdown.appendChild(btn);
