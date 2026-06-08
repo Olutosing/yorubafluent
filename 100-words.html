@@ -278,7 +278,7 @@
 
     /* ── BROWSE NAV ───────────────────────────────────────── */
     .browse-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .btn-nav { font-family: var(--font); font-size: 1.1rem; font-weight: 800; letter-spacing: 0.04em; padding: 20px 52px; border-radius: 999px; border: 2.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; transition: background var(--dur), color var(--dur), box-shadow var(--dur), transform var(--dur); flex-shrink: 0; box-shadow: var(--shadow-sm); }
+    .btn-nav { font-family: var(--font); font-size: 1.3rem; font-weight: 800; letter-spacing: 0.04em; padding: 26px 0; flex: 1; border-radius: 999px; border: 2.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; transition: background var(--dur), color var(--dur), box-shadow var(--dur), transform var(--dur); box-shadow: var(--shadow-sm); }
     @media (hover: hover) {
       .btn-nav:hover:not(:disabled) { background: var(--ink); color: #fff; box-shadow: none; transform: translate(3px, 3px); }
     }
@@ -345,9 +345,9 @@
     }
     .quiz-opt.correct.anim { animation: opt-correct-pop 320ms ease both; }
     .quiz-opt.wrong.anim   { animation: opt-wrong-shake 280ms ease both; }
-    /* desktop: slightly smaller nav buttons */
+    /* desktop: compact nav buttons */
     @media (min-width: 641px) {
-      .btn-nav { font-size: 0.7rem; padding: 11px 24px; }
+      .btn-nav { font-size: 0.7rem; padding: 11px 24px; flex: 0 0 auto; }
     }
   </style>
 </head>
