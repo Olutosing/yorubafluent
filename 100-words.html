@@ -214,7 +214,7 @@
       .quiz-meta { margin-bottom: 12px; }
       .progress-wrap { margin-bottom: 14px; }
       /* Bigger "I know this" tap target */
-      .card-know-btn { padding: 10px 16px; font-size: 0.65rem; }
+      .card-know-btn { padding: 10px 22px; font-size: 1.1rem; }
     }
 
     /* ── MODE TABS ────────────────────────────────────────── */
@@ -268,7 +268,7 @@
     .card-word { font-weight: 900; font-size: clamp(2.8rem, 10vw, 5.8rem); color: #fff; line-height: 0.95; letter-spacing: -0.03em; word-break: break-word; max-width: 100%; }
     .card-front-footer { display: flex; justify-content: flex-end; align-items: center; flex-shrink: 0; }
     .card-reveal-hint { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
-    .card-know-btn { font-family: var(--font); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.82); cursor: pointer; transition: background var(--dur), border-color var(--dur); z-index: 2; }
+    .card-know-btn { font-family: var(--font); font-size: 1rem; font-weight: 800; padding: 8px 20px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.82); cursor: pointer; transition: background var(--dur), border-color var(--dur); z-index: 2; }
     @media (hover: hover) { .card-know-btn:hover { background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.7); } }
     .card-know-btn:active { background: rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.8); }
     .card-back { transform: rotateY(180deg); background: var(--surface); box-shadow: var(--shadow-lg); justify-content: center; gap: 12px; }
@@ -404,7 +404,7 @@
                 <span class="card-reveal-hint">tap to reveal</span>
               </div>
               <div class="card-front-footer">
-                <button class="card-know-btn" id="btn-know">I know this ✓</button>
+                <button class="card-know-btn" id="btn-know">✓</button>
               </div>
             </div>
             <div class="card-face card-back">
