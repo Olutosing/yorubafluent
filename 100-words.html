@@ -237,19 +237,11 @@
     .panel { display: none; }
     .panel.active { display: block; }
 
-    /* ── PROGRESS ─────────────────────────────────────────── */
-    .progress-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-    .progress-track { flex: 1; height: 7px; background: rgba(26,26,26,0.09); border-radius: 99px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--teal); border-radius: 99px; transition: width 0.5s var(--ease); width: 0%; }
-    .progress-fill.complete { background: var(--gold); }
-    .progress-label { font-size: 0.67rem; font-weight: 800; letter-spacing: 0.05em; color: var(--ink-mid); white-space: nowrap; min-width: 64px; text-align: right; }
-    .progress-label.complete { color: var(--gold-deep); }
-
     /* ── BROWSE CARD ──────────────────────────────────────── */
     .browse-perspective { perspective: 1200px; margin-bottom: 18px; }
     .browse-card {
       position: relative; width: 100%;
-      height: clamp(300px, 44vw, 440px);
+      height: clamp(420px, 58vw, 520px);
       transform-style: preserve-3d;
       transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
@@ -259,15 +251,21 @@
     .card-face {
       position: absolute; inset: 0; border-radius: 18px;
       backface-visibility: hidden; -webkit-backface-visibility: hidden;
-      border: 3px solid var(--ink); padding: 24px 28px;
+      border: 3px solid var(--ink); padding: 20px 24px;
       display: flex; flex-direction: column;
     }
-    .card-front { background: var(--teal); box-shadow: var(--shadow-lg); align-items: center; justify-content: center; text-align: center; }
-    .card-front-meta { position: absolute; top: 18px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; }
+    /* card-front uses flex column with space distribution */
+    .card-front { background: var(--teal); box-shadow: var(--shadow-lg); justify-content: space-between; text-align: center; }
+    .card-front-meta { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .card-cat-badge { font-size: 0.57rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.32); }
     .card-seen-tag { font-size: 0.57rem; font-weight: 800; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 999px; background: var(--gold); color: var(--ink); border: 1.5px solid rgba(26,26,26,0.4); }
-    .card-word { font-weight: 900; font-size: clamp(2.8rem, 10vw, 5.8rem); color: #fff; line-height: 0.95; letter-spacing: -0.03em; word-break: break-word; max-width: 100%; }
-    .card-front-footer { position: absolute; bottom: 16px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; }
+    /* Teal overrides for quiz-prog-row when inside card-front */
+    .card-front .quiz-prog-row { margin-bottom: 0; }
+    .card-front .quiz-q-num { color: rgba(255,255,255,0.6); }
+    .card-front .quiz-prog-track { background: rgba(255,255,255,0.2); }
+    .card-front .quiz-prog-fill { background: rgba(255,255,255,0.75); }
+    .card-word { font-weight: 900; font-size: clamp(2.8rem, 10vw, 5.8rem); color: #fff; line-height: 0.95; letter-spacing: -0.03em; word-break: break-word; max-width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; }
+    .card-front-footer { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .card-reveal-hint { font-size: 0.56rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
     .card-know-btn { font-family: var(--font); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.82); cursor: pointer; transition: background var(--dur), border-color var(--dur); z-index: 2; }
     @media (hover: hover) { .card-know-btn:hover { background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.7); } }
@@ -295,10 +293,10 @@
     .quiz-score strong { color: var(--teal); font-size: 1.05rem; font-weight: 900; }
     .btn-reset { font-family: var(--font); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; border: 2px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; transition: all var(--dur); box-shadow: 2px 2px 0 var(--ink); }
     .btn-reset:hover { background: var(--coral); border-color: var(--coral); color: #fff; box-shadow: none; transform: translate(2px, 2px); }
-    .quiz-card { background: var(--gold); border: 3px solid var(--ink); border-radius: 18px; padding: clamp(28px, 5vw, 44px) clamp(20px, 4vw, 32px) clamp(24px, 4vw, 36px); text-align: center; box-shadow: var(--shadow-lg); }
+    .quiz-card { background: var(--gold); border: 3px solid var(--ink); border-radius: 18px; padding: 20px 24px; text-align: center; box-shadow: var(--shadow-lg); min-height: clamp(420px, 58vw, 520px); display: flex; flex-direction: column; justify-content: space-between; }
     .quiz-instruction { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,26,26,0.42); margin-bottom: 10px; }
     .quiz-prompt { font-size: clamp(1.6rem, 5.5vw, 2.6rem); font-weight: 900; color: var(--ink); line-height: 1.1; margin-bottom: 28px; letter-spacing: -0.03em; }
-    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; align-content: start; }
     @media (max-width: 480px) { .quiz-options { grid-template-columns: 1fr; } }
     .quiz-opt { font-family: var(--font); font-size: 1rem; font-weight: 800; padding: 18px 14px; border-radius: 12px; border: 2.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; text-align: center; line-height: 1.3; transition: background var(--dur), color var(--dur), border-color var(--dur), box-shadow var(--dur); box-shadow: 3px 3px 0 var(--ink); }
     @media (hover: hover) {
@@ -385,16 +383,16 @@
 
       <!-- BROWSE -->
       <div id="panel-browse" class="panel active">
-        <div class="progress-wrap">
-          <div class="progress-track"><div class="progress-fill" id="b-fill"></div></div>
-          <span class="progress-label" id="b-label">0 / 100</span>
-        </div>
         <div class="browse-perspective">
           <div class="browse-card" id="browse-card">
             <div class="card-face card-front">
               <div class="card-front-meta">
                 <span class="card-cat-badge" id="f-cat"></span>
                 <span class="card-seen-tag"  id="f-seen" style="display:none">✓ seen</span>
+              </div>
+              <div class="quiz-prog-row">
+                <span class="quiz-q-num" id="b-num">1 / 100</span>
+                <div class="quiz-prog-track"><div class="quiz-prog-fill" id="b-prog-fill"></div></div>
               </div>
               <div class="card-word" id="f-word"></div>
               <div class="card-front-footer">
@@ -411,7 +409,6 @@
         </div>
         <div class="browse-nav">
           <button class="btn-nav"                 id="btn-prev">← prev</button>
-          <span   class="browse-counter"          id="b-counter">1 / 100</span>
           <button class="btn-nav btn-nav-primary" id="btn-next">next →</button>
         </div>
       </div>
@@ -569,7 +566,7 @@ function renderBrowse() {
   document.getElementById('b-sent-yo').textContent = w.sent_yo;
   document.getElementById('b-sent-en').textContent = w.sent_en;
   document.getElementById('f-seen').style.display  = seenIds.has(w.id) ? '' : 'none';
-  document.getElementById('b-counter').textContent = (bIndex + 1) + ' / ' + filtered.length;
+  document.getElementById('b-num').textContent = (bIndex + 1) + ' / ' + filtered.length;
   document.getElementById('btn-prev').disabled = bIndex === 0;
   document.getElementById('btn-next').disabled = bIndex === filtered.length - 1;
   updateBrowseProgress();
@@ -584,11 +581,7 @@ function renderBrowse() {
 function updateBrowseProgress() {
   var seen  = filtered.filter(function(w){ return seenIds.has(w.id); }).length;
   var total = filtered.length, pct = total ? (seen / total * 100) : 0;
-  var fill  = document.getElementById('b-fill'), label = document.getElementById('b-label');
-  fill.style.width = pct + '%';
-  var done = seen === total && total > 0;
-  fill.classList.toggle('complete', done); label.classList.toggle('complete', done);
-  label.textContent = done ? 'All seen ✓' : seen + ' / ' + total;
+  document.getElementById('b-prog-fill').style.width = pct + '%';
 }
 
 
