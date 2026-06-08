@@ -131,12 +131,6 @@
       margin-bottom: 4px;
     }
     .page-subtitle { font-size: 0.9rem; color: rgba(255,255,255,0.62); max-width: 340px; line-height: 1.65; margin-bottom: 22px; }
-    .stat-chip {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.64rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 6px 14px; border-radius: 999px;
-      background: var(--gold); color: var(--ink); border: 2px solid var(--ink);
-    }
 
     /* ── APP LAYOUT ───────────────────────────────────────── */
     .app-outer { padding: clamp(24px, 4vw, 44px) var(--pad) 80px; }
@@ -363,7 +357,6 @@
   <div class="page-header-inner">
     <h1 class="page-title"><span class="page-title-yo">Ọgọrun ọrọ</span>100 Words</h1>
     <p class="page-subtitle">Build your Yorùbá vocabulary foundation one word at a time. Browse, flip, quiz yourself.</p>
-    <span class="stat-chip" id="global-stat">0 / 100 seen</span>
   </div>
 </div>
 
@@ -580,7 +573,6 @@ function renderBrowse() {
   document.getElementById('btn-prev').disabled = bIndex === 0;
   document.getElementById('btn-next').disabled = bIndex === filtered.length - 1;
   updateBrowseProgress();
-  updateGlobalStat();
   var card = document.getElementById('browse-card');
   bFlipped = false;
   if (card.classList.contains('flipped')) {
@@ -599,10 +591,6 @@ function updateBrowseProgress() {
   label.textContent = done ? 'All seen ✓' : seen + ' / ' + total;
 }
 
-function updateGlobalStat() {
-  var el = document.getElementById('global-stat');
-  if (el) el.textContent = seenIds.size + ' / ' + allWords.length + ' seen';
-}
 
 function flipCard() {
   var card = document.getElementById('browse-card');
@@ -612,7 +600,7 @@ function flipCard() {
     if (!seenIds.has(w.id)) {
       seenIds.add(w.id); saveSeen();
       document.getElementById('f-seen').style.display = '';
-      updateBrowseProgress(); updateGlobalStat();
+      updateBrowseProgress();
     }
   }
 }
@@ -641,7 +629,7 @@ function markKnown(e) {
   e.stopPropagation();
   if (!filtered.length) return;
   var w = filtered[bIndex];
-  if (!seenIds.has(w.id)) { seenIds.add(w.id); saveSeen(); updateBrowseProgress(); updateGlobalStat(); }
+  if (!seenIds.has(w.id)) { seenIds.add(w.id); saveSeen(); updateBrowseProgress(); }
   if (bIndex < filtered.length - 1) navBrowse(1);
   else document.getElementById('f-seen').style.display = '';
 }
@@ -777,7 +765,7 @@ fetch('./yoruba-100.json')
   .then(r => r.json())
   .then(words => init(words))
   .catch(() => {
-    document.getElementById('global-stat').textContent = 'Could not load — open via local server';
+    console.warn('Could not load yoruba-100.json — open via local server');
   });
 </script>
 
