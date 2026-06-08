@@ -256,7 +256,7 @@
     }
     /* card-front uses flex column with space distribution */
     .card-front { background: var(--teal); box-shadow: var(--shadow-lg); justify-content: space-between; text-align: center; }
-    .card-front-meta { display: flex; justify-content: flex-end; align-items: center; flex-shrink: 0; min-height: 0; }
+    .card-front-meta { position: absolute; top: clamp(20px, 3.5vw, 32px); right: clamp(22px, 4vw, 36px); }
     .card-cat-badge { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.28); text-align: center; }
     .card-seen-tag { font-size: 0.57rem; font-weight: 800; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 999px; background: var(--gold); color: var(--ink); border: 1.5px solid rgba(26,26,26,0.4); }
     /* Teal overrides for quiz-prog-row when inside card-front */
@@ -271,10 +271,10 @@
     .card-know-btn { font-family: var(--font); font-size: 1rem; font-weight: 800; padding: 8px 20px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.82); cursor: pointer; transition: background var(--dur), border-color var(--dur); z-index: 2; }
     @media (hover: hover) { .card-know-btn:hover { background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.7); } }
     .card-know-btn:active { background: rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.8); }
-    .card-back { transform: rotateY(180deg); background: var(--surface); box-shadow: var(--shadow-lg); justify-content: center; gap: 12px; }
-    .card-meaning { font-weight: 900; font-size: clamp(2rem, 8vw, 4.2rem); color: var(--ink); line-height: 0.95; letter-spacing: -0.035em; }
-    .card-example-yo { font-size: 1.15rem; color: var(--teal); font-style: normal; line-height: 1.6; padding-top: 10px; border-top: 2px solid rgba(15,130,122,0.15); }
-    .card-example-en { font-size: 1rem; color: var(--ink-mid); line-height: 1.5; }
+    .card-back { transform: rotateY(180deg); background: var(--surface); box-shadow: var(--shadow-lg); justify-content: center; gap: 0; }
+    .card-meaning { font-weight: 900; font-size: clamp(2rem, 8vw, 4.2rem); color: var(--ink); line-height: 0.95; letter-spacing: -0.035em; margin-bottom: 14px; }
+    .card-example-yo { font-size: 1.15rem; color: var(--teal); font-style: normal; line-height: 1.4; padding-top: 10px; border-top: 2px solid rgba(15,130,122,0.15); margin-bottom: 2px; }
+    .card-example-en { font-size: 1rem; color: var(--ink-mid); line-height: 1.4; margin-top: -4px; }
 
     /* ── BROWSE NAV ───────────────────────────────────────── */
     .browse-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -290,12 +290,13 @@
 
     /* ── QUIZ ─────────────────────────────────────────────── */
     .quiz-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    .quiz-score { font-size: 0.8rem; font-weight: 700; color: var(--ink-mid); }
+    .quiz-score { position: absolute; bottom: 20px; left: 24px; font-size: 0.8rem; font-weight: 700; color: var(--ink-mid); }
     .quiz-score strong { color: var(--teal); font-size: 1.05rem; font-weight: 900; }
-    .btn-reset { font-family: var(--font); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; border: 2px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; transition: all var(--dur); box-shadow: 2px 2px 0 var(--ink); }
-    .btn-reset:hover { background: var(--coral); border-color: var(--coral); color: #fff; box-shadow: none; transform: translate(2px, 2px); }
-    .quiz-card { background: var(--gold); border: 3px solid var(--ink); border-radius: 18px; padding: 20px 24px; text-align: center; box-shadow: var(--shadow-lg); min-height: clamp(420px, 70vh, 520px); display: flex; flex-direction: column; justify-content: space-between; }
-    .quiz-instruction { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,26,26,0.42); margin-bottom: 10px; }
+    .btn-reset { position: absolute; bottom: 20px; right: 24px; font-family: var(--font); font-size: 1rem; font-weight: 800; padding: 8px 20px; border-radius: 999px; border: 1.5px solid rgba(26,26,26,0.35); background: rgba(26,26,26,0.1); color: rgba(26,26,26,0.7); cursor: pointer; transition: background var(--dur), border-color var(--dur); z-index: 2; }
+    @media (hover: hover) { .btn-reset:hover { background: rgba(26,26,26,0.2); border-color: rgba(26,26,26,0.6); } }
+    .btn-reset:active { background: rgba(26,26,26,0.25); }
+    .quiz-card { background: var(--gold); border: 3px solid var(--ink); border-radius: 18px; padding: 20px 24px; text-align: center; box-shadow: var(--shadow-lg); min-height: clamp(420px, 70vh, 520px); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+    .quiz-instruction { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,26,26,0.42); margin-bottom: 24px; }
     .quiz-prompt { font-size: clamp(1.6rem, 5.5vw, 2.6rem); font-weight: 900; color: var(--ink); line-height: 1.1; margin-bottom: 28px; letter-spacing: -0.03em; }
     .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; align-content: start; }
     @media (max-width: 480px) { .quiz-options { grid-template-columns: 1fr; } }
@@ -308,19 +309,17 @@
     .quiz-opt.wrong   { background: var(--coral); border-color: var(--coral-deep); color: #fff; box-shadow: 3px 3px 0 var(--coral-deep); }
     .quiz-opt.dim     { background: rgba(255,255,255,0.35); border-color: rgba(26,26,26,0.12); color: rgba(26,26,26,0.32); box-shadow: none; }
     .quiz-opt:disabled { cursor: default; }
-    .btn-quiz-next { font-family: var(--font); width: 100%; margin-top: 18px; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; padding: 14px; border-radius: 12px; border: 2.5px solid var(--ink); background: var(--teal); color: #fff; cursor: pointer; transition: background var(--dur), box-shadow var(--dur), transform var(--dur); box-shadow: var(--shadow-sm); }
     @media (hover: hover) {
       .btn-quiz-next:hover { background: var(--teal-deep); box-shadow: none; transform: translate(3px, 3px); }
     }
     .btn-quiz-next:active { background: var(--teal-deep); box-shadow: none; transform: translate(3px, 3px); }
-    .quiz-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
     .quiz-done { text-align: center; padding: clamp(28px, 5vw, 44px) 16px clamp(24px, 4vw, 32px); }
     .quiz-done-glyph { font-size: clamp(2.2rem, 6vw, 3.5rem); font-weight: 900; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.04em; }
     .quiz-done-title { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 900; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.04em; }
     .quiz-done-sub { font-size: 0.9rem; color: rgba(26,26,26,0.55); margin-bottom: 28px; line-height: 1.5; }
 
     /* ── QUIZ PROGRESS ROW ───────────────────────────────────── */
-    .quiz-prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .quiz-prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
     .quiz-q-num { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.08em; color: rgba(26,26,26,0.45); white-space: nowrap; }
     .quiz-prog-track { flex: 1; height: 5px; background: rgba(26,26,26,0.18); border-radius: 99px; overflow: hidden; }
     .quiz-prog-fill { height: 100%; background: var(--ink); border-radius: 99px; transition: width 0.4s var(--ease); width: 0%; }
@@ -430,7 +429,8 @@
           <div class="quiz-instruction">Which Yoruba word means…</div>
           <div class="quiz-prompt" id="q-prompt"></div>
           <div class="quiz-options" id="q-options"></div>
-          <button class="btn-quiz-next" id="btn-quiz-next" style="display:none">Next question →</button>
+          <span class="quiz-score" id="q-score"><strong>0</strong> / 0</span>
+          <button class="btn-reset" id="btn-reset">↺</button>
         </div>
         <div class="quiz-card" id="quiz-done-screen" style="display:none">
           <div class="quiz-done">
@@ -440,12 +440,9 @@
             <button class="btn-quiz-next" id="btn-quiz-again">Play again →</button>
           </div>
         </div>
-        <div class="quiz-nav">
-          <button class="btn-nav" id="btn-qprev" style="display:none">← Back</button>
-        </div>
-        <div class="quiz-meta">
-          <span class="quiz-score" id="q-score">Score: <strong>0</strong> / 0</span>
-          <button class="btn-reset" id="btn-reset">Reset</button>
+        <div class="browse-nav">
+          <button class="btn-nav" id="btn-qprev" disabled>prev</button>
+          <button class="btn-nav btn-nav-primary" id="btn-quiz-next" disabled>next</button>
         </div>
       </div>
 
@@ -671,8 +668,8 @@ function renderQuiz() {
     document.getElementById('quiz-card').style.display = 'none';
     document.getElementById('quiz-done-screen').style.display = '';
     document.getElementById('quiz-done-sub').textContent = qCorrect + ' correct out of ' + qTotal + ' · ' + filtered.length + ' words';
-    btnPrev.style.display = qHistory.length > 0 ? '' : 'none'; btnPrev.disabled = false;
-    btnNext.style.display = 'none'; return;
+    btnPrev.disabled = (qHistory.length === 0);
+    btnNext.disabled = true; return;
   }
   document.getElementById('quiz-card').style.display = '';
   document.getElementById('quiz-done-screen').style.display = 'none';
@@ -700,13 +697,7 @@ function renderQuiz() {
     } else { btn.addEventListener('click', function(){ selectOpt(opt.id, word.id, options); }); }
     optEl.appendChild(btn);
   });
-  if (alreadyAnswered) {
-    btnNext.style.display = '';
-    btnNext.textContent = (qCursor === qOrder.length - 1) ? 'See results →' : 'Next question →';
-  } else {
-    btnNext.style.display = 'none';
-  }
-  btnPrev.style.display = qHistory.length === 0 ? 'none' : '';
+  btnNext.disabled = !alreadyAnswered;
   btnPrev.disabled = (qCursor === 0);
 }
 
@@ -722,14 +713,13 @@ function selectOpt(selectedId, correctId, options) {
     else btn.classList.add('dim');
   });
   var btnNext = document.getElementById('btn-quiz-next');
-  btnNext.style.display = '';
-  btnNext.textContent = (qCursor === qOrder.length - 1) ? 'See results →' : 'Next question →';
-  document.getElementById('btn-qprev').style.display = ''; document.getElementById('btn-qprev').disabled = (qCursor === 0);
+  btnNext.disabled = false;
+  document.getElementById('btn-qprev').disabled = (qCursor === 0);
 }
 
 function advanceQuiz()  { if (!qAnswered) return; qCursor++; renderQuiz(); }
 function retreatQuiz()  { if (qCursor > 0) { qCursor--; renderQuiz(); } }
-function updateQuizScore() { document.getElementById('q-score').innerHTML = 'Score: <strong>' + qCorrect + '</strong> / ' + qTotal; }
+function updateQuizScore() { document.getElementById('q-score').innerHTML = '<strong>' + qCorrect + '</strong> / ' + qTotal; }
 
 /* ════════════════════════════════════════════════════════
    EVENTS
