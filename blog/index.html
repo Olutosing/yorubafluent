@@ -48,11 +48,10 @@
     let activeCategory = 'all';
 
     function buildCard(post) {
-      const url = 'https://www.yorubafluent.com/blog';
+      const url = post.slug + '/';
       const a = document.createElement('a');
       a.className = 'post-card';
       a.href = url;
-      a.target = '_top';
 
       a.innerHTML = `
         <div class="post-card-bg" style="background:${post.color}">
