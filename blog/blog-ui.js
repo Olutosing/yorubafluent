@@ -14,7 +14,7 @@ const NAV_HTML = `
     <div class="pill-nav">
       <a href="https://www.yorubafluent.com/" class="pill pill-home" target="_top">Home</a>
       <a href="https://www.yorubafluent.com/plans-pricing" class="pill pill-about" target="_top">Learn</a>
-      <a href="https://olutosing.github.io/yorubafluent/blog/" class="pill pill-blog">Blog</a>
+      <a href="https://www.yorubafluent.com/blog" class="pill pill-blog" target="_top">Blog</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -23,7 +23,7 @@ const NAV_HTML = `
   <div class="mobile-menu" id="mobileMenu">
     <a href="https://www.yorubafluent.com/" class="pill pill-home" target="_top">Home</a>
     <a href="https://www.yorubafluent.com/plans-pricing" class="pill pill-about" target="_top">Learn</a>
-    <a href="https://olutosing.github.io/yorubafluent/blog/" class="pill pill-blog">Blog</a>
+    <a href="https://www.yorubafluent.com/blog" class="pill pill-blog" target="_top">Blog</a>
   </div>`;
 
 /* ── FOOTER ────────────────────────────────────────────────
@@ -39,7 +39,7 @@ const FOOTER_HTML = `
       </div>
       <nav class="footer-nav">
         <a href="https://www.yorubafluent.com/" target="_top">Home</a>
-        <a href="https://olutosing.github.io/yorubafluent/blog/">Blog</a>
+        <a href="https://www.yorubafluent.com/blog" target="_top">Blog</a>
         <a href="https://www.yorubafluent.com/members-area/my/my-bookings" target="_top">Ilé-Ìwé</a>
         <a href="https://www.yorubafluent.com/vocabularies" target="_top">Vocabularies</a>
       </nav>
