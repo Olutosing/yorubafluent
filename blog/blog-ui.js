@@ -8,12 +8,12 @@
 const NAV_HTML = `
   <nav class="nav">
     <div class="nav-logo-group">
-      <a href="https://www.yorubafluent.com/" class="nav-logo">YorubaFluent</a>
+      <a href="https://www.yorubafluent.com/" class="nav-logo" target="_top">YorubaFluent</a>
       <span class="nav-byline">By Olutosin Akinwumi</span>
     </div>
     <div class="pill-nav">
-      <a href="https://www.yorubafluent.com/" class="pill pill-home">Home</a>
-      <a href="https://www.yorubafluent.com/plans-pricing" class="pill pill-about">Learn</a>
+      <a href="https://www.yorubafluent.com/" class="pill pill-home" target="_top">Home</a>
+      <a href="https://www.yorubafluent.com/plans-pricing" class="pill pill-about" target="_top">Learn</a>
       <a href="https://olutosing.github.io/yorubafluent/blog/" class="pill pill-blog">Blog</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -21,8 +21,8 @@ const NAV_HTML = `
     </button>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="https://www.yorubafluent.com/" class="pill pill-home">Home</a>
-    <a href="https://www.yorubafluent.com/plans-pricing" class="pill pill-about">Learn</a>
+    <a href="https://www.yorubafluent.com/" class="pill pill-home" target="_top">Home</a>
+    <a href="https://www.yorubafluent.com/plans-pricing" class="pill pill-about" target="_top">Learn</a>
     <a href="https://olutosing.github.io/yorubafluent/blog/" class="pill pill-blog">Blog</a>
   </div>`;
 
@@ -34,14 +34,14 @@ const FOOTER_HTML = `
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand-group">
-        <a href="https://www.yorubafluent.com/" class="footer-brand">YorubaFluent</a>
+        <a href="https://www.yorubafluent.com/" class="footer-brand" target="_top">YorubaFluent</a>
         <span class="footer-byline">By Olutosin Akinwumi</span>
       </div>
       <nav class="footer-nav">
-        <a href="https://www.yorubafluent.com/">Home</a>
+        <a href="https://www.yorubafluent.com/" target="_top">Home</a>
         <a href="https://olutosing.github.io/yorubafluent/blog/">Blog</a>
-        <a href="https://www.yorubafluent.com/members-area/my/my-bookings">Ilé-Ìwé</a>
-        <a href="https://www.yorubafluent.com/vocabularies">Vocabularies</a>
+        <a href="https://www.yorubafluent.com/members-area/my/my-bookings" target="_top">Ilé-Ìwé</a>
+        <a href="https://www.yorubafluent.com/vocabularies" target="_top">Vocabularies</a>
       </nav>
     </div>
     <div class="footer-social">
