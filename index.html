@@ -1602,10 +1602,11 @@
       const grid = document.getElementById('homepage-blog-grid');
       grid.innerHTML = '';
       posts.slice(0, 4).forEach(post => {
-        const url = 'https://olutosing.github.io/yorubafluent/blog/' + post.slug + '/';
+        const url = 'https://www.yorubafluent.com/blog';
         const card = document.createElement('a');
         card.className = 'blog-card';
         card.href = url;
+        card.target = '_top';
         card.innerHTML = `
           <div class="blog-placeholder" style="background:${post.color}">
             <span class="blog-placeholder-glyph">${post.glyph}</span>
