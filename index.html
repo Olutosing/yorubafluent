@@ -370,7 +370,8 @@
       padding: 0 var(--page-pad) 8px;
       margin-top: 28px;
       overflow-x: auto;
-      scroll-snap-type: x mandatory;
+      scroll-snap-type: x proximity;
+      overscroll-behavior-x: contain;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
@@ -875,7 +876,7 @@
       display: flex;
       flex-direction: column;
     }
-    .wotd-center { margin-top: auto; margin-bottom: auto; }
+    .wotd-center { margin-top: auto; margin-bottom: auto; padding-top: 3rem; }
 
     .wotd-eyebrow {
       display: flex;
@@ -1083,10 +1084,11 @@
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
       padding: 0;
       border-radius: 20px;
       position: relative;
-      overflow: hidden;
       transform: scale(0.92) translateY(16px);
       opacity: 0;
       transition: transform var(--dur-normal) var(--ease-overshoot), opacity var(--dur-normal) var(--ease);
@@ -1502,14 +1504,23 @@
       });
 
       const overlay = document.getElementById('wotd-overlay');
+      let lockedScrollY = 0;
 
       function openModal(e) {
         if (e.target.closest('.wotd-share-wrap')) return;
+        lockedScrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${lockedScrollY}px`;
+        document.body.style.width = '100%';
         overlay.classList.add('open');
       }
       function closeModal() {
         overlay.classList.remove('open');
         document.querySelectorAll('.wotd-share-menu').forEach(m => m.classList.remove('open'));
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, lockedScrollY);
       }
 
       const card = document.getElementById('wotd-card');
@@ -1546,12 +1557,30 @@
           });
         });
       });
+
+      syncWotdHeights();
     }
 
     fetch('words.json')
       .then(function(r) { return r.json(); })
       .then(initWOTD)
       .catch(function() { initWOTD(FALLBACK_WORDS); });
+
+    // ── EQUAL-HEIGHT WOTD / ILÉ-ÌWÉ (stacked on mobile) ──
+    function syncWotdHeights() {
+      const wotdCard = document.getElementById('wotd-card');
+      const wotdRight = document.querySelector('.wotd-right');
+      if (!wotdCard || !wotdRight) return;
+      if (window.matchMedia('(max-width: 640px)').matches) {
+        wotdRight.style.minHeight = wotdCard.offsetHeight + 'px';
+      } else {
+        wotdRight.style.minHeight = '';
+      }
+    }
+    window.addEventListener('resize', syncWotdHeights);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(syncWotdHeights);
+    }
 
     // ── HERO LETTER CYCLE ────────────────────────────
     (function () {
