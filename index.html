@@ -603,6 +603,8 @@
     .reel-track {
       display: inline-flex;
       animation: marquee 14s linear infinite;
+      will-change: transform;
+      backface-visibility: hidden;
     }
 
     .reel-track span {
@@ -612,6 +614,11 @@
       opacity: 0.4;
       letter-spacing: 0.08em;
       padding-right: 3rem;
+    }
+
+    /* Disable decorative looping animations when the user prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .iliwe-bg-track, .reel-track { animation: none; }
     }
 
     @keyframes marquee {
@@ -774,6 +781,8 @@
       flex-direction: column;
       gap: 0.2rem;
       animation: words-up 18s linear infinite;
+      will-change: transform;
+      backface-visibility: hidden;
     }
 
     .iliwe-bg-track span {
@@ -1405,7 +1414,7 @@
     </div>
     <div class="resources-carousel">
       <a class="resource-card" href="https://www.yorubafluent.com/_files/ugd/2cf81b_3f7e1e86d95944968b51f00940ee4f07.pdf" target="_blank" rel="noopener">
-        <img class="resource-cover" src="thumbnail1.png" alt="Ẹya Ara — Body Parts worksheet">
+        <img class="resource-cover" src="thumbnail1.png" alt="Ẹya Ara — Body Parts worksheet" loading="lazy" decoding="async">
         <div class="resource-body">
           <div class="resource-category">Vocabulary</div>
           <div class="resource-title">Ẹya Ara — Body Parts</div>
@@ -1413,7 +1422,7 @@
         </div>
       </a>
       <a class="resource-card" href="https://www.yorubafluent.com/_files/ugd/2cf81b_221f6a7846904f26890739622e91c7af.pdf" target="_blank" rel="noopener">
-        <img class="resource-cover" src="thumbnail2.png" alt="Action Words in Yoruba worksheet">
+        <img class="resource-cover" src="thumbnail2.png" alt="Action Words in Yoruba worksheet" loading="lazy" decoding="async">
         <div class="resource-body">
           <div class="resource-category">Vocabulary</div>
           <div class="resource-title">Action Words in Yoruba</div>
@@ -1421,7 +1430,7 @@
         </div>
       </a>
       <a class="resource-card" href="https://www.yorubafluent.com/_files/ugd/2cf81b_176d7f5226c442cea8593af6c542755a.pdf" target="_blank" rel="noopener">
-        <img class="resource-cover" src="thumbnail3.png" alt="Òrò Ìdàkejì — Words and Opposites worksheet">
+        <img class="resource-cover" src="thumbnail3.png" alt="Òrò Ìdàkejì — Words and Opposites worksheet" loading="lazy" decoding="async">
         <div class="resource-body">
           <div class="resource-category">Vocabulary</div>
           <div class="resource-title">Òrò Ìdàkejì — Words and Opposites</div>
@@ -1641,7 +1650,7 @@
           <div class="blog-placeholder" style="background:${post.color}">
             <span class="blog-placeholder-glyph">${post.glyph}</span>
           </div>
-          <img class="blog-card-img" src="blog/${post.slug}/image.jpg" alt="${post.title}" loading="lazy"
+          <img class="blog-card-img" src="blog/${post.slug}/image.jpg" alt="${post.title}" loading="lazy" decoding="async"
                onerror="this.style.display='none'">
           <div class="blog-card-overlay"></div>
           <div class="blog-card-label">
